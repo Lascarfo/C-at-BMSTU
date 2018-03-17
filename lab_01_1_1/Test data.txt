@@ -1,0 +1,8 @@
+Input data:
+
+Down side: 300
+Upper side: 200
+Angular: 100
+
+Answer:
+S = 14680.000
