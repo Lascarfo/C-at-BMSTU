@@ -12,5 +12,5 @@ int main()
 	printf("Angular: ");
 	scanf("%f", &ang);
     plos = abs(0.5*(down*down-upper*upper)*tan(ang));
-    printf("S = %3.3f", plos);
+    printf("S = %.4f", plos);
 }
