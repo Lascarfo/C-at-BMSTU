@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.5.1, 2018-03-24T17:21:48. -->
+<!-- Written by QtCreator 4.5.1, 2018-03-27T11:33:48. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -211,6 +211,7 @@
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
     <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.Arguments"></value>
     <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.Executable">C:/Users/qanelph/Desktop/C/lab_01/iu7-cprog-labs-2018-yarotskydaniil/lab_01_1_1/main.exe</value>
+    <value type="bool" key="ProjectExplorer.CustomExecutableRunConfiguration.UseTerminal">true</value>
     <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.WorkingDirectory">%{buildDir}</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Запуск C:\Users\qanelph\Desktop\C\lab_01\iu7-cprog-labs-2018-yarotskydaniil\lab_01_1_1\main.exe</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName"></value>
