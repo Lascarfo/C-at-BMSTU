@@ -1,11 +1,12 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <math.h>
+
 #define PI 3.14
+
 int main()
 {
     setbuf(stdout, NULL);
-    float down, upper, ang, plos ;
+    float down, upper, ang, plos;
     printf("Down side: ");
     scanf("%f", &down);
     printf("Upper side: ");
