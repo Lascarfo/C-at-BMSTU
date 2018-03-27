@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define PI 3.14159265359
+#define PI 3.14
 #define FULLANGLE 180.0
 
 int main()
