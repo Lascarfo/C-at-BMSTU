@@ -11,6 +11,6 @@ int main(void)
     printf("Down side, upper side, angular: ");
     scanf("%f %f %d", &down, &upper, &ang);
     radians = 0.5 * (down - upper) * tan((ang * PI) / FULLANGLE);
-    plos = fabs(((down + upper) * tan(radians)) / 2);
+    plos = fabs(((down + upper) * (radians)) / 2);
     printf("S = %.4f\n", plos);
 }
