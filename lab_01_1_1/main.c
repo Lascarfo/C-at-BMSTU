@@ -2,6 +2,7 @@
 #include <math.h>
 
 #define PI 3.14159265359
+#define FULLANGLE 180.0
 
 int main()
 {
@@ -13,7 +14,7 @@ int main()
     scanf("%f", &upper);
     printf("Angular: ");
     scanf("%f", &ang);
-    radians = (ang * PI) / 180.0;
-    plos = 0.5 * (down + upper)* tan(radians);
+    radians = (ang * PI) / FULLANGLE;
+    plos = fabs(0.5 * (down + upper)* tan(radians));
     printf("S = %.4f", plos);
 }
