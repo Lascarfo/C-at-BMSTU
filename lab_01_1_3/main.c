@@ -10,5 +10,5 @@ int main(void)
     scanf("%f,%f", &vol2, &temp2);
 	vol = vol1 + vol2;
 	temp = (vol1 * temp1 + vol2 * temp2) / (vol1 + vol2);
-	printf("Liquid volume is: %f, temperature is: %f", vol, temp);
+    printf("Liquid volume is: %.4f, temperature is: %.4f", vol, temp);
 }

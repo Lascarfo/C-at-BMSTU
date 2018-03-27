@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <math.h>
 
-#define PI 3.14
+#define PI 3.14159265
 
 int main()
 {
@@ -13,6 +13,6 @@ int main()
     scanf("%f", &upper);
     printf("Angular: ");
     scanf("%f", &ang);
-    plos = fabs(0.5 * (down * down - upper * upper) * tan((ang * PI) / 180));
+    plos = fabs(0.5 * (down + upper) * tan((ang * (PI / 180))));
     printf("S = %.4f", plos);
 }
