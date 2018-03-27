@@ -1,8 +1,8 @@
 Input data:
 
-Down side: 300
-Upper side: 200
-Angular: 100
+Down side, upper side, angular: 10 20 30
+
 
 Answer:
-S = 14680.000
+
+S = 43.3013
