@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <math.h>
 
-#define PI 3.14
+#define PI 3.14159265359
 #define FULLANGLE 180.0
 
-int main()
+int main(void)
 {
     setbuf(stdout, NULL);
     float down, upper, ang, plos, radians;
