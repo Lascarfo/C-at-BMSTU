@@ -2,6 +2,7 @@
 #include <math.h>
 
 #define PI 3.14
+#define ANGULAR 0.01745329251
 
 int main()
 {
@@ -13,6 +14,6 @@ int main()
     scanf("%f", &upper);
     printf("Angular: ");
     scanf("%f", &ang);
-    plos = 0.5 * (down + upper) * tan(ang * (PI / 180));
+    plos = 0.5 * (down + upper) * tan(ang * ANGULAR);
     printf("S = %.4f", plos);
 }
