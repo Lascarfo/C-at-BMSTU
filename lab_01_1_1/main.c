@@ -10,7 +10,7 @@ int main(void)
     float down, upper, plos, radians;
     printf("Down side, upper side, angular: ");
     scanf("%f %f %d", &down, &upper, &ang);
-    radians = (ang * PI) / FULLANGLE;
+    radians = 0.5 * (down - upper) * tan((ang * PI) / FULLANGLE);
     plos = fabs(((down + upper) * tan(radians)) / 2);
     printf("S = %.4f\n", plos);
 }
