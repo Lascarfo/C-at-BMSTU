@@ -2,15 +2,14 @@
 #include <math.h>
 
 #define PI 3.14159265359
-#define FULLANGLE 180
+#define FULLANGLE 180.0
 
 int main(void)
 {
-    int ang;
-    float down, upper, plos, radians;
+    float down, upper, plos, height, ang;
     printf("Down side, upper side, angular: ");
-    scanf("%f %f %d", &down, &upper, &ang);
-    radians = 0.5 * (down - upper) * tan((ang * PI) / FULLANGLE);
-    plos = fabs(((down + upper) * (radians)) / 2);
+    scanf("%f %f %f", &down, &upper, &ang);
+    height = 0.5 * fabs(down - upper) * tan((ang * PI) / FULLANGLE);
+    plos = 0.5 * (down + upper) * height;
     printf("S = %.4f\n", plos);
 }
