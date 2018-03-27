@@ -6,7 +6,7 @@
 int main(void)
 {
 	int number, pod, st;
-	setbuf (stdout, NULL);
+    setbuf (stdout, NULL);
 	printf("input room's number: ");
 	scanf("%d", &number);
 	pod = (number + SF) / SS;
