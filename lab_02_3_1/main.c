@@ -5,7 +5,7 @@
 #define ERR_IO 1
 #define ERR_RANGE 2
 
-int NOD(int a, int b)
+int largest_common_divisor(int a, int b)
 {
     while(a > 0 && b > 0)
         if(a > b)
@@ -23,7 +23,7 @@ int main(void)
     {
         if (a > 0 && b > 0)
         {
-            printf("NOD = %d\n", NOD(a, b));
+            printf("NOD = %d\n", largest_common_divisor(a, b);
         }
         else
         {

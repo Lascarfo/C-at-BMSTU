@@ -3,7 +3,7 @@
 #define OK 0
 #define ERR_DIG 1
 
-void line(x, x1, x2, y, y1, y2)
+void line(float x, float x1, float x2, float y, float y1, float y2)
 {
     if (((y1 - y2) * x + (x2 - x1) * y + (x1 * y2 - x2 * y1)) == 0)
         printf ("Point is on the line\n");
