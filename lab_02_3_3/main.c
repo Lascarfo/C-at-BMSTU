@@ -10,13 +10,11 @@ float calc_s(float eps, float x)
 {
    float changing_x = x;
    float sum = 0.0;
-   int numer = 3;
    while (fabs(changing_x) >= eps)
    {
        x *= x * x;
        sum += changing_x;
        changing_x = MINUS * (x / numer);
-       numer += 2;
    }
    return sum;
 }
