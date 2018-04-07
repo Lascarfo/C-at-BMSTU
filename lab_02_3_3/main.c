@@ -28,13 +28,13 @@ int main(void)
     float eps, x, s, f, abs_f, relative;
     if (scanf("%f %f", &x, &eps) == 2)
     {
-        if ((eps > 0) && (eps <= 1) && (fabs(x) <= 1))
+        if ((eps > 0) && (eps <= 1) && (fabs(x) <= 1) && (x != 0))
         {
             f = atan(x);
             s = calc_s(eps, x);
             abs_f = fabs(f - s);
             relative = abs_f / fabs(f);
-            printf("%f, %f, %f, %f", s, f, abs_f, relative);
+            printf("%.4f, %.4f, %.4f, %.4f", s, f, abs_f, relative);
         }
         else
         {
