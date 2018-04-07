@@ -7,8 +7,8 @@
 
 int largest_common_divisor(int a, int b)
 {
-    while(a > 0 && b > 0)
-        if(a > b)
+    while (a > 0 && b > 0)
+        if (a > b)
             a %= b;
         else
             b %= a;
@@ -29,11 +29,8 @@ int main(void)
             rc = ERR_RANGE;
             printf("a or b < 0!\n");
         }
-
     }
     else
-    {
         rc = ERR_IO;
-    }
     return rc;
 }
