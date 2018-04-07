@@ -10,20 +10,12 @@ float calc_s(float eps, float x)
 {
     float changing_x = x;
     float sum = 0.0;
-    float numer = 1.0;
+    float number = 1.0;
     while (fabs(changing_x) > eps)
     {
         sum += changing_x;
-        x *= x * x;
-        numer += 2;
-        if (changing_x < 0)
-        {
-            changing_x = x / numer;
-        }
-        else
-        {
-            changing_x = MINUS * (x / numer);
-        }
+        changing_x *= - 1 * x * x / number;
+        number += 2;
     }
     return sum;
 }
