@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.6.0, 2018-04-07T21:03:59. -->
+<!-- Written by QtCreator 4.6.0, 2018-04-07T22:04:02. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -270,7 +270,7 @@
     <value type="bool" key="ProjectExplorer.CustomExecutableRunConfiguration.UseTerminal">true</value>
     <value type="QString" key="ProjectExplorer.CustomExecutableRunConfiguration.WorkingDirectory"></value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.DefaultDisplayName">Run /Users/qanelph/Desktop/IU7-2S/C/iu7-cprog-labs-2018-yarotskydaniil/lab_02_3_3/main.exec</value>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">Run /Users/qanelph/Desktop/IU7-2S/C/lab_02/iu7-cprog-labs-2018-yarotskydaniil/lab_02_3_3/main.exec2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">1</value>
     <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">ProjectExplorer.CustomExecutableRunConfiguration</value>
     <value type="uint" key="RunConfiguration.QmlDebugServerPort">3768</value>
     <value type="bool" key="RunConfiguration.UseCppDebugger">false</value>

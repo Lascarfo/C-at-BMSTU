@@ -10,13 +10,14 @@ float calc_s(float eps, float x)
 {
     float changing_x = x;
     float sum = 0.0;
-    int numer = 3;
-    while (fabs(changing_x) >= eps)
+    float numer = 1.0;
+    while (fabs(changing_x) > eps)
     {
-        x *= x * x;
         sum += changing_x;
-        changing_x = MINUS * (x / numer);
+        printf("sum %f\nx is %f\n", sum, x);
+        x *= x * x;
         numer += 2;
+        changing_x = MINUS * (x / numer);
     }
     return sum;
 }
@@ -33,8 +34,8 @@ int main(void)
             f = atan(x);
             s = calc_s(eps, x);
             abs_f = fabs(f - s);
-            relative = abs_f / fabs(f);
-            printf("s(%.4f),f(%.4f),delta_a(%.4f),delta_b(%.4f)", s, f, abs_f, relative);
+            relative = fabs(abs_f / f);
+            printf("%.4f,%.4f,%.4f,%.4f", s, f, abs_f, relative);
         }
         else
         {
