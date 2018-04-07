@@ -27,7 +27,6 @@ int main(void)
         else
         {
             rc = ERR_RANGE;
-            printf("a or b < 0!\n");
         }
     }
     else
