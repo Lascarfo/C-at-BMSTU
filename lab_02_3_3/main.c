@@ -14,8 +14,8 @@ float calc_s(float eps, float x)
     while (fabs(changing_x) > eps)
     {
         sum += changing_x;
-        changing_x *= - 1 * x * x / number;
         number += 2;
+        changing_x *= - 1 * x * x / number;
     }
     return sum;
 }
