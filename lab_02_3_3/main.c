@@ -24,17 +24,17 @@ float calc_s(float eps, float x)
 
 int main(void)
 {
-     int rc = OK;
-     float eps, x, s, f, abs_f, relative;
-     if (scanf("%f %f", &x, &eps) == 2)
-     {
-       if ((eps > 0) && (eps <= 1) && (fabs(x) <= 1))
-       {
-           f = atan(x);
-           s = calc_s(eps, x);
-           abs_f = fabs(f - s);
-           relative = abs_f / fabs(f);
-           printf("%f, %f, %f, %f", s, f, abs_f, relative);
+    int rc = OK;
+    float eps, x, s, f, abs_f, relative;
+    if (scanf("%f %f", &x, &eps) == 2)
+    {
+        if ((eps > 0) && (eps <= 1) && (fabs(x) <= 1))
+        {
+            f = atan(x);
+            s = calc_s(eps, x);
+            abs_f = fabs(f - s);
+            relative = abs_f / fabs(f);
+            printf("%f, %f, %f, %f", s, f, abs_f, relative);
         }
         else
         {
