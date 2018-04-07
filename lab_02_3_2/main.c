@@ -23,7 +23,7 @@ int main(void)
     float x, x1, x2, y, y1, y2;
     if (scanf("%f %f %f %f %f %f", &x1, &y1, &x2, &y2, &x, &y) == 6)   
     {
-        if (x1 == x2 == y2 == y1)
+        if ((x1 == x2) && (y2 == y1))
         {
             rc = ERR_DIG;
         }
