@@ -24,6 +24,7 @@ int main(void)
     if (scanf("%f %f %f %f %f %f", &x1, &y1, &x2, &y2, &x, &y) == 6)
     {
         rc = line(x, x1, x2, y, y1, y2);
+        printf("%d", rc);
     }
     else
     {
