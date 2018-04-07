@@ -14,10 +14,16 @@ float calc_s(float eps, float x)
     while (fabs(changing_x) > eps)
     {
         sum += changing_x;
-        printf("sum %f\nx is %f\n", sum, x);
         x *= x * x;
         numer += 2;
-        changing_x = MINUS * (x / numer);
+        if (changing_x < 0)
+        {
+            changing_x = x / numer;
+        }
+        else
+        {
+            changing_x = MINUS * (x / numer);
+        }
     }
     return sum;
 }
