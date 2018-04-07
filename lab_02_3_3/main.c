@@ -34,7 +34,7 @@ int main(void)
             s = calc_s(eps, x);
             abs_f = fabs(f - s);
             relative = abs_f / fabs(f);
-            printf("%.4f, %.4f, %.4f, %.4f", s, f, abs_f, relative);
+            printf("s(%.4f), f(%.4f), delta_a(%.4f), delta_b(%.4f)", s, f, abs_f, relative);
         }
         else
         {
