@@ -18,12 +18,11 @@ int largest_common_divisor(int a, int b)
 int main(void)
 {
     int a, b, rc = OK;
-    printf("input (a and b) > 0: ");
     if (scanf("%d %d", &a, &b) == 2)
     {
         if (a > 0 && b > 0)
         {
-            printf("NOD = %d\n", largest_common_divisor(a, b);
+            printf("%d", largest_common_divisor(a, b));
         }
         else
         {
@@ -35,7 +34,6 @@ int main(void)
     else
     {
         rc = ERR_IO;
-        printf("a or b is not int!\n");
     }
     return rc;
 }
