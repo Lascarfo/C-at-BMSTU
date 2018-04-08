@@ -15,7 +15,7 @@ float calc_s(float eps, float x)
     {
         sum += changing_x;
         number += 2;
-        changing_x *= MINUS * x * x / number;
+        changing_x *= MINUS * (number - 2) * x * x / number;
     }
     return sum;
 }
