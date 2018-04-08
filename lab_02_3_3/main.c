@@ -27,7 +27,7 @@ int main(void)
     float eps, x, s, f, abs_f, relative;
     if (scanf("%f %f", &x, &eps) == 2)
     {
-        if ((eps > 0) && (eps < 1) && (fabs(x) <= 1))
+        if ((eps > 0) && (eps < 1) && (fabs(x) <= 1) && (x != 0))
         {
             f = atan(x);
             s = calc_s(eps, x);
