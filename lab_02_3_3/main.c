@@ -25,7 +25,7 @@ int main(void)
 {
     int rc = OK;
     float eps, x, s, f, abs_f, relative;
-    if (scanf("%g%g", &x, &eps) == 2)
+    if (scanf("%f%*c%f", &x, &eps) == 2)
     {
         if ((eps > 0) && (eps < 1) && (fabs(x) <= 1) && (x != 0))
         {
