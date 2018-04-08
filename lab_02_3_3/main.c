@@ -15,7 +15,7 @@ float calc_s(float eps, float x)
     {
         sum += changing_x;
         number += 2;
-        changing_x *= - 1 * x * x / number;
+        changing_x *= MINUS * x * x / number;
     }
     return sum;
 }
@@ -27,13 +27,13 @@ int main(void)
     float eps, x, s, f, abs_f, relative;
     if (scanf("%f %f", &x, &eps) == 2)
     {
-        if ((eps > 0) && (eps <= 1) && (fabs(x) <= 1) && (x != 0))
+        if ((eps > 0) && (eps < 1) && (fabs(x) <= 1))
         {
             f = atan(x);
             s = calc_s(eps, x);
             abs_f = fabs(f - s);
-            relative = fabs(abs_f / f);
-            printf("%f, %f, %f, %f", s, f, abs_f, relative);
+            relative = fabs((f - s) / f);
+            printf("%f%f%f%f", s, f, abs_f, relative);
         }
         else
         {
