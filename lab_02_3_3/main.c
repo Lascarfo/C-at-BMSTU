@@ -33,7 +33,7 @@ int main(void)
             s = calc_s(eps, x);
             abs_f = fabs(f - s);
             relative = fabs(abs_f / f);
-            printf("%.4f %.4f %.4f %.4f", s, f, abs_f, relative);
+            printf("%.4f%.4f%.4f%.4f", s, f, abs_f, relative);
         }
         else
         {
