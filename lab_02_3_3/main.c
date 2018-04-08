@@ -23,7 +23,7 @@ float calc_s(float eps, float x)
 
 int main(void)
 {
-    int rc = OK;
+    int rc = ERR_IO;
     float eps, x, s, f, abs_f, relative;
     if (scanf("%f%*c%f", &x, &eps) == 2)
     {
@@ -34,6 +34,7 @@ int main(void)
             abs_f = fabs(f - s);
             relative = fabs((f - s) / f);
             printf("%f%f%f%f", s, f, abs_f, relative);
+            rc = OK;
         }
         else
         {
