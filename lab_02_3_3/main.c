@@ -23,21 +23,28 @@ float calc_s(float eps, float x)
 
 int main(void)
 {
-    int rc = ERR_IO;
+    int rc = OK;
     float eps, x, s, f, abs_f, relative;
-    if (scanf("%f%*c%f", &x, &eps) == 2)
+    if (scanf("%f", &x) == 1)
     {
-        if ((eps > 0) && (eps < 1) && (fabs(x) <= 1) && (x != 0))
+        if (scanf("%f", &eps) == 1)
         {
-            f = atan(x);
-            s = calc_s(eps, x);
-            abs_f = fabs(f - s);
-            relative = fabs((f - s) / f);
-            printf("%f%f%f%f", s, f, abs_f, relative);
+            if ((eps > 0) && (eps < 1) && (fabs(x) <= 1) && (x != 0))
+            {
+                f = atan(x);
+                s = calc_s(eps, x);
+                abs_f = fabs(f - s);
+                relative = fabs((f - s) / f);
+                printf("%f%f%f%f", s, f, abs_f, relative);
+            }
+            else
+            {
+                rc = ERR_RANGE;
+            }
         }
         else
         {
-            rc = ERR_RANGE;
+            rc = ERR_IO;
         }
     }
     else
