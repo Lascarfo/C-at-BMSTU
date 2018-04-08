@@ -17,7 +17,6 @@ float calc_s(float eps, float x)
         number += 2;
         changing_x *= - 1 * x * x / number;
     }
-    sum += changing_x;
     return sum;
 }
 
@@ -34,7 +33,7 @@ int main(void)
             s = calc_s(eps, x);
             abs_f = fabs(f - s);
             relative = fabs(abs_f / f);
-            printf("%f%f%f%f", s, f, abs_f, relative);
+            printf("%f, %f, %f, %f", s, f, abs_f, relative);
         }
         else
         {
