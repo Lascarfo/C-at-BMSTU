@@ -3,7 +3,7 @@
 
 #define OK 0
 #define ERR_IO 1
-#define ERR_RANGE 2
+#define ERR_RANGE ERR_IO + 1
 #define MINUS -1
 
 float calc_s(float eps, float x)
@@ -25,9 +25,9 @@ int main(void)
 {
     int rc = OK;
     float eps, x, s, f, abs_f, relative;
-    if (scanf("%f %f", &x, &eps) == 2)
+    if (scanf("%f%f", &x, &eps) == 2)
     {
-        if ((eps > 0) && (eps < 1) && (fabs(x) <= 1) && (x != 0))
+        if ((eps > 0) && (eps < 1) && (fabs(x) <= 1) && (x != 0 ))
         {
             f = atan(x);
             s = calc_s(eps, x);
