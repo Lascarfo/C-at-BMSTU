@@ -34,7 +34,6 @@ int main(void)
             abs_f = fabs(f - s);
             relative = fabs((f - s) / f);
             printf("%f%f%f%f", s, f, abs_f, relative);
-            rc = OK;
         }
         else
         {
