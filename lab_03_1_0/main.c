@@ -1,54 +1,40 @@
 #include <stdio.h>
 
-#define ZERO 0
-#define NOTHING_INPUT -1
-#define NOTHING_BEFORE_MINUS -2
+#define ERR_MAIN -1
 
-
-int process(FILE *f, int count)
+int maximum(int *rc, int *number)
 {
-    if (count == 0)
-        return NOTHING_INPUT;
-    else
+    int reedu, cachedd = 0, flag = 0;
+    fscanf(stdin, "%d", &cachedd);
+    while (fscanf(stdin, "%d", &reedu) == 1)
     {
-        int max_num = -1;
-        int cachedd = 0;
-        for (int i = 0; i < count; i++)
+        cachedd++;
+        if (flag == 1)
+            if (*number < reedu)
+                *number = reedu;
+        if (reedu < 0)
         {
-            fscanf(f, "%d ", &cachedd);
-            if (cachedd < ZERO)
-            {
-                max_num = NOTHING_BEFORE_MINUS;
-            }
-            if (cachedd > max_num)
-            {
-                max_num = cachedd;
-            }
+            flag += 1;
         }
-        return max_num;
+    }
+    if ((cachedd == 0) || (*number == -1))
+        *rc = ERR_MAIN;
+    return *rc;
+}
 
-     }
+void usage(void)
+{
+    printf("Another time please input integers and negative number. For stop input string.");
 }
 
 int main(void)
 {
-    int number = 0, count = 0;
-    int new;
-    new = 0;
-    new ++;
-    FILE *f = fopen("text.txt", "w");
-
+    int number = -1, rc = 0;
     printf("input numbers (CTRL+Z + ENTER or LITERAL for cancel): ");
-    while (scanf("%d", &number) == 1)
-    {
-            fprintf(f, "%d ", number);
-            count++;
-     }
-    fclose(f);
-    FILE *e = fopen("text.txt", "r");
-    new = process(e, count);
-
-    printf("maximum chislo above (or error code (-1, -2)): %d", new);
-    fclose(e);
-
+    rc = maximum(&rc, &number);
+    if (rc != 0)
+        usage();
+    else
+        fprintf(stdout, "max number before negative is %d", number);
+    return rc;
 }
