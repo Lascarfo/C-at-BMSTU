@@ -12,6 +12,7 @@ int maximum(int *rc, int *number)
         if (flag == 1)
             if (*number < reedu)
                 *number = reedu;
+                flag = 0;
         if (reedu < 0)
         {
             flag += 1;
