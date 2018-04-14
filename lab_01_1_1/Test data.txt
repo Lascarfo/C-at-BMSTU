@@ -1,8 +1,0 @@
-Input data:
-
-Down side, upper side, angular: 10 20 30
-
-
-Answer:
-
-S = 43.3013

@@ -1,9 +1,0 @@
-Input data:
-
-input vol1, vol2: 10,20
-input temp1, temp2: 30,40
-
-
-Answer:
-
-Liquid volume is: 30.000000, temperature is: 36.666668
