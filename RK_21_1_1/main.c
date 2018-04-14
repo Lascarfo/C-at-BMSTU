@@ -1,7 +1,7 @@
 #include<stdio.h>
 
 #define RIGHT 0
-#define ERR_INPUT RIGHT + 1
+#define ERR_INPUT (RIGHT + 1)
 #define TEN 10
 
 int shet(int number,int *res)
