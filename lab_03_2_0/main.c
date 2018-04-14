@@ -28,16 +28,17 @@ int search(FILE *file, float *number)
     else
     {
         semi_num = sum / count;
+        fseek(file, 0, 0);
         for (int i = 0; i < count; i++)
         {
             fscanf(file, "%f", &data_cache);
             pre_cached_num = fabs(semi_num - data_cache);
             if (pre_cached_num < cached_num)
             {
-                cached_num = data_cache;
+                cached_num = pre_cached_num;
+                *number = data_cache;
             }
         }
-        *number = cached_num;
         return RIGHT;
     }
 }
