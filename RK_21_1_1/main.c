@@ -27,7 +27,7 @@ int shet(int number,int *res)
                 first_max = cache;
             }
             *res = first_max - first_min;
-            number = number / 10;
+            number = number / TEN;
         }
     }
     else
