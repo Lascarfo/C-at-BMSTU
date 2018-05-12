@@ -1,0 +1,8 @@
+Input data:
+
+input room's number: 10
+
+
+Answer:
+
+podjezd is: 1, stage is: 3
