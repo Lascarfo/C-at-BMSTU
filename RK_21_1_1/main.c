@@ -6,7 +6,7 @@
 
 int shet(int number,int *res)
 {
-    int err = RIGHT, cache = 0, first_max = 0, first_min = 0, flag = 0;
+    int err = RIGHT, cache = 0, first_max, first_min, flag = 0;
     if (number != 0)
     {
         while (number != 0)
@@ -26,8 +26,15 @@ int shet(int number,int *res)
             {
                 first_max = cache;
             }
-            *res = first_max - first_min;
             number = number / TEN;
+        }
+        if (flag == 1)
+        {
+            *res = first_max - first_min;
+        }
+        else
+        {
+            err = ERR_INPUT;
         }
     }
     else
@@ -43,17 +50,17 @@ int main(void)
     setbuf(stdout, NULL);
     int err = RIGHT, number = 0, res = 0;
     printf("Input number: ");
-    if (scanf("%d", &number) == 1)
+    if ((scanf("%d", &number) == 1) && (number > 0))
     {
         err = shet(number, &res);
-        if (err == 0)
+        if (err == RIGHT)
         {
             printf ("resault is %d", res);
         }
     }
     else
     {
-        printf("Please input natural number!");
+        printf("Please input natural number!\n");
         err = ERR_INPUT;
     }
 
