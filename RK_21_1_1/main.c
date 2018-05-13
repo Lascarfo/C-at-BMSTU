@@ -2,7 +2,7 @@
 
 #define RIGHT 0
 #define ERR_INPUT (RIGHT + 1)
-#define TEN 10
+#define DIVIDER 10
 
 int shet(int number,int *res)
 {
@@ -11,7 +11,7 @@ int shet(int number,int *res)
     {
         while (number != 0)
         {
-            cache = number % TEN;
+            cache = number % DIVIDER;
             if (flag == 0)
             {
                 first_max = cache;

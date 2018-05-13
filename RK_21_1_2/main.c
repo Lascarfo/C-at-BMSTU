@@ -5,7 +5,6 @@
 #define ERR_TEST 25
 #define ERR_OPEN_FILE 24
 #define CHET 2
-#define MIN -999999
 
 
 
@@ -16,7 +15,7 @@ int max_nechet(FILE *file, int *number)
     {
         if (flag == 0)
         {
-            max = MIN;
+            max = cache;
             flag = 1;
         }
         del = cache % CHET;
@@ -25,6 +24,7 @@ int max_nechet(FILE *file, int *number)
             if (cache >= max)
             {
                 *number = cache;
+                max = cache;
                 err = RIGHT;
             }
         }
@@ -47,17 +47,15 @@ int main(int argc, char** argv)
     {
         err = max_nechet(file, &number);
         fclose(file);
-        printf("Maxumum nechet number is %d", number);
+        if (err == RIGHT)
+            printf("Maxumum nechet number is %d", number);
+        else
+            printf("No request numbers in file\n");
     }
     else
     {
         err = ERR_OPEN_FILE;
         usage();
-    }
-    if (err == ERR_TEST)
-    {
-        printf("No request numbers in file\n");
-        err = RIGHT;
     }
     return err;
 }
