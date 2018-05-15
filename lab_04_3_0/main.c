@@ -14,13 +14,13 @@ int polin(int number)
     int reverse = 0, cache = 0;
     bool checker = false;
     cache = number;
-    while( cache != 0 )
+    while(cache != 0)
     {
         reverse = reverse * 10;
         reverse = reverse + cache % 10;
         cache = cache / 10;
     }
-    if ( number == reverse )
+    if (number == reverse)
         checker = true;
     else
         checker = false;
@@ -32,7 +32,7 @@ void del(int *mas, int i, int length)
     int pred = length;
     for (; i < pred - 1; i++)
     {
-        mas[i] = mas[i+1];
+        mas[i] = mas[i + 1];
         pred--;
     }
 }

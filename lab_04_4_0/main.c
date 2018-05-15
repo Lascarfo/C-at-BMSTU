@@ -62,7 +62,7 @@ int main(void)
     int err = RIGHT, length = 0;
     int massiv[MAS];
     err = inp(massiv, &length);
-    check = sortirovka(massiv, length);
+    int check = sortirovka(massiv, length);
     for (int i = 0; i < length; i++)
         printf("%d ", massiv[i]);
     return err;

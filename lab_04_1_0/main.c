@@ -7,7 +7,7 @@
 #define MAS 10
 
 
-int counter(int const mas[MAS],int length, int *number)
+int counter(int const mas[MAS], int length, int *number)
 {
     int err = RIGHT;
     for (int i = 0; i < length; i++)
@@ -33,9 +33,7 @@ int inp(int *massiv, int *length)
     printf("Input int numbers (< 10), for stop input input STRING.\n");
     for (int i = 0; i < *length; i++)
         if (scanf("%d", &cache) == 1)
-        {
-             massiv[i] = cache;
-        }
+            massiv[i] = cache;
         else
         {
             printf("pls inp int numb!\n");
