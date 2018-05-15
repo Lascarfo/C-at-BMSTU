@@ -34,32 +34,32 @@ int sortirovka(int *mass, int len)
 
 int inp(int *massiv, int *length)
 {
-  int err = RIGHT, cache = 0;
-  printf("input length of mass ot 0 to 10: ");
-  scanf("%d", length);
-  if (((*length < 0) && (*length > 10)))
-  {
-      printf("pls inp int numb!\n");
-      return ERR_LENGTH;
-  }
-  printf("Input int numbers (< 10), for stop input input STRING.\n");
-  for (int i = 0; i < *length; i++)
-      if (scanf("%d", &cache) == 1)
-      {
-          massiv[i] = cache;
-      }
-      else
-      {
-          printf("pls inp int numb!\n");
-          err = ERR_INPUT;
-          return err;
-      }
+    int err = RIGHT, cache = 0;
+    printf("input length of mass ot 0 to 10: ");
+    scanf("%d", length);
+    if (((*length < 0) && (*length > 10)))
+    {
+        printf("pls inp int numb!\n");
+        return ERR_LENGTH;
+    }
+    printf("Input int numbers (< 10), for stop input input STRING.\n");
+    for (int i = 0; i < *length; i++)
+        if (scanf("%d", &cache) == 1)
+        {
+            massiv[i] = cache;
+        }
+        else
+        {
+            printf("pls inp int numb!\n");
+            err = ERR_INPUT;
+            return err;
+        }
     return RIGHT;
 }
 
 int main(void)
 {
-    int err = RIGHT, length = 0, check = 0;
+    int err = RIGHT, length = 0;
     int massiv[MAS];
     err = inp(massiv, &length);
     check = sortirovka(massiv, length);
