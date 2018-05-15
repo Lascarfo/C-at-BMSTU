@@ -63,8 +63,11 @@ int main(void)
     int massiv[MAS];
     err = inp(massiv, &length);
     int check = sortirovka(massiv, length);
-    for (int i = 0; i < length; i++)
-        printf("%d ", massiv[i]);
+    if ((err == RIGHT) && (check == COMPLETE))
+    {
+        for (int i = 0; i < length; i++)
+            printf("%d ", massiv[i]);
+    }
     return err;
 }
 
