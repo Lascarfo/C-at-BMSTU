@@ -36,8 +36,9 @@ int inp(int *massiv, int *length)
 {
     int err = RIGHT, cache = 0;
     printf("input lingth of mass ot 0 to 10: ");
-    scanf("%d", length);
-    if (((*length < 0) && (*length > 10)))
+    if (scanf("%d", length) != 1)
+        return ERR_INPUT;
+    if ((*length < 0) || (*length > 10))
     {
         printf("pls inp int numb!\n");
         return ERR_LENGTH;
