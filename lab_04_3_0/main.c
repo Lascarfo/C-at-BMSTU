@@ -14,7 +14,7 @@ int polin(int number)
     int reverse = 0, cache = 0;
     bool checker = false;
     cache = number;
-    while(cache != 0)
+    while (cache != 0)
     {
         reverse = reverse * 10;
         reverse = reverse + cache % 10;
