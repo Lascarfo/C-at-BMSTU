@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <ctype.h>
 
 #define OK 0
 #define ERR_IO 1
