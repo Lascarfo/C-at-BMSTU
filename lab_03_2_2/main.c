@@ -16,7 +16,8 @@ int mid(FILE* file, float *cached_num, float *semi_num)
         count++;
         sum += data_cache;
     }
-    *semi_num = sum / count;
+    if (count != RIGHT)
+        *semi_num = sum / count;
     return count;
 }
 

@@ -5,9 +5,9 @@
 * please following next input rules:
 * main.exec <filename> <option>
 * list of options:
-* cf - create file
-* rf - read file and print numbers
-* sn - sort numbers
+* c - create file
+* p - read file and print numbers
+* s - sort numbers
 */
 
 
@@ -27,27 +27,22 @@
 int get_number_by_pos(FILE *file, int pos)
 {
     int number = 0;
-    rewind(file);
     fseek(file, pos * sizeof(int), SEEK_SET);
     fread(&number, sizeof(int), 1, file);
-    fseek(file, pos * sizeof(int), SEEK_SET);
-//  printf("number and pos: %d, %d\n", number, pos);
     return number;
 }
 
 void put_number_by_pos(FILE *file, int value, int pos)
 {
-    rewind(file);
     fseek(file, pos * sizeof(int), SEEK_SET);
     fwrite(&value, sizeof(int), 1, file);
-    fseek(file, pos * sizeof(int), SEEK_SET);
 }
 
 
 
 void usage(void)
 {
-    printf("please following next input rules:\nmain.exec <filename> <option>\nlist of options:\ncf - create file\nrf - read file and print numbers\nsn - sort numbers");
+    printf("please following next input rules:\nmain.exec <filename> <option>\nlist of options:\nc - create file\np - read file and print numbers\ns - sort numbers");
 }
 
 
@@ -62,9 +57,8 @@ int randomize(FILE *file)
 {
     int number = -1, cache = 0;
     printf("Input number of random numbers: ");
-    if (scanf("%d", &number) != 1)
+    if (scanf("%d", &number) != ERR_INPUT)
         return ERR_INPUT;
-    srand(time(NULL));
     for (int i = 0; i < number; i++)
     {
         cache = rand() % N;
@@ -75,20 +69,10 @@ int randomize(FILE *file)
 }
 
 
-
-void readingplus(FILE *file, int *len)
-{
-    int cache = 0;
-    while (fread(&cache, sizeof(int), 1, file) == 1)
-    {
-        *len = *len + 1;
-    }
-}
-
 int pick(FILE *file)
 {
-    int len = 0;
-    readingplus(file, &len);
+    fseek(file, sizeof(int), SEEK_END);
+    int len = ((ftell(file) / sizeof(int)) - 1);
     int fcache1, fcache2;
     bool flag;
     for (int i = len - 1; i >= 0; i--)
@@ -117,17 +101,18 @@ int pick(FILE *file)
 int main(int argc, char **kvargs)
 {
     setbuf(stdout, NULL);
+    srand(time(NULL));
     int err = RIGHT;
     FILE *file;
     if (argc == 3)
     {
-        if (strcmp(kvargs [2], "cf") == 0)
+        if (strcmp(kvargs [2], "c") == 0)
         {
             file = fopen(kvargs[1],"wb");
             err = randomize(file);
             fclose(file);
         }
-        else if (strcmp(kvargs [2], "rf") == 0)
+        else if (strcmp(kvargs [2], "p") == 0)
         {
             file = fopen(kvargs[1],"rb");
             if (file)
@@ -142,7 +127,7 @@ int main(int argc, char **kvargs)
             }
 
         }
-        else if (strcmp(kvargs [2], "sn") == 0)
+        else if (strcmp(kvargs [2], "s") == 0)
         {
             file = fopen(kvargs[1],"r+b");
             if (file)
