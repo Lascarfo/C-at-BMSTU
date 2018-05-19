@@ -32,6 +32,8 @@ int main(int argc, char **argv)
         }
         else
         {
+            fprintf(stdout, "err open file(s)\n");
+            usage();
             return ERR_FILE;
         }
 
