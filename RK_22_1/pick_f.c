@@ -14,7 +14,7 @@ void pick(int *x, int *y, int *number, int n1, int n2)
         flag = true;
         for (int i = 0; i < n2; i++)
         {
-            printf("pa, pb: %d, %d\n", *pa, *pb);
+//          printf("pa, pb: %d, %d\n", *pa, *pb);
             if (*pa == *pb)
                 flag = false;
             pb++;

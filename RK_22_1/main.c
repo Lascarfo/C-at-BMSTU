@@ -24,11 +24,13 @@ int main(int argc, char **argv)
             fscanf(file1, "%d", &n1);
             fscanf(file2, "%d", &n2);
             int x[n1], y[n2];
-            printf("n1, n2: %d, %d\n", n1, n2);
+//          printf("n1, n2: %d, %d\n", n1, n2);
             read(x, y, file1, file2);
-            printf("x, y: %d, %d\n", *x, *y);
+//          printf("x, y: %d, %d\n", *x, *y);
             pick(x, y, &number, n1, n2);
             printf("fin number %d", number);
+            fclose(file1);
+            fclose(file2);
         }
         else
         {
