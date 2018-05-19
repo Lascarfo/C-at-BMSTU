@@ -9,7 +9,7 @@ void usage(void)
 }
 
 
-int main(int argc, char **argv[])
+int main(int argc, char **argv)
 {
     int rc = RIGHT, number = 0;
     FILE *file1;
@@ -20,16 +20,15 @@ int main(int argc, char **argv[])
         file2 = fopen(argv[2], "r");
         if (file1 && file2)
         {
-            int n1, n2, n3;
+            int n1, n2;
             fscanf(file1, "%d", &n1);
             fscanf(file2, "%d", &n2);
-            if (n1 > n2)
-                n3 = n1;
-            else
-                n3 = n2;
-            int x[n1], y[n2], z[n3];
-            read(x[n1], y[n2], file1, file2);
-            pick(x[n1], y[n2], z[n3], &number);
+            int x[n1], y[n2];
+            printf("n1, n2: %d, %d\n", n1, n2);
+            read(x, y, file1, file2);
+            printf("x, y: %d, %d\n", *x, *y);
+            pick(x, y, &number, n1, n2);
+            printf("fin number %d", number);
         }
         else
         {
