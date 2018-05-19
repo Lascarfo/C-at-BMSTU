@@ -18,7 +18,7 @@ read_f.o: read_f.c read_f.h
 	$(GCC) $(PARAM) -c read_f.c
 
 test.exe: test.o read_f.o pick_f.o
-        $(GCC) $(PARAM) -g3 -o test.exe test.o read_f.o pick_f.o
+	$(GCC) $(PARAM) -g3 -o test.exe test.o read_f.o pick_f.o
 
 test.o: test.c err_lib.h read_f.h pick_f.h
 	$(GCC) $(PARAM) -c test.c
