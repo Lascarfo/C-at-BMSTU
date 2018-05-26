@@ -8,7 +8,7 @@
 #define ERR_IN_FILE (ERR_INP + 1)
 #define ERR_OPEN (ERR_IN_FILE + 1)
 
-int mid(FILE* file, float *cached_num, float *semi_num)
+int mid(FILE* file, float *semi_num)
 {
     float data_cache = 0.0, sum = 0.0, count = 0.0;
     while (fscanf(file, "%f", &data_cache) == 1)
@@ -31,11 +31,11 @@ void dispers(FILE* file, float semi_num, float *number)
     *number = *number / cache;
 }
 
-int search(FILE* file, float *number, float *cached_num)
+int search(FILE* file, float *number)
 {
     int rc = RIGHT;
     float count = 0.0, semi_num = 0.0;
-    count = mid(file, cached_num, &semi_num);
+    count = mid(file, &semi_num);
     if (count == 0)
         return ERR_IN_FILE;
     else
@@ -49,7 +49,7 @@ int search(FILE* file, float *number, float *cached_num)
 int main(int argc, char **argv)
 {
     int err = RIGHT;
-    float number = 0.0, cached_num;
+    float number = 0.0;
     FILE* file;
 
     if (argc == 2)
@@ -57,7 +57,7 @@ int main(int argc, char **argv)
         file = fopen(argv[1], "r");
         if (file)
         {
-            err = search(file, &number, &cached_num);
+            err = search(file, &number);
             fclose(file);
         }
         else
