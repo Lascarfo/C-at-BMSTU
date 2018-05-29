@@ -44,6 +44,8 @@ int field(FILE* file, int *arr)
     {
         *pe = cache;
         pe++;
+        if ((pe - pb) > 100)
+            return ERR_INPUT;
     }
     if ((pe - pb) < 2)
     {
