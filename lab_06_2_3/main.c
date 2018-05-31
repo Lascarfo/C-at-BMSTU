@@ -13,7 +13,6 @@ x[i] - элементы массива x из n элементов.
 int main(int argc, char** argv)
 {
     int err = OK;
-    int number = INT_MAX;
     int arr[ARR] = {0};
     FILE* file;
     if (argc == 2)
@@ -21,7 +20,8 @@ int main(int argc, char** argv)
         file = fopen(argv[1], "r");
         if (file)
         {
-            err = field(file, arr, &number);
+            err = field(file, arr);
+            fclose(file);
         }
         else
         {
@@ -33,13 +33,7 @@ int main(int argc, char** argv)
         usage();
         err = ERR_OFILE;
     }
-    if (number == INT_MAX)
-    {
-        err = ERR_INPUT;
-    }
-    else
-    {
-        fprintf(stdout, "MIN number is: %d\n", number);
-    }
+
     return err;
 }
+
