@@ -5,21 +5,15 @@ x[i] - элементы массива x из n элементов.
 
 
 #include <limits.h>
-#include "field.c"
-#include "usage.c"
+#include "field.h"
+#include "usage.h"
+#include "const.h"
 
-#define ERR_OFILE 1
-#define ERR_ARR 2
-#define ERR_INPUT 3
-
-
-void usage(void);
-
-int field(FILE* file, int *arr);
 
 int main(int argc, char** argv)
 {
     int err = OK;
+    int number = INT_MAX;
     int arr[ARR] = {0};
     FILE* file;
     if (argc == 2)
@@ -27,8 +21,7 @@ int main(int argc, char** argv)
         file = fopen(argv[1], "r");
         if (file)
         {
-            err = field(file, arr);
-            fclose(file);
+            err = field(file, arr, &number);
         }
         else
         {
@@ -40,7 +33,13 @@ int main(int argc, char** argv)
         usage();
         err = ERR_OFILE;
     }
-
+    if (number == INT_MAX)
+    {
+        err = ERR_INPUT;
+    }
+    else
+    {
+        fprintf(stdout, "MIN number is: %d\n", number);
+    }
     return err;
 }
-
