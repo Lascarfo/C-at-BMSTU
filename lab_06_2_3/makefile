@@ -5,6 +5,13 @@ PARAM := -std=c99 -Wall -Werror -pedantic
 main.exec: main.o usage.o minimum.o field.o
 	$(GCC) $(PARAM) -o main.exec main.o usage.o minimum.o field.o
 
+test.exec: test.o minimum.o field.o
+	$(GCC) $(PARAM) -o test.exec test.o minimum.o field.o
+
+test.o: test.c field.h minimum.h const.h
+	$(GCC) $(PARAM) -c test.c
+	
+
 clean:
 	rm -f *.o *.exec
 

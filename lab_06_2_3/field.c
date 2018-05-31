@@ -15,7 +15,7 @@ int field(FILE* file, int *arr)
     }
     if ((pe - pb) < 2)
     {
-            printf("err in file");
+            printf("err in file\n");
             return ERR_INPUT;
     }
     else

@@ -12,5 +12,5 @@ void minimum(int *pb, int *pe)
     pb++;
     pb2++;
     }
-    fprintf(stdout, "MIN number is: %d\n", number);
+    fprintf(stdout, "%d\n", number);
 }
