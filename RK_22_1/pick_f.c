@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include "check_f.h"
 
 
 void pick(int *x, int *y, int *number, int n1, int n2)
@@ -11,14 +12,7 @@ void pick(int *x, int *y, int *number, int n1, int n2)
     for (int i = 0; i < n1; i++)
     {
         pb = y;
-        flag = true;
-        for (int i = 0; i < n2; i++)
-        {
-//          printf("pa, pb: %d, %d\n", *pa, *pb);
-            if (*pa == *pb)
-                flag = false;
-            pb++;
-        }
+        flag = check_f(n2, pa, pb);
         if (flag == true)
         {
             if (flag1 == true)

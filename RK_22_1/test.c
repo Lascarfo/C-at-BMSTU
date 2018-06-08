@@ -2,6 +2,7 @@
 #include "err_lib.h"
 #include "read_f.h"
 #include "pick_f.h"
+#include "check_f.h"
 
 int main(void)
 {

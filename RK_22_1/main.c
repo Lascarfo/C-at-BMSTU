@@ -2,6 +2,7 @@
 #include "err_lib.h"
 #include "read_f.h"
 #include "pick_f.h"
+#include "check_f.h"
 
 void usage(void)
 {
@@ -17,12 +18,44 @@ int main(int argc, char **argv)
     if (argc == 3)
     {
         file1 = fopen(argv[1], "r");
+        if (file1)
+            rc = RIGHT;
+        else
+        {
+            fprintf(stdout, "err open file 1\n");
+            usage();
+            return ERR_FILE;
+        }
         file2 = fopen(argv[2], "r");
+        if (file2)
+            rc = RIGHT;
+        else
+        {
+            fprintf(stdout, "err open file 2\n");
+            usage();
+            return ERR_FILE;
+        }
         if (file1 && file2)
         {
             int n1, n2;
-            fscanf(file1, "%d", &n1);
-            fscanf(file2, "%d", &n2);
+            if (fscanf(file1, "%d", &n1) == 1)
+            {
+                rc = RIGHT;
+            }
+            else
+            {
+                fprintf(stdout, "err read len1\n");
+                return ERR_ARR;
+            }
+            if (fscanf(file2, "%d", &n2) == 1)
+            {
+                rc = RIGHT;
+            }
+            else
+            {
+                fprintf(stdout, "err read len1\n");
+                return ERR_ARR;
+            }
             int x[n1], y[n2];
 //          printf("n1, n2: %d, %d\n", n1, n2);
             read(x, y, file1, file2);
@@ -31,12 +64,6 @@ int main(int argc, char **argv)
             printf("fin number %d", number);
             fclose(file1);
             fclose(file2);
-        }
-        else
-        {
-            fprintf(stdout, "err open file(s)\n");
-            usage();
-            return ERR_FILE;
         }
 
     }
