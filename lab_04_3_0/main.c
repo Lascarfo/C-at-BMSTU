@@ -9,7 +9,7 @@
 #define MAS 10
 
 
-int polin(int number)
+bool polin(int number)
 {
     int reverse = 0, cache = 0;
     bool checker = false;
@@ -64,16 +64,27 @@ int inp(int *massiv, int *length)
 }
 
 
+void calc(int *massiv,int *length)
+{
+    for (int i = 0; i < length; i++)
+        if (polin(massiv[i]) == true)
+            del(massiv, i, length);
+}
+
+void print_f(int *final, int length)
+{
+    for (int i = 0; i < length; i++)
+        printf("%d ", final[i]);
+}
+
+
 int main(void)
 {
     int err = RIGHT, length = 0;
     int massiv[MAS];
     err = inp(massiv, &length);
-    for (int i = 0; i < length; i++)
-        if (polin(massiv[i]) == true)
-            del(massiv, i, length);
-    for (int i = 0; i < length; i++)
-        printf("%d ", massiv[i]);
+    calc(massiv, &length);
+    print_f(final, length);
     return err;
 }
 

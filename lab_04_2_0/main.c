@@ -58,6 +58,12 @@ int inp(int *massiv, int *length)
     return RIGHT;
 }
 
+void print_f(int *final, int length)
+{
+    for (int i = 0; i < length; i++)
+        printf("%d ", final[i]);
+}
+
 
 int main(void)
 {
@@ -65,8 +71,7 @@ int main(void)
     int massiv[MAS], final[MAS];
     err = inp(massiv, &length);
     length = elem(massiv, final, length, &number);
-    for (int i = 0; i < length; i++)
-        printf("%d ", final[i]);
+    print_f(final, length);
     return err;
 }
 
