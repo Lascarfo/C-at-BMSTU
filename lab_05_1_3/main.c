@@ -19,7 +19,7 @@ void usage(void)
     fprintf(stdout, "Please make input following next instructions:\nmain.exec main.txt\n");
 }
 
-void minimum(int *pb, int *pe)
+int minimum(int *pb, int *pe)
 {
     int *end = pe - 1, *pb2 = pb + 1, number = (*pb) * (*pb2);
     while (pb < end)
@@ -31,11 +31,11 @@ void minimum(int *pb, int *pe)
     pb++;
     pb2++;
     }
-    fprintf(stdout, "MIN number is: %d\n", number);
+    return number;
 }
 
 
-int field(FILE* file, int *arr)
+int field(FILE* file, int *arr, int *number)
 {
     int cache = 0;
     int *pb = arr;
@@ -44,22 +44,16 @@ int field(FILE* file, int *arr)
     {
         *pe = cache;
         pe++;
-        if ((pe - pb) > 100)
+        if ((pe - pb) > ARR)
             return ERR_INPUT;
     }
-    if ((pe - pb) < 2)
-    {
-            printf("err in file");
-            return ERR_INPUT;
-    }
-    else
-        minimum(pb, pe);
+    *number = minimum(pb, pe);
     return OK;
 }
 
 int main(int argc, char** argv)
 {
-    int err = OK;
+    int err = OK, number = 0;
     int arr[ARR] = {0};
     FILE* file;
     if (argc == 2)
@@ -67,8 +61,9 @@ int main(int argc, char** argv)
         file = fopen(argv[1], "r");
         if (file)
         {
-            err = field(file, arr);
+            err = field(file, arr, &number);
             fclose(file);
+            fprintf(stdout, "MIN number is: %d\n", number);
         }
         else
         {
