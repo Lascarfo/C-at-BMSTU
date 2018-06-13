@@ -58,7 +58,8 @@ int main(int argc, char **argv)
             }
             int x[n1], y[n2];
 //          printf("n1, n2: %d, %d\n", n1, n2);
-            read(x, y, file1, file2);
+            read(x, file1);
+            read(y, file2);
 //          printf("x, y: %d, %d\n", *x, *y);
             pick(x, y, &number, n1, n2);
             printf("fin number %d", number);
