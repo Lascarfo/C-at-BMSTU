@@ -71,11 +71,26 @@ int main(void)
         pick(x, y, &number, n1, n2);
         if (number == RIGHT)
         {
-            fprintf(stdout, "pick_f test are ok!\n");
+            fprintf(stdout, "pick_f 1 test are ok!\n");
         }
         else
         {
-            fprintf(stdout, "pick_f test are not ok!\n");
+            fprintf(stdout, "pick_f 1 test are not ok!\n");
+            return ERR_ARR;
+        }
+
+        int number = 0;                                                    //test func pick_f
+        int x[] = {1, 1, 1, 1, 0, 1, 1};
+        int y[] = {5, 5, 5, 5, 5};
+        int n1 = 7, n2 = 5;
+        pick(x, y, &number, n1, n2);
+        if (number == RIGHT)
+        {
+            fprintf(stdout, "pick_f 2 test are ok!\n");
+        }
+        else
+        {
+            fprintf(stdout, "pick_f 2 test are not ok!\n");
             return ERR_ARR;
         }
     }
