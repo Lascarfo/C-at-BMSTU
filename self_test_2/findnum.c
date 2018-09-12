@@ -10,10 +10,10 @@ bool findnum(int *ar, int *len, int *fin_num)
     {
         if (*ar < 0 && (((*len) - 1) != i) && flag == true)
         {
-            *fin_num = *(ar + sizeof(int));
+            *fin_num = *(ar + 1);
             flag = false;
         }
-        ar = ar + sizeof(int);
+        ar++;
     }
     return flag;
 }
