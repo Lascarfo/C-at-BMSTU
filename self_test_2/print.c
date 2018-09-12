@@ -6,7 +6,7 @@ void printar(int *ar, int *len)
   for (int i = 0; i < *len; i++)
   {
     printf("%d ", *ar);
-    ar = ar + sizeof(int);
+    ar++;
   }
   printf("\n");
 }
