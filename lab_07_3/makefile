@@ -1,14 +1,14 @@
 CC := gcc
 CFLAGS := -m32 -std=c99 -Wall -Werror -pedantic
 
-main.exeс: main.o usage.o io.o filter.o sort.o
-	$(CC) $(CFLAGS) -o main.exec $^
+app.exe: main.o usage.o io.o filter.o sort.o
+	$(CC) $(CFLAGS) -o app.exe $^
 
-test.exec: test.o filter.o sort.o io.o
-	$(CC) $(CFLAGS) -g3 -o test.exec $^
+test.exe: test.o filter.o sort.o io.o
+	$(CC) $(CFLAGS) -g3 -o test.exe $^
 	
 %.o: %.c *.h
 	$(CC) $(CFLAGS) -c $<
 
 clean: 
-	rm -f *.o *.exec
+	rm -f *.o *.exe
