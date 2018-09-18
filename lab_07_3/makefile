@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS := -m32 -std=c99 -Wall -Werror -pedantic
+CFLAGS := -std=c99 -Wall -Werror -pedantic
 
 app.exe: main.o usage.o io.o filter.o sort.o
 	$(CC) $(CFLAGS) -o app.exe $^
