@@ -42,8 +42,10 @@ int main(int argc, char *argv[])
             for (int i = 0; i < len; i++)
             {
                 if (result[i] != *(arr_s + i))
+                {
                     flag = false;
                     break;
+                }
             }
             printf("test 1 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
@@ -67,8 +69,10 @@ int main(int argc, char *argv[])
             for (int i = 0; i < len; i++)
             {
                 if (result[i] != *(arr_s + i))
+                {
                     flag = false;
                     break;
+                }
             }
             printf("test 2 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
@@ -92,8 +96,10 @@ int main(int argc, char *argv[])
             for (int i = 0; i < len; i++)
             {
                 if (result[i] != *(arr_s + i))
+                {
                     flag = false;
                     break;
+                }
             }
             printf("test 3 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
@@ -117,8 +123,10 @@ int main(int argc, char *argv[])
             for (int i = 0; i < len; i++)
             {
                 if (result[i] != *(arr_s + i))
+                {
                     flag = false;
                     break;
+                }
             }
             printf("test 4 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
@@ -149,8 +157,10 @@ int main(int argc, char *argv[])
             for (int i = 0; i < len; i++)
             {
                 if (result[i] != *(arr + i))
+                {
                     flag = false;
                     break;
+                }
             }
             printf("test 1 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
@@ -175,8 +185,10 @@ int main(int argc, char *argv[])
             for (int i = 0; i < len; i++)
             {
                 if (result[i] != *(arr + i))
+                {
                     flag = false;
                     break;
+                }
             }
             printf("test 2 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
@@ -201,8 +213,10 @@ int main(int argc, char *argv[])
             for (int i = 0; i < len; i++)
             {
                 if (result[i] != *(arr + i))
+                {
                     flag = false;
                     break;
+                }
             }
             printf("test 3 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
@@ -227,8 +241,10 @@ int main(int argc, char *argv[])
             for (int i = 0; i < len; i++)
             {
                 if (result[i] != *(arr + i))
+                {
                     flag = false;
                     break;
+                }
             }
             printf("test 4 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
@@ -253,8 +269,10 @@ int main(int argc, char *argv[])
             for (int i = 0; i < len; i++)
             {
                 if (result[i] != *(arr + i))
+                {
                     flag = false;
                     break;
+                }
             }
             printf("test 5 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
@@ -279,8 +297,10 @@ int main(int argc, char *argv[])
             for (int i = 0; i < len; i++)
             {
                 if (result[i] != *(arr + i))
+                {
                     flag = false;
                     break;
+                }
             }
             printf("test 6 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
@@ -305,8 +325,10 @@ int main(int argc, char *argv[])
             for (int i = 0; i < len; i++)
             {
                 if (result[i] != *(arr + i))
+                {
                     flag = false;
                     break;
+                }
             }
             printf("test 7 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
@@ -331,8 +353,10 @@ int main(int argc, char *argv[])
             for (int i = 0; i < len; i++)
             {
                 if (result[i] != *(arr + i))
+                {
                     flag = false;
                     break;
+                }
             }
             printf("test 8 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
