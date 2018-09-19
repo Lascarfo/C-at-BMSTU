@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include "usage.h"
 
 void usage(void)
 {
