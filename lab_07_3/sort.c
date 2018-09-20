@@ -23,9 +23,9 @@ int cmp_int(const void *left, const void *right)
     return(*(int*)(left) - *(int*)(right));
 }
 
-// sort function num. 6
+// mysort function num. 6
 
-void sort(void *base, void *base_end, size_t size, int(*cmpr)(const void*, const void*))
+void mysort(void *base, void *base_end, size_t size, int(*cmpr)(const void*, const void*))
 {
 
     char *arr_s = base;

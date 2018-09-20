@@ -28,7 +28,7 @@ int main(int argc, char *argv[])
                 {
                     if ((arr_s_end - arr_s) > 1)
                     {
-                        sort((void*)(arr_s), (void*)(arr_s_end), sizeof(int), cmp_int);
+                        mysort((void*)(arr_s), (void*)(arr_s_end), sizeof(int), cmp_int);
                     }
                     if (rc == OK)
                     {
@@ -69,7 +69,7 @@ int main(int argc, char *argv[])
                     rc = key(arr, arr_end, &arr_s, &arr_s_end);  // вызов функции - фильтра
                     if ((arr_s_end - arr_s) > 1)
                     {
-                        sort((void*)(arr_s), (void*)(arr_s_end), sizeof(int), cmp_int);
+                        mysort((void*)(arr_s), (void*)(arr_s_end), sizeof(int), cmp_int);
                     }
                     if (rc == OK)
                     {

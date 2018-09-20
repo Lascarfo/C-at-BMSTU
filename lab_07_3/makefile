@@ -1,14 +1,17 @@
 CC := gcc
-CFLAGS := -std=c99 -Wall -Werror -pedantic
+CFLAGS :=-m32 -std=c99 -Wall -Werror -pedantic
 
-app.exe: main.o usage.o io.o filter.o sort.o
-	$(CC) $(CFLAGS) -o app.exe $^
+main.exec: main.o usage.o io.o filter.o sort.o
+	$(CC) $(CFLAGS) -o main.exec $^
 
-test.exe: test.o filter.o sort.o io.o
-	$(CC) $(CFLAGS) -g3 -o test.exe $^
-	
+test.exec: test.o filter.o sort.o io.o
+	$(CC) $(CFLAGS) -g3 -o test.exec $^
+
+time.exec: time.o sort.o io.o
+	$(CC) $(CFLAGS) -o $@ $^
+
 %.o: %.c *.h
 	$(CC) $(CFLAGS) -c $<
 
-clean: 
-	rm -f *.o *.exe
+clean:
+	rm -f *.o *.exec

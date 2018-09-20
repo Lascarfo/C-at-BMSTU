@@ -8,6 +8,15 @@
 #include "io.h"
 
 
+unsigned long long tick(void)
+{
+    unsigned long long d;
+    __asm__ __volatile__ ("rdtsc" : "=A" (d) );
+    return d;
+}
+
+
+
 int main(int argc, char *argv[])
 {
     bool printi = false;
@@ -80,11 +89,11 @@ int main(int argc, char *argv[])
         {
             printf("third array:\n");
             bool flag = true;
-            int len = 5;
+            int len = 3;
             int array[] = {1, 2, -3, 4, 5};
             int result[] = {1, 2, -3};
             int *arr = array;
-            int *arr_end = arr + len;
+            int *arr_end = arr + len + 2;
             int *arr_s, *arr_s_end;
             arr_s = arr_s_end = NULL;
             key(arr, arr_end, &arr_s, &arr_s_end);
@@ -97,6 +106,7 @@ int main(int argc, char *argv[])
             {
                 if (result[i] != *(arr_s + i))
                 {
+                    printf("res: %d, arr_s: %d", result[i], *(arr_s + i));
                     flag = false;
                     break;
                 }
@@ -107,11 +117,11 @@ int main(int argc, char *argv[])
         {
             printf("fourth array:\n");
             bool flag = true;
-            int len = 5;
+            int len = 3;
             int array[] = {1, 2, -3, -4, 5};
             int result[] = {1, 2, -3};
             int *arr = array;
-            int *arr_end = arr + len;
+            int *arr_end = arr + len + 2;
             int *arr_s, *arr_s_end;
             arr_s = arr_s_end = NULL;
             key(arr, arr_end, &arr_s, &arr_s_end);
@@ -133,12 +143,13 @@ int main(int argc, char *argv[])
         }
 
     }
-    {  //sort func from sort.h tests
+    {  //mysort func from mysort.h tests
 
-        printf("\t\t\t***sort*** func tests:\n");
+        printf("\t\t\t***mysort*** func tests:\n");
         {
             printf("\n");
             printf("first array:\n");
+            unsigned long long start, stop;
             bool flag = true;
             int len = 5;
             int array[] = {1, 2, 3, 4, 5};
@@ -149,9 +160,12 @@ int main(int argc, char *argv[])
             {
                 print(arr, arr_end);
             }
-            sort(arr, arr_end, sizeof(int), cmp_int);
+            start = tick();
+            mysort(arr, arr_end, sizeof(int), cmp_int);
+            stop = tick();
             if (printi)
             {
+                printf("TIME mysort: %llu\n", (stop - start));
                 print(arr, arr_end);
             }
             for (int i = 0; i < len; i++)
@@ -167,6 +181,7 @@ int main(int argc, char *argv[])
         }
         {
             printf("second array:\n");
+            unsigned long long start, stop;
             bool flag = true;
             int len = 5;
             int array[] = {5, 4, 3, 2, 1};
@@ -177,9 +192,12 @@ int main(int argc, char *argv[])
             {
                 print(arr, arr_end);
             }
-            sort(arr, arr_end, sizeof(int), cmp_int);
+            start = tick();
+            mysort(arr, arr_end, sizeof(int), cmp_int);
+            stop = tick();
             if (printi)
             {
+                printf("TIME mysort: %llu\n", (stop - start));
                 print(arr, arr_end);
             }
             for (int i = 0; i < len; i++)
@@ -195,6 +213,7 @@ int main(int argc, char *argv[])
         }
         {
             printf("third array:\n");
+            unsigned long long start, stop;
             bool flag = true;
             int len = 5;
             int array[] = {1, 3, 2, 5, 0};
@@ -205,9 +224,12 @@ int main(int argc, char *argv[])
             {
                 print(arr, arr_end);
             }
-            sort(arr, arr_end, sizeof(int), cmp_int);
+            start = tick();
+            mysort(arr, arr_end, sizeof(int), cmp_int);
+            stop = tick();
             if (printi)
             {
+                printf("TIME mysort: %llu\n", (stop - start));
                 print(arr, arr_end);
             }
             for (int i = 0; i < len; i++)
@@ -223,6 +245,7 @@ int main(int argc, char *argv[])
         }
         {
             printf("fourth array:\n");
+            unsigned long long start, stop;
             bool flag = true;
             int len = 5;
             int array[] = {1, 1, 1, 1, 1};
@@ -233,9 +256,12 @@ int main(int argc, char *argv[])
             {
                 print(arr, arr_end);
             }
-            sort(arr, arr_end, sizeof(int), cmp_int);
+            start = tick();
+            mysort(arr, arr_end, sizeof(int), cmp_int);
+            stop = tick();
             if (printi)
             {
+                printf("TIME mysort: %llu\n", (stop - start));
                 print(arr, arr_end);
             }
             for (int i = 0; i < len; i++)
@@ -251,6 +277,7 @@ int main(int argc, char *argv[])
         }
         {
             printf("fifth array:\n");
+            unsigned long long start, stop;
             bool flag = true;
             int len = 2;
             int array[] = {2, 1};
@@ -261,9 +288,12 @@ int main(int argc, char *argv[])
             {
                 print(arr, arr_end);
             }
-            sort(arr, arr_end, sizeof(int), cmp_int);
+            start = tick();
+            mysort(arr, arr_end, sizeof(int), cmp_int);
+            stop = tick();
             if (printi)
             {
+                printf("TIME mysort: %llu\n", (stop - start));
                 print(arr, arr_end);
             }
             for (int i = 0; i < len; i++)
@@ -279,6 +309,7 @@ int main(int argc, char *argv[])
         }
         {
             printf("sixth array:\n");
+            unsigned long long start, stop;
             bool flag = true;
             int len = 2;
             int array[] = {1, 2};
@@ -289,9 +320,12 @@ int main(int argc, char *argv[])
             {
                 print(arr, arr_end);
             }
-            sort(arr, arr_end, sizeof(int), cmp_int);
+            start = tick();
+            mysort(arr, arr_end, sizeof(int), cmp_int);
+            stop = tick();
             if (printi)
             {
+                printf("TIME mysort: %llu\n", (stop - start));
                 print(arr, arr_end);
             }
             for (int i = 0; i < len; i++)
@@ -307,6 +341,7 @@ int main(int argc, char *argv[])
         }
         {
             printf("seventh array:\n");
+            unsigned long long start, stop;
             bool flag = true;
             int len = 1;
             int array[] = {1};
@@ -317,9 +352,12 @@ int main(int argc, char *argv[])
             {
                 print(arr, arr_end);
             }
-            sort(arr, arr_end, sizeof(int), cmp_int);
+            start = tick();
+            mysort(arr, arr_end, sizeof(int), cmp_int);
+            stop = tick();
             if (printi)
             {
+                printf("TIME mysort: %llu\n", (stop - start));
                 print(arr, arr_end);
             }
             for (int i = 0; i < len; i++)
@@ -335,6 +373,7 @@ int main(int argc, char *argv[])
         }
         {
             printf("eighth array:\n");
+            unsigned long long start, stop;
             bool flag = true;
             int len = 0;
             int array[1];
@@ -345,9 +384,12 @@ int main(int argc, char *argv[])
             {
                 print(arr, arr_end);
             }
-            sort(arr, arr_end, sizeof(int), cmp_int);
+            start = tick();
+            mysort(arr, arr_end, sizeof(int), cmp_int);
+            stop = tick();
             if (printi)
             {
+                printf("TIME mysort: %llu\n", (stop - start));
                 print(arr, arr_end);
             }
             for (int i = 0; i < len; i++)
