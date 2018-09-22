@@ -26,14 +26,8 @@ int main(int argc, char *argv[])
                 rc = read(file_in, &arr_s, &arr_s_end);
                 if (rc == OK)
                 {
-                    if ((arr_s_end - arr_s) > 1)
-                    {
-                        mysort((void*)(arr_s), (void*)(arr_s_end), sizeof(int), cmp_int);
-                    }
-                    if (rc == OK)
-                    {
-                        save(file_out, arr_s, arr_s_end);
-                    }
+                    mysort((arr_s), (arr_s_end), sizeof(int), cmp_int);
+                    save(file_out, arr_s, arr_s_end);
                     free(arr_s);
                 }
                 fclose(file_out);

@@ -9,28 +9,33 @@
 #include "filter.h"
 #include "io.h"
 
-int count_pos(const int *arr, const int *arr_end)
+const int *count_pos(const int *arr, const int *arr_end)
 {
-    int pos = 1, cache = -1;
+    const int *cache = NULL;
+    cache = arr_end;
     while (arr < arr_end)
     {
         if (*arr < 0)
-            cache = pos;
+            cache = arr + 1;
         arr++;
-        pos++;
     }
     return cache;
 }
 
 void copy_arr(const int *arr, int *arr_s, int *arr_s_end)
 {
-    for (int i = 0; i < (arr_s_end - arr_s); i++)
-        *(arr_s + i) = *(arr + i);
+    while (arr_s < arr_s_end)
+    {
+        *arr_s = *arr;
+        arr_s++;
+        arr++;
+    }
 }
 
 int key(const int *arr, const int *arr_end, int **arr_n, int **arr_n_end)
 {
     int rc = OK, len = OK;
+    const int *pos = NULL;
 /*
     printf("arr_end: %pd\n", (void * ) arr_end);
     printf("arr: %pd\n", (void * )arr);
@@ -39,8 +44,8 @@ int key(const int *arr, const int *arr_end, int **arr_n, int **arr_n_end)
 
     if (arr != NULL && arr_end != NULL)
     {
-        int pos = count_pos(arr, arr_end);
-        len = (pos != -1) ? pos : (arr_end - arr);
+        pos = count_pos(arr, arr_end);
+        len = pos - arr;
         int *buf1 = malloc(len * sizeof (int));
         if (buf1)
         {
