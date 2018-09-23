@@ -3,6 +3,6 @@
 
 void swap (void *left, void *right, size_t size);
 int cmp_int(const void *left, const void *right);
-void mysort(void *base, void *base_end, size_t size, int(*cmp_int)(const void*, const void*));
+void mysort(void *base, size_t nitems, size_t size, int(*cmp_int)(const void*, const void*));
 
 #endif

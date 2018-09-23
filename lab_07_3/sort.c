@@ -25,50 +25,41 @@ int cmp_int(const void *left, const void *right)
 
 // mysort function num. 6
 
-void mysort(void *base, void *base_end, size_t size, int(*cmpr)(const void*, const void*))
+void mysort(void *base, size_t nitems, size_t size, int(*cmpr)(const void*, const void*))
 {
-
-    char *arr_s = base;
-    char *arr_s_end = (char* )(base_end) - size;
-
-
-
-    bool even = true;
-    bool end = true;
-
-    if (arr_s == arr_s_end + size)
-        end = false;
-
-    while (end)
+    if (nitems != 0)
     {
-        end = false;
-        arr_s = base;
-        arr_s_end = (char* )(base_end) - size;
-        // print((void*)(arr_s), (void*)(arr_s_end + 4));
-        // printf("arr_s: %d\n", *arr_s);
-        // printf("arr_s_end: %d\n", *arr_s_end);
+        char *arr_s = base;
+        char *arr_s_end = arr_s + nitems * size - size;
+
+        bool even = false;
+
         while (arr_s != arr_s_end)
         {
+            even = !even;
             if (even)
             {
                 if (cmpr(arr_s_end, (arr_s_end - size)) < 0)
                 {
                     swap(arr_s_end, (arr_s_end - size), size);
-                    end = true;
+                    arr_s = base;
+                    arr_s_end = (char* )(base) + nitems * size - size;
+
                 }
-                arr_s_end -= size;
-                even = false;
+                else
+                    arr_s_end -= size;
             }
             else
             {
                 if (cmpr(arr_s, (arr_s + size)) > 0)
                 {
                     swap(arr_s, (arr_s + size), size);
-                    end = true;
+                    arr_s = base;
+                    arr_s_end = (char* )(base) + nitems * size - size;
                 }
-                arr_s += size;
-                even = true;
+                else
+                    arr_s += size;
             }
         }
-    }
+    }    
 }

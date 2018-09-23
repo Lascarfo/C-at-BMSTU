@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
                 rc = read(file_in, &arr_s, &arr_s_end);
                 if (rc == OK)
                 {
-                    mysort((arr_s), (arr_s_end), sizeof(int), cmp_int);
+                    mysort((arr_s), (arr_s_end - arr_s), sizeof(int), cmp_int);
                     save(file_out, arr_s, arr_s_end);
                     free(arr_s);
                 }
@@ -61,15 +61,12 @@ int main(int argc, char *argv[])
                 {
                     int *arr_s = NULL, *arr_s_end = NULL;
                     rc = key(arr, arr_end, &arr_s, &arr_s_end);  // вызов функции - фильтра
-                    if ((arr_s_end - arr_s) > 1)
-                    {
-                        mysort((void*)(arr_s), (void*)(arr_s_end), sizeof(int), cmp_int);
-                    }
                     if (rc == OK)
                     {
+                        mysort((arr_s), (arr_s_end - arr_s), sizeof(int), cmp_int);
                         save(file_out, arr_s, arr_s_end);
-                        free(arr_s);
                     }
+                    free(arr_s);
                     free(arr);
                 }
                 fclose(file_out);

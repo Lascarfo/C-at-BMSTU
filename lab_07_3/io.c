@@ -66,5 +66,4 @@ int save(FILE *file, const int *arr, const int *arr_end)
 void print(const int *arr, const int *arr_end)
 {
     save(stdout, arr, arr_end);
-    fprintf(stdout, "\n");
 }
