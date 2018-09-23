@@ -1,5 +1,9 @@
 // filter.c
 
+/**
+ \file
+ */
+
 #include <stdlib.h>
 #include <stdio.h>
 #include <assert.h>
@@ -8,6 +12,13 @@
 #include "const.h"
 #include "filter.h"
 #include "io.h"
+
+/**
+* \brief эта функция определяет номер элемента
+* \details эта функция возвращает указатель на элемент массива, соответствующий
+* \ условию функции - фильтра.
+*/
+
 
 const int *count_pos(const int *arr, const int *arr_end)
 {
@@ -22,6 +33,12 @@ const int *count_pos(const int *arr, const int *arr_end)
     return cache;
 }
 
+/**
+* \brief эта функция копирует все элементы из старого массива в новый
+* \details
+*/
+
+
 void copy_arr(const int *arr, int *arr_s, int *arr_s_end)
 {
     while (arr_s < arr_s_end)
@@ -31,6 +48,13 @@ void copy_arr(const int *arr, int *arr_s, int *arr_s_end)
         arr++;
     }
 }
+
+/**
+* \brief эта отсеивает все числа в массиве, которые соответствуют заданному условию
+* \details функция выполняет заданную проверку, в данном случае она определяет последнее отрицательное
+* число в массиве; если такого числа нет, то возвращает абсолютно идентичный изначальному массив.
+*/
+
 
 int key(const int *arr, const int *arr_end, int **arr_n, int **arr_n_end)
 {
