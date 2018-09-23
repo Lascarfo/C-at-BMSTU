@@ -16,7 +16,17 @@ unsigned long long tick(void)
     return d;
 }
 
-
+bool check(int *result, int *arr_s, int len)
+{
+    for (int i = 0; i < len; i++)
+    {
+        if (*(result + i) != *(arr_s + i))
+        {
+            return false;
+        }
+    }
+    return true;
+}
 
 int main(int argc, char *argv[])
 {
@@ -40,6 +50,7 @@ int main(int argc, char *argv[])
             int len = 5;
             int array[] = {1, 2, 3, 4, 5};
             int result[] = {1, 2, 3, 4, 5};
+            int *res = result;
             int *arr = array;
             int *arr_end = arr + len;
             int *arr_s, *arr_s_end;
@@ -53,14 +64,7 @@ int main(int argc, char *argv[])
                 printf("  filtered: ");
                 print(arr_s, arr_s_end);
             }
-            for (int i = 0; i < len; i++)
-            {
-                if (result[i] != *(arr_s + i))
-                {
-                    flag = false;
-                    break;
-                }
-            }
+            flag = check(res, arr_s, len);
             if (key_flag != 0)
                 flag = false;
             printf("test 1 was %s\n", (flag) ? "passed" : "not passed");
@@ -73,6 +77,7 @@ int main(int argc, char *argv[])
             int len = 5;
             int array[] = {1, 2, 3, 4, 5, -1};
             int result[] = {1, 2, 3, 4, 5};
+            int *res = result;
             int *arr = array;
             int *arr_end = arr + len + 1;
             int *arr_s, *arr_s_end;
@@ -86,14 +91,7 @@ int main(int argc, char *argv[])
                 printf("  filtered: ");
                 print(arr_s, arr_s_end);
             }
-            for (int i = 0; i < len; i++)
-            {
-                if (result[i] != *(arr_s + i))
-                {
-                    flag = false;
-                    break;
-                }
-            }
+            flag = check(res, arr_s, len);
             if (key_flag != 0)
                 flag = false;
             printf("test 2 was %s\n", (flag) ? "passed" : "not passed");
@@ -106,6 +104,7 @@ int main(int argc, char *argv[])
             int len = 3;
             int array[] = {1, 2, -3, 4, 5};
             int result[] = {1, 2, -3};
+            int *res = result;
             int *arr = array;
             int *arr_end = arr + len + 2;
             int *arr_s, *arr_s_end;
@@ -119,15 +118,7 @@ int main(int argc, char *argv[])
                 printf("  filtered: ");
                 print(arr_s, arr_s_end);
             }
-            for (int i = 0; i < len; i++)
-            {
-                if (result[i] != *(arr_s + i))
-                {
-                    printf("res: %d, arr_s: %d", result[i], *(arr_s + i));
-                    flag = false;
-                    break;
-                }
-            }
+            flag = check(res, arr_s, len);
             if (key_flag != 0)
                 flag = false;
             printf("test 3 was %s\n", (flag) ? "passed" : "not passed");
@@ -140,6 +131,7 @@ int main(int argc, char *argv[])
             int len = 3;
             int array[] = {1, 2, -3, -4, 5};
             int result[] = {1, 2, -3};
+            int *res = result;
             int *arr = array;
             int *arr_end = arr + len + 2;
             int *arr_s, *arr_s_end;
@@ -153,14 +145,7 @@ int main(int argc, char *argv[])
                 printf("  filtered: ");
                 print(arr_s, arr_s_end);
             }
-            for (int i = 0; i < len; i++)
-            {
-                if (result[i] != *(arr_s + i))
-                {
-                    flag = false;
-                    break;
-                }
-            }
+            flag = check(res, arr_s, len);
             if (key_flag != 0)
                 flag = false;
             printf("test 4 was %s\n", (flag) ? "passed" : "not passed");
@@ -181,6 +166,7 @@ int main(int argc, char *argv[])
             int array[] = {1, 2, 3, 4, 5};
             int arr_copy[] = {1, 2, 3, 4, 5};
             int result[] = {1, 2, 3, 4, 5};
+            int *res = result;
             int *arr = array;
             int *arr_end = arr + len;
             if (printi)
@@ -206,14 +192,7 @@ int main(int argc, char *argv[])
                 print(arr, arr_end);
                 printf("sorting time: %llu\n", timer);
             }
-            for (int i = 0; i < len; i++)
-            {
-                if (result[i] != *(arr + i))
-                {
-                    flag = false;
-                    break;
-                }
-            }
+            flag = check(res, arr, len);
             printf("test 1 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
         }
@@ -226,6 +205,7 @@ int main(int argc, char *argv[])
             int array[] = {5, 4, 3, 2, 1};
             int arr_copy[] = {5, 4, 3, 2, 1};
             int result[] = {1, 2, 3, 4, 5};
+            int *res = result;
             int *arr = array;
             int *arr_end = arr + len;
             if (printi)
@@ -251,14 +231,7 @@ int main(int argc, char *argv[])
                 print(arr, arr_end);
                 printf("sorting time: %llu\n", timer);
             }
-            for (int i = 0; i < len; i++)
-            {
-                if (result[i] != *(arr + i))
-                {
-                    flag = false;
-                    break;
-                }
-            }
+            flag = check(res, arr, len);
             printf("test 2 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
         }
@@ -271,6 +244,7 @@ int main(int argc, char *argv[])
             int array[] = {1, 3, 2, 5, 0};
             int arr_copy[] = {1, 3, 2, 5, 0};
             int result[] = {0, 1, 2, 3, 5};
+            int *res = result;
             int *arr = array;
             int *arr_end = arr + len;
             if (printi)
@@ -296,14 +270,7 @@ int main(int argc, char *argv[])
                 print(arr, arr_end);
                 printf("sorting time: %llu\n", timer);
             }
-            for (int i = 0; i < len; i++)
-            {
-                if (result[i] != *(arr + i))
-                {
-                    flag = false;
-                    break;
-                }
-            }
+            flag = check(res, arr, len);
             printf("test 3 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
         }
@@ -316,6 +283,7 @@ int main(int argc, char *argv[])
             int array[] = {1, 1, 1, 1, 1};
             int arr_copy[] = {1, 1, 1, 1, 1};
             int result[] = {1, 1, 1, 1, 1};
+            int *res = result;
             int *arr = array;
             int *arr_end = arr + len;
             if (printi)
@@ -341,14 +309,7 @@ int main(int argc, char *argv[])
                 print(arr, arr_end);
                 printf("sorting time: %llu\n", timer);
             }
-            for (int i = 0; i < len; i++)
-            {
-                if (result[i] != *(arr + i))
-                {
-                    flag = false;
-                    break;
-                }
-            }
+            flag = check(res, arr, len);
             printf("test 4 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
         }
@@ -361,6 +322,7 @@ int main(int argc, char *argv[])
             int array[] = {2, 1};
             int arr_copy[] = {2, 1};
             int result[] = {1, 2};
+            int *res = result;
             int *arr = array;
             int *arr_end = arr + len;
             if (printi)
@@ -385,14 +347,7 @@ int main(int argc, char *argv[])
                 printf("TIME mysort: %llu\n", (stop - start));
                 print(arr, arr_end);
             }
-            for (int i = 0; i < len; i++)
-            {
-                if (result[i] != *(arr + i))
-                {
-                    flag = false;
-                    break;
-                }
-            }
+            flag = check(res, arr, len);
             printf("test 5 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
         }
@@ -405,6 +360,7 @@ int main(int argc, char *argv[])
             int array[] = {1, 2};
             int arr_copy[] = {1, 2};
             int result[] = {1, 2};
+            int *res = result;
             int *arr = array;
             int *arr_end = arr + len;
             if (printi)
@@ -430,14 +386,7 @@ int main(int argc, char *argv[])
                 print(arr, arr_end);
                 printf("sorting time: %llu\n", timer);
             }
-            for (int i = 0; i < len; i++)
-            {
-                if (result[i] != *(arr + i))
-                {
-                    flag = false;
-                    break;
-                }
-            }
+            flag = check(res, arr, len);
             printf("test 6 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
         }
@@ -450,6 +399,7 @@ int main(int argc, char *argv[])
             int array[] = {1};
             int arr_copy[] = {1};
             int result[] = {1};
+            int *res = result;
             int *arr = array;
             int *arr_end = arr + len;
             if (printi)
@@ -475,14 +425,7 @@ int main(int argc, char *argv[])
                 print(arr, arr_end);
                 printf("sorting time: %llu\n", timer);
             }
-            for (int i = 0; i < len; i++)
-            {
-                if (result[i] != *(arr + i))
-                {
-                    flag = false;
-                    break;
-                }
-            }
+            flag = check(res, arr, len);
             printf("test 7 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
         }
@@ -495,6 +438,7 @@ int main(int argc, char *argv[])
             int array[1];
             int arr_copy[1];
             int result[1];
+            int *res = result;
             int *arr = array;
             int *arr_end = arr + len;
             if (printi)
@@ -520,14 +464,7 @@ int main(int argc, char *argv[])
                 print(arr, arr_end);
                 printf("sorting time(?): %llu\n", timer);
             }
-            for (int i = 0; i < len; i++)
-            {
-                if (result[i] != *(arr + i))
-                {
-                    flag = false;
-                    break;
-                }
-            }
+            flag = check(res, arr, len);
             printf("test 8 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
         }
