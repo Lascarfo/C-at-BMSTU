@@ -1,3 +1,8 @@
+/**
+ \file
+ */
+
+
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
@@ -6,6 +11,12 @@
 #include "io.h"
 
 //  swap func
+
+/**
+* \brief эта функция меняет расположение элементов
+* \details на вход функции подается два адреса элементов, которые нужно поменять и размер этих элементов в байтах;
+*  функция меняет эти элементы местами при помощи встроенной функции memcpy.
+*/
 
 void swap (void *left, void *right, size_t size)
 {
@@ -18,12 +29,25 @@ void swap (void *left, void *right, size_t size)
 
 // compare for int
 
+/**
+* \brief эта функция сравнивает два переданных элемента
+* \details функция-компаратор получает два объекта и вычисляет и разность, соотвествуя типу.
+*/
+
+
 int cmp_int(const void *left, const void *right)
 {
     return(*(int*)(left) - *(int*)(right));
 }
 
 // mysort function num. 6
+/**
+* \brief эта функция предназначена для сортировки массива заданным алогритмом
+* \details функция mysort использует алгоритм модифицированного пузрька II, который выполняет проходы сверху по
+*  четным итерациям и проходы снизу по нечетным; во всех остальных аспектах используются принципы обычного пузырька.
+*/
+
+
 
 void mysort(void *base, size_t nitems, size_t size, int(*cmpr)(const void*, const void*))
 {
@@ -31,35 +55,40 @@ void mysort(void *base, size_t nitems, size_t size, int(*cmpr)(const void*, cons
     {
         char *arr_s = base;
         char *arr_s_end = arr_s + nitems * size - size;
-
+        int start = 0;
+        int end = nitems - 1;
         bool even = false;
 
-        while (arr_s != arr_s_end)
+
+        while (end > 0)
         {
             even = !even;
             if (even)
             {
-                if (cmpr(arr_s_end, (arr_s_end - size)) < 0)
+                for (int i = end; i > 0; i--)
                 {
-                    swap(arr_s_end, (arr_s_end - size), size);
-                    arr_s = base;
-                    arr_s_end = (char* )(base) + nitems * size - size;
-
-                }
-                else
+                    if (cmpr(arr_s_end, (arr_s_end - size)) < 0)
+                    {
+                        swap(arr_s_end, (arr_s_end - size), size);
+                    }
                     arr_s_end -= size;
+                }
+                start++;
+                arr_s_end = (char *)(base) + end * size - size;
             }
             else
             {
-                if (cmpr(arr_s, (arr_s + size)) > 0)
+                for (int i = start; i < nitems; i++)
                 {
-                    swap(arr_s, (arr_s + size), size);
-                    arr_s = base;
-                    arr_s_end = (char* )(base) + nitems * size - size;
-                }
-                else
+                    if (cmpr(arr_s, (arr_s + size)) > 0)
+                    {
+                        swap(arr_s, (arr_s + size), size);
+                    }
                     arr_s += size;
+                }
+                end--;
+                arr_s = (char *)(base) + start * size;
             }
         }
-    }    
+    }
 }

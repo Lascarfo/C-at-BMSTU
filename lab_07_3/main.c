@@ -1,3 +1,12 @@
+
+/**
+ * \author Яроцкий Даниил
+ * \brief это основная функция программы
+ * \details программа считывает числа с файла, и сортирует по алгоритму модифицированного пузырька,
+ *  учитывая условие фильтрации.
+ *
+*/
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
@@ -8,6 +17,19 @@
 #include "io.h"
 #include "filter.h"
 #include "sort.h"
+
+
+
+/*!
+ * \file
+ * \fn int main(int argc, char* argv[])
+ *  \brief main function
+ *  \param argc an integer
+ *  \param argv an array of chars.
+ *  \exception symbols in file must been int
+ *  \return code of error
+ */
+
 
 int main(int argc, char *argv[])
 {

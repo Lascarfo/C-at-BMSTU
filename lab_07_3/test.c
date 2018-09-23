@@ -1,3 +1,10 @@
+/**
+* \brief эта функция предназначена для тестирования файла
+* \details введен набор тестов, программа проверяет корректную работу функций key и mysort
+*/
+
+
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -344,8 +351,9 @@ int main(int argc, char *argv[])
             }
             if (printi)
             {
-                printf("TIME mysort: %llu\n", (stop - start));
+                printf("    sorted: ");
                 print(arr, arr_end);
+                printf("TIME mysort: %llu\n", (stop - start));
             }
             flag = check(res, arr, len);
             printf("test 5 was %s\n", (flag) ? "passed" : "not passed");
