@@ -23,7 +23,7 @@ unsigned long long tick(void)
     return d;
 }
 
-bool check(int *result, int *arr_s, int len)
+bool check(const int *result, const int *arr_s, int len)
 {
     for (int i = 0; i < len; i++)
     {
@@ -63,7 +63,6 @@ int main(int argc, char *argv[])
             int *arr_s, *arr_s_end;
             arr_s = arr_s_end = NULL;
             key_flag = key(arr, arr_end, &arr_s, &arr_s_end);
-            free(arr_s);
             if (printi)
             {
                 printf("primordial: ");
@@ -76,6 +75,7 @@ int main(int argc, char *argv[])
                 flag = false;
             printf("test 1 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
+            free(arr_s);
         }
         {
             printf("second array:\n");
@@ -90,7 +90,6 @@ int main(int argc, char *argv[])
             int *arr_s, *arr_s_end;
             arr_s = arr_s_end = NULL;
             key_flag = key(arr, arr_end, &arr_s, &arr_s_end);
-            free(arr_s);
             if (printi)
             {
                 printf("primordial: ");
@@ -103,21 +102,21 @@ int main(int argc, char *argv[])
                 flag = false;
             printf("test 2 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
+            free(arr_s);
         }
         {
             printf("third array:\n");
             bool flag = true;
             int key_flag;
-            int len = 3;
+            int len = 2;
             int array[] = {1, 2, -3, 4, 5};
-            int result[] = {1, 2, -3};
+            int result[] = {1, 2};
             int *res = result;
             int *arr = array;
-            int *arr_end = arr + len + 2;
+            int *arr_end = arr + 5;
             int *arr_s, *arr_s_end;
             arr_s = arr_s_end = NULL;
             key_flag = key(arr, arr_end, &arr_s, &arr_s_end);
-            free(arr_s);
             if (printi)
             {
                 printf("primordial: ");
@@ -130,21 +129,21 @@ int main(int argc, char *argv[])
                 flag = false;
             printf("test 3 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
+            free(arr_s);
         }
         {
             printf("fourth array:\n");
             bool flag = true;
             int key_flag;
-            int len = 3;
-            int array[] = {1, 2, -3, -4, 5};
-            int result[] = {1, 2, -3};
+            int len = 0;
+            int array[] = {-1, 2, 3, 4, 5};
+            int result[1];
             int *res = result;
             int *arr = array;
-            int *arr_end = arr + len + 2;
+            int *arr_end = arr + 5;
             int *arr_s, *arr_s_end;
             arr_s = arr_s_end = NULL;
             key_flag = key(arr, arr_end, &arr_s, &arr_s_end);
-            free(arr_s);
             if (printi)
             {
                 printf("primordial: ");
@@ -155,8 +154,9 @@ int main(int argc, char *argv[])
             flag = check(res, arr_s, len);
             if (key_flag != 0)
                 flag = false;
-            printf("test 4 was %s\n", (flag) ? "passed" : "not passed");
+            printf("test 4 was %s\n", (flag) ? "not passed" : "passed");
             printf("\n");
+            free(arr_s);
         }
 
     }

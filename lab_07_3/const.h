@@ -9,6 +9,6 @@
 #define ERR_PRINT -5
 #define ERR_PARAM -6
 
-#define N 10
+#define N 50
 
 #endif

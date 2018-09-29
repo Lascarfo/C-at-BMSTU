@@ -27,7 +27,7 @@ const int *count_pos(const int *arr, const int *arr_end)
     while (arr < arr_end)
     {
         if (*arr < 0)
-            cache = arr + 1;
+            cache = arr;
         arr++;
     }
     return cache;
@@ -66,16 +66,23 @@ int key(const int *arr, const int *arr_end, int **arr_n, int **arr_n_end)
     printf("diff: %d\n", (arr_end - arr));
 */
 
-    if (arr != NULL && arr_end != NULL)
+    if ((arr != NULL && arr_end != NULL) && (arr < arr_end))
     {
         pos = count_pos(arr, arr_end);
         len = pos - arr;
-        int *buf1 = malloc(len * sizeof (int));
-        if (buf1)
+        if (len > 0)
         {
-            *arr_n = buf1;
-            *arr_n_end = *arr_n + len;
-            copy_arr(arr, *arr_n, *arr_n_end);
+            int *buf1 = malloc(len * sizeof (int));
+            if (buf1)
+            {
+                *arr_n = buf1;
+                *arr_n_end = *arr_n + len;
+                copy_arr(arr, *arr_n, *arr_n_end);
+            }
+            else
+            {
+                rc = ERR_MEMORY;
+            }
         }
         else
         {

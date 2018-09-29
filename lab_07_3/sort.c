@@ -55,17 +55,19 @@ void mysort(void *base, size_t nitems, size_t size, int(*cmpr)(const void*, cons
     {
         char *arr_s = base;
         char *arr_s_end = arr_s + nitems * size - size;
-        int start = 0;
-        int end = nitems - 1;
+        char *start = base;
+        char *end = arr_s + nitems * size - size;
+        int start_n = 0;
+        int end_n = nitems - 1;
         bool even = false;
 
 
-        while (end > 0)
+        while (end > start)
         {
             even = !even;
             if (even)
             {
-                for (int i = end; i > 0; i--)
+                while (arr_s_end > start)
                 {
                     if (cmpr(arr_s_end, (arr_s_end - size)) < 0)
                     {
@@ -73,12 +75,13 @@ void mysort(void *base, size_t nitems, size_t size, int(*cmpr)(const void*, cons
                     }
                     arr_s_end -= size;
                 }
+                start += size;
                 start++;
-                arr_s_end = (char *)(base) + end * size - size;
+                arr_s_end = (char *)(base) + end_n * size - size;
             }
             else
             {
-                for (int i = start; i < nitems; i++)
+                while (arr_s < end)
                 {
                     if (cmpr(arr_s, (arr_s + size)) > 0)
                     {
@@ -86,8 +89,9 @@ void mysort(void *base, size_t nitems, size_t size, int(*cmpr)(const void*, cons
                     }
                     arr_s += size;
                 }
-                end--;
-                arr_s = (char *)(base) + start * size;
+                end -= size;
+                end_n--;
+                arr_s = (char *)(base) + start_n * size;
             }
         }
     }

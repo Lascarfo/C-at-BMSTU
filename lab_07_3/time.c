@@ -8,6 +8,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
+
 #include "sort.h"
 #include "io.h"
 #include "const.h"
@@ -23,464 +25,185 @@ unsigned long long tick(void)
 }
 
 
+unsigned long long time_mysort(int len, int *array, const int *arr_copy)
+{
+    unsigned long long start, stop;
+    unsigned long long timer = OK;
+    int *arr = array;
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < len; j++)
+        {
+            array[j] = arr_copy[j];
+        }
+        start = tick();
+        mysort(arr, len, sizeof(int), cmp_int);
+        stop = tick();
+        if (i > 0)
+            timer += (stop - start);
+    }
+    timer /= (N - 1);
+    return timer;
+}
+
+unsigned long long time_qsort(int len, int *array, const int *arr_copy)
+{
+    unsigned long long start, stop;
+    unsigned long long timer = OK;
+    int *arr = array;
+    for (int i = 0; i < N; i++)
+    {
+        for (int j = 0; j < len; j++)
+        {
+            array[j] = arr_copy[j];
+        }
+        start = tick();
+        qsort(arr, len, sizeof(int), cmp_int);
+        stop = tick();
+        if (i > 0)
+            timer += (stop - start);
+    }
+    timer /= (N - 1);
+    return timer;
+}
+
+
+int *downstream(int *cache, int n)
+{
+    int *arr = NULL;
+    arr = cache;
+    for (int i = n; i > 0; i--)
+    {
+        *arr = i;
+        arr++;
+    }
+    return cache;
+}
+
+
+int *upstream(int *cache, int n)
+{
+    int *arr = NULL;
+    arr = cache;
+    for (int i = 1; i <= n; i++)
+    {
+        *arr = i;
+        arr++;
+    }
+    return cache;
+}
+
+
+int *randfill(int *cache, int n)
+{
+    int *arr = NULL;
+    srand(time(NULL));
+    arr = cache;
+    for (int i = 1; i <= n; i++)
+    {
+        *arr = rand() % 10;
+        arr++;
+    }
+    return cache;
+}
+
+
+
+int *arr_generator(int n, int key) // 0 - downstream, 1 – upstream, 2 - random filling
+{
+    int *arr = NULL;
+    int *cache = malloc(n * sizeof(int));
+    if (cache)
+    {
+        switch (key)
+        {
+            case 0:
+                arr = downstream(cache, n);
+                break;
+            case 1:
+                arr = upstream(cache, n);
+                break;
+            case 2:
+                arr = randfill(cache, n);
+                break;
+            default:
+                printf("Smt gonna wrong!\n");
+        }
+    }
+    return arr;
+}
+
+void save_r(unsigned long long timer_q, unsigned long long timer_m)
+{
+    FILE *file;
+    file = fopen("results.txt", "a");
+    if (file)
+    {
+        fprintf(file, "%llu %llu\n", timer_m, timer_q);
+    }
+}
+
+
+int main_time(const int key)
+{
+    int rc = OK;
+    int len = 0;
+    int piece = 1;
+    while (len != 1000)
+    {
+        len += piece;
+        if (len < 10)
+        {
+            piece = 1;
+        }
+        else if (len < 100)
+        {
+            piece = 10;
+        }
+        else if (len <= 1000)
+        {
+            piece = 100;
+        }
+        unsigned long long timer_q = OK, timer_m = OK;
+        int *array = arr_generator(len, key);
+        if (array != NULL)
+        {
+            int *arr_copy = arr_generator(len, key);
+            if (arr_copy != NULL)
+            {
+                timer_m = time_mysort(len, array, arr_copy);
+                timer_q = time_qsort(len, array, arr_copy);
+                printf("(%d) mysort: %llu\n", len, timer_m);
+                printf("(%d) qsort:: %llu\n", len, timer_q);
+                save_r(timer_m, timer_q);
+                free(arr_copy);
+            }
+            else
+            {
+                return ERR_MEMORY;
+            }
+            free(array);
+        }
+        else
+        {
+            return ERR_MEMORY;
+        }
+    }
+    return rc;
+}
 
 int main(void)
 {
+    int rc = OK;
+    rc = main_time(0); //downstream
+    if (rc == 0)
     {
-        int array[] = {1};
-        int arr_copy[] = {1};
-        unsigned long long start, stop, timer = OK;
-        int len = 1;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            mysort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(1) mysort: %llu\n", timer);
-        // printf("array: ");
-        // print(arr, (arr + len));
+        rc = main_time(1);  //upstream
     }
+    if (rc == 0)
     {
-        int array[] = {1};
-        int arr_copy[] = {1};
-        unsigned long long start, stop, timer = OK;
-        int len = 1;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            qsort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(1) qsort:: %llu\n", timer);
-        printf("array: ");
-        print(arr, (arr + len));
+        rc = main_time(2);  //random feeling
+    }
 
-    }
-    {
-        int array[] = {2, 1};
-        int arr_copy[] = {2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 2;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            mysort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(2) mysort: %llu\n", timer);
-        // printf("array: ");
-        // print(arr, (arr + len));
-    }
-    {
-        int array[] = {2, 1};
-        int arr_copy[] = {2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 2;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            qsort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(2) qsort:: %llu\n", timer);
-        printf("array: ");
-        print(arr, (arr + len));
-
-    }
-    {
-        int array[] = {3, 2, 1};
-        int arr_copy[] = {3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 3;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            mysort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(3) mysort: %llu\n", timer);
-        // printf("array: ");
-        // print(arr, (arr + len));
-    }
-    {
-        int array[] = {3, 2, 1};
-        int arr_copy[] = {3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 3;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            qsort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(3) qsort:: %llu\n", timer);
-        printf("array: ");
-        print(arr, (arr + len));
-
-    }
-    {
-        int array[] = {4, 3, 2, 1};
-        int arr_copy[] = {4, 3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 4;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            mysort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(4) qsort:: %llu\n", timer);
-        // printf("array: ");
-        // print(arr, (arr + len));
-
-    }
-    {
-        int array[] = {4, 3, 2, 1};
-        int arr_copy[] = {4, 3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 4;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            qsort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(4) mysort: %llu\n", timer);
-        printf("array: ");
-        print(arr, (arr + len));
-    }
-    {
-        int array[] = {5, 4, 3, 2, 1};
-        int arr_copy[] = {5, 4, 3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 5;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            mysort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(5) qsort:: %llu\n", timer);
-        // printf("array: ");
-        // print(arr, (arr + len));
-
-    }
-    {
-        int array[] = {5, 4, 3, 2, 1};
-        int arr_copy[] = {5, 4, 3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 5;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            qsort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(5) mysort: %llu\n", timer);
-        printf("array: ");
-        print(arr, (arr + len));
-    }
-    {
-        int array[] = {6, 5, 4, 3, 2, 1};
-        int arr_copy[] = {6, 5, 4, 3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 6;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            mysort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(6) qsort:: %llu\n", timer);
-        // printf("array: ");
-        // print(arr, (arr + len));
-
-    }
-    {
-        int array[] = {6, 5, 4, 3, 2, 1};
-        int arr_copy[] = {6, 5, 4, 3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 6;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            qsort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(6) mysort: %llu\n", timer);
-        printf("array: ");
-        print(arr, (arr + len));
-    }
-    {
-        int array[] = {7, 6, 5, 4, 3, 2, 1};
-        int arr_copy[] = {7, 6, 5, 4, 3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 7;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            mysort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(7) mysort: %llu\n", timer);
-        // printf("array: ");
-        // print(arr, (arr + len));
-    }
-    {
-        int array[] = {7, 6, 5, 4, 3, 2, 1};
-        int arr_copy[] = {7, 6, 5, 4, 3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 7;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            qsort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(7) qsort:: %llu\n", timer);
-        printf("array: ");
-        print(arr, (arr + len));
-
-    }
-    {
-        int array[] = {8, 7, 6, 5, 4, 3, 2, 1};
-        int arr_copy[] = {8, 7, 6, 5, 4, 3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 8;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            mysort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(8) mysort: %llu\n", timer);
-        // printf("array: ");
-        // print(arr, (arr + len));
-    }
-    {
-        int array[] = {8, 7, 6, 5, 4, 3, 2, 1};
-        int arr_copy[] = {8, 7, 6, 5, 4, 3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 8;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            qsort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(8) qsort:: %llu\n", timer);
-        printf("array: ");
-        print(arr, (arr + len));
-
-    }
-    {
-        int array[] = {9, 8, 7, 6, 5, 4, 3, 2, 1};
-        int arr_copy[] = {9, 8, 7, 6, 5, 4, 3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 9;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            mysort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(9) mysort: %llu\n", timer);
-        // printf("array: ");
-        // print(arr, (arr + len));
-    }
-    {
-        int array[] = {9, 8, 7, 6, 5, 4, 3, 2, 1};
-        int arr_copy[] = {9, 8, 7, 6, 5, 4, 3, 2, 1};
-        unsigned long long start, stop, timer = OK;
-        int len = 9;
-        int *arr = array;
-        for (int i = 0; i < N; i++)
-        {
-            for (int j = 0; j < len; j++)
-            {
-                array[j] = arr_copy[j];
-            }
-            start = tick();
-            qsort(arr, len, sizeof(int), cmp_int);
-            stop = tick();
-            if (i > 0)
-                timer += (stop - start) / (N - 1);
-        }
-        printf("(9) qsort:: %llu\n", timer);
-        printf("array: ");
-        print(arr, (arr + len));
-    }
-    // {
-    //     int array[100];
-    //     int arr_copy[100];
-    //     unsigned long long start, stop, timer = OK;
-    //     int len = 100;
-    //     int *arr = array;
-    //     for (int i = 100; i > 0; i--)
-    //     {
-    //         array[i] = i;
-    //         arr_copy[i] = i;
-    //     }
-    //     for (int i = 0; i < N; i++)
-    //     {
-    //         for (int j = 0; j < len; j++)
-    //         {
-    //             array[j] = arr_copy[j];
-    //         }
-    //         start = tick();
-    //         mysort(arr, len, sizeof(int), cmp_int);
-    //         stop = tick();
-    //         if (i > 0)
-    //             timer += (stop - start) / (N - 1);
-    //     }
-    //     printf("(100) mysort: %llu\n", timer);
-    //     //print(arr, (arr + len)); // life threatening!
-    // }
-    // {
-    //     int array[100];
-    //     int arr_copy[100];
-    //     unsigned long long start, stop, timer = OK;
-    //     int len = 100;
-    //     int *arr = array;
-    //     for (int i = 100; i > 0; i--)
-    //     {
-    //         array[i] = i;
-    //         arr_copy[i] = i;
-    //     }
-    //     for (int i = 0; i < N; i++)
-    //     {
-    //         for (int j = 0; j < len; j++)
-    //         {
-    //             array[j] = arr_copy[j];
-    //         }
-    //         start = tick();
-    //         qsort(arr, len, sizeof(int), cmp_int);
-    //         stop = tick();
-    //         if (i > 0)
-    //             timer += (stop - start) / (N - 1);
-    //     }
-    //     printf("(100) qsort:: %llu\n", timer);
-    //     //print(arr, (arr + len)); // life threatening!
-    // }
-    return 0;
+    return rc;
 }
