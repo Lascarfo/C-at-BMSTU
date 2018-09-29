@@ -36,7 +36,7 @@ void swap(void *left, void *right, size_t size)
 
 int cmp_int(const void *left, const void *right)
 {
-    return(*(int*)(left) - *(int*)(right));
+    return (*(int*)(left) - *(int*)(right));
 }
 
 
