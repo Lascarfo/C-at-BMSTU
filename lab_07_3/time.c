@@ -108,8 +108,8 @@ int *randfill(int *cache, int n)
 }
 
 
-
-int *arr_generator(int n, int key) // 0 - downstream, 1 – upstream, 2 - random filling
+// 0 - downstream, 1 – upstream, 2 - random filling
+int *arr_generator(int n, int key)
 {
     int *arr = NULL;
     int *cache = malloc(n * sizeof(int));
