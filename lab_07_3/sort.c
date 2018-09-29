@@ -62,7 +62,7 @@ void mysort(void *base, size_t nitems, size_t size, int(*cmpr)(const void*, cons
         bool even = false;
 
 
-        while (end => start)
+        while (end >= start)
         {
             even = !even;
             if (even)
