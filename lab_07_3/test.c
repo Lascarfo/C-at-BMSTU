@@ -158,10 +158,8 @@ int main(int argc, char *argv[])
             printf("\n");
             free(arr_s);
         }
-
     }
     {  //mysort func from mysort.h tests
-
         printf("\t\t\t***mysort*** func tests:\n");
         {
             printf("\n");
@@ -230,7 +228,9 @@ int main(int argc, char *argv[])
                 mysort(arr, len, sizeof(int), cmp_int);
                 stop = tick();
                 if (i > 0) // на первой итерации насчитывал 1400 - 1600 тактов, на всех последующих -– 100 - 300
+                {
                     timer += (stop - start) / (N - 1);
+                }
             }
             if (printi)
             {
