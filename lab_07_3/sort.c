@@ -18,13 +18,12 @@
 *  функция меняет эти элементы местами при помощи встроенной функции memcpy.
 */
 
-void swap (void *left, void *right, size_t size)
+void swap(void *left, void *right, size_t size)
 {
     char buf[size];
     memcpy(buf, left, size);
     memcpy(left, right, size);
     memcpy(right, buf, size);
-
 }
 
 // compare for int
@@ -39,6 +38,7 @@ int cmp_int(const void *left, const void *right)
 {
     return(*(int*)(left) - *(int*)(right));
 }
+
 
 // mysort function num. 6
 /**
