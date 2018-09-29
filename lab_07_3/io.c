@@ -19,7 +19,7 @@
 int count_n(FILE *file)
 {
     int count = 0, cache;
-    while(fscanf(file, "%d", &cache) == 1)
+    while (fscanf(file, "%d", &cache) == 1)
         count++;
     return count;
 }

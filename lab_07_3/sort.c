@@ -51,7 +51,7 @@ int cmp_int(const void *left, const void *right)
 
 void mysort(void *base, size_t nitems, size_t size, int(*cmpr)(const void*, const void*))
 {
-    if (nitems != 0)
+    if (true)
     {
         char *arr_s = base;
         char *arr_s_end = arr_s + nitems * size - size;
