@@ -705,7 +705,6 @@ int main(int argc, char *argv[])
             printf("test 13 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
         }
-
     }
     return OK;
 }
