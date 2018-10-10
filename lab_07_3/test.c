@@ -35,6 +35,30 @@ bool check(const int *result, const int *arr_s, int len)
     return true;
 }
 
+bool check_double(const double *result, const double *arr_s, int len)
+{
+    for (int i = 0; i < len; i++)
+    {
+        if (*(result + i) != *(arr_s + i))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool check_char(const char *result, const char *arr_s, int len)
+{
+    for (int i = 0; i < len; i++)
+    {
+        if (*(result + i) != *(arr_s + i))
+        {
+            return false;
+        }
+    }
+    return true;
+}
+
 int main(int argc, char *argv[])
 {
     bool printi = false;
@@ -70,9 +94,10 @@ int main(int argc, char *argv[])
                 printf("  filtered: ");
                 print(arr_s, arr_s_end);
             }
-            flag = check(res, arr_s, len);
             if (key_flag != 0)
                 flag = false;
+            else
+                flag = check(res, arr_s, len);
             printf("test 1 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
             free(arr_s);
@@ -97,9 +122,10 @@ int main(int argc, char *argv[])
                 printf("  filtered: ");
                 print(arr_s, arr_s_end);
             }
-            flag = check(res, arr_s, len);
             if (key_flag != 0)
                 flag = false;
+            else
+                flag = check(res, arr_s, len);
             printf("test 2 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
             free(arr_s);
@@ -124,9 +150,10 @@ int main(int argc, char *argv[])
                 printf("  filtered: ");
                 print(arr_s, arr_s_end);
             }
-            flag = check(res, arr_s, len);
             if (key_flag != 0)
                 flag = false;
+            else
+                flag = check(res, arr_s, len);
             printf("test 3 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
             free(arr_s);
@@ -151,9 +178,10 @@ int main(int argc, char *argv[])
                 printf("  filtered: ");
                 print(arr_s, arr_s_end);
             }
-            flag = check(res, arr_s, len);
             if (key_flag != 0)
                 flag = false;
+            else
+                flag = check(res, arr_s, len);
             printf("test 4 was %s\n", (flag) ? "not passed" : "passed");
             printf("\n");
             free(arr_s);
@@ -477,6 +505,207 @@ int main(int argc, char *argv[])
             printf("test 8 was %s\n", (flag) ? "passed" : "not passed");
             printf("\n");
         }
+        {
+            printf("\n");
+            printf("ninth array:\n");
+            unsigned long long start, stop;
+            bool flag = true;
+            int len = 5;
+            unsigned long long timer = OK;
+            double array[] = { 5.0, 4.0, 3.0, 2.0, 1.0 };
+            double arr_copy[] = { 5.0, 4.0, 3.0, 2.0, 1.0 };
+            double result[] = { 1.0, 2.0, 3.0, 4.0, 5.0 };
+            double *res = result;
+            double *arr = array;
+            double *arr_end = arr + len;
+            if (printi)
+            {
+                printf("primordial: ");
+                print_double(arr, arr_end);
+            }
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < len; j++)
+                {
+                    array[j] = arr_copy[j];
+                }
+                start = tick();
+                mysort(arr, len, sizeof(double), cmp_double);
+                stop = tick();
+                if (i > 0)
+                    timer += (stop - start) / (N - 1);
+            }
+            if (printi)
+            {
+                printf("    sorted: ");
+                print_double(arr, arr_end);
+                printf("sorting time: %llu\n", timer);
+            }
+            flag = check_double(res, arr, len);
+            printf("test 9 was %s\n", (flag) ? "passed" : "not passed");
+            printf("\n");
+        }
+        {
+            printf("\n");
+            printf("tenth array:\n");
+            unsigned long long start, stop;
+            bool flag = true;
+            int len = 5;
+            unsigned long long timer = OK;
+            double array[] = { 1.0, 2.0, 3.0, 4.0, 5.0 };
+            double arr_copy[] = { 1.0, 2.0, 3.0, 4.0, 5.0 };
+            double result[] = { 1.0, 2.0, 3.0, 4.0, 5.0 };
+            double *res = result;
+            double *arr = array;
+            double *arr_end = arr + len;
+            if (printi)
+            {
+                printf("primordial: ");
+                print_double(arr, arr_end);
+            }
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < len; j++)
+                {
+                    array[j] = arr_copy[j];
+                }
+                start = tick();
+                mysort(arr, len, sizeof(double), cmp_double);
+                stop = tick();
+                if (i > 0)
+                    timer += (stop - start) / (N - 1);
+            }
+            if (printi)
+            {
+                printf("    sorted: ");
+                print_double(arr, arr_end);
+                printf("sorting time: %llu\n", timer);
+            }
+            flag = check_double(res, arr, len);
+            printf("test 10 was %s\n", (flag) ? "passed" : "not passed");
+            printf("\n");
+        }
+        {
+            printf("\n");
+            printf("eleventh array:\n");
+            unsigned long long start, stop;
+            bool flag = true;
+            int len = 5;
+            unsigned long long timer = OK;
+            double array[] = { 0.2, 0.3, 0.1, 0.4, 0.5 };
+            double arr_copy[] = { 0.2, 0.3, 0.1, 0.4, 0.5 };
+            double result[] = { 0.1, 0.2, 0.3, 0.4, 0.5 };
+            double *res = result;
+            double *arr = array;
+            double *arr_end = arr + len;
+            if (printi)
+            {
+                printf("primordial: ");
+                print_double(arr, arr_end);
+            }
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < len; j++)
+                {
+                    array[j] = arr_copy[j];
+                }
+                start = tick();
+                mysort(arr, len, sizeof(double), cmp_double);
+                stop = tick();
+                if (i > 0)
+                    timer += (stop - start) / (N - 1);
+            }
+            if (printi)
+            {
+                printf("    sorted: ");
+                print_double(arr, arr_end);
+                printf("sorting time: %llu\n", timer);
+            }
+            flag = check_double(res, arr, len);
+            printf("test 11 was %s\n", (flag) ? "passed" : "not passed");
+            printf("\n");
+        }
+        {
+            printf("\n");
+            printf("twelfth array:\n");
+            unsigned long long start, stop;
+            bool flag = true;
+            int len = 5;
+            unsigned long long timer = OK;
+            char array[] = { 'a', 'b', 'c', 'd', 'e' };
+            char arr_copy[] = { 'a', 'b', 'c', 'd', 'e' };
+            char result[] = { 'a', 'b', 'c', 'd', 'e' };
+            char *res = result;
+            char *arr = array;
+            char *arr_end = arr + len;
+            if (printi)
+            {
+                printf("primordial: ");
+                print_char(arr, arr_end);
+            }
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < len; j++)
+                {
+                    array[j] = arr_copy[j];
+                }
+                start = tick();
+                mysort(arr, len, sizeof(char), cmp_char);
+                stop = tick();
+                if (i > 0)
+                    timer += (stop - start) / (N - 1);
+            }
+            if (printi)
+            {
+                printf("    sorted: ");
+                print_char(arr, arr_end);
+                printf("sorting time: %llu\n", timer);
+            }
+            flag = check_char(res, arr, len);
+            printf("test 12 was %s\n", (flag) ? "passed" : "not passed");
+            printf("\n");
+        }
+        {
+            printf("\n");
+            printf("thirteenth array:\n");
+            unsigned long long start, stop;
+            bool flag = true;
+            int len = 5;
+            unsigned long long timer = OK;
+            char array[] = { 'd', 'c', 'a', 'b', 'e' };
+            char arr_copy[] = { 'd', 'c', 'a', 'b', 'e' };
+            char result[] = { 'a', 'b', 'c', 'd', 'e' };
+            char *res = result;
+            char *arr = array;
+            char *arr_end = arr + len;
+            if (printi)
+            {
+                printf("primordial: ");
+                print_char(arr, arr_end);
+            }
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < len; j++)
+                {
+                    array[j] = arr_copy[j];
+                }
+                start = tick();
+                mysort(arr, len, sizeof(char), cmp_char);
+                stop = tick();
+                if (i > 0)
+                    timer += (stop - start) / (N - 1);
+            }
+            if (printi)
+            {
+                printf("    sorted: ");
+                print_char(arr, arr_end);
+                printf("sorting time: %llu\n", timer);
+            }
+            flag = check_char(res, arr, len);
+            printf("test 13 was %s\n", (flag) ? "passed" : "not passed");
+            printf("\n");
+        }
+
     }
     return OK;
 }

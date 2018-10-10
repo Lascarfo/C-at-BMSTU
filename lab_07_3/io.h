@@ -9,5 +9,7 @@ int read_array(FILE *file, int *arr, int *arr_end);
 int read(FILE *file, int **arr, int **arr_end);
 int save(FILE *file, const int *arr, const int *arr_end);
 void print(const int *arr, const int *arr_end);
+void print_double(const double *arr, const double *arr_end);
+void print_char(const char *arr, const char *arr_end);
 
 #endif

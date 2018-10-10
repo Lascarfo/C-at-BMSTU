@@ -22,8 +22,7 @@
 
 const int *count_pos(const int *arr, const int *arr_end)
 {
-    const int *cache = NULL;
-    cache = arr_end;
+    const int *cache = arr_end;
     while (arr < arr_end)
     {
         if (*arr < 0)

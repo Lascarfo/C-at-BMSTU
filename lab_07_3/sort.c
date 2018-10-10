@@ -29,7 +29,7 @@ void swap(void *left, void *right, size_t size)
 // compare for int
 
 /**
-* \brief эта функция сравнивает два переданных элемента
+* \brief эта функция сравнивает два переданных элемента типа int
 * \details функция-компаратор получает два объекта и вычисляет и разность, соотвествуя типу.
 */
 
@@ -39,6 +39,38 @@ int cmp_int(const void *left, const void *right)
     return (*(int*)(left) - *(int*)(right));
 }
 
+// compare for char
+
+/**
+* \brief эта функция сравнивает два переданных элемента типа char
+*/
+
+int cmp_char(const void *left, const void *right)
+{
+    return (*(char*)left) - (*(char*)right);
+}
+
+
+// compare for double
+
+/**
+* \brief эта функция сравнивает два переданных элемента типа double
+*/
+
+
+int cmp_double(const void *left, const void *right)
+{
+    const double compare = (*(double*)left) - (*(double*)right);
+    if (compare < 0)
+    {
+        return -1;
+    }
+    if (compare > 0)
+    {
+        return 1;
+    }
+    return 0;
+}
 
 // mysort function num. 6
 /**
@@ -57,12 +89,9 @@ void mysort(void *base, size_t nitems, size_t size, int(*cmpr)(const void*, cons
         char *arr_s_end = arr_s + nitems * size - size;
         char *start = base;
         char *end = arr_s + nitems * size - size;
-        int start_n = 0;
-        int end_n = nitems - 1;
         bool even = false;
 
-
-        while (end >= (char*)(base))
+        while (end >= start)
         {
             even = !even;
             if (even)
@@ -76,8 +105,7 @@ void mysort(void *base, size_t nitems, size_t size, int(*cmpr)(const void*, cons
                     arr_s_end -= size;
                 }
                 start += size;
-                start++;
-                arr_s_end = (char *)(base) + end_n * size - size;
+                arr_s_end = end;
             }
             else
             {
@@ -90,8 +118,7 @@ void mysort(void *base, size_t nitems, size_t size, int(*cmpr)(const void*, cons
                     arr_s += size;
                 }
                 end -= size;
-                end_n--;
-                arr_s = (char *)(base) + start_n * size;
+                arr_s = start;
             }
         }
     }

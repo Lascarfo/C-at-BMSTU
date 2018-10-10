@@ -92,3 +92,23 @@ void print(const int *arr, const int *arr_end)
 {
     save(stdout, arr, arr_end);
 }
+
+void print_double(const double *arr, const double *arr_end)
+{
+    while (arr < arr_end)
+    {
+        fprintf(stdout, "%.1f ", *arr);
+        arr++;
+    }
+    fprintf(stdout, "\n");
+}
+
+void print_char(const char *arr, const char *arr_end)
+{
+    while (arr < arr_end)
+    {
+        fprintf(stdout, "%c ", *arr);
+        arr++;
+    }
+    fprintf(stdout, "\n");
+}
