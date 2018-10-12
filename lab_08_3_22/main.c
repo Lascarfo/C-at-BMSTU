@@ -7,7 +7,7 @@
 int main(int argc, char **argv)
 {
     int rc = OK;
-    if ((argc == 5) && ((strcmp(argv[1], "a") || (strcmp(argv[1], "m")))))
+    if ((argc == 5) && ((strcmp(argv[1], "a") == 0 || (strcmp(argv[1], "m")) == 0)))
     {
         rc = arithmetic(argv);
     }

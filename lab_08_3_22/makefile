@@ -1,5 +1,5 @@
 CC := gcc
-CFLAGS :=-std=c99 -Wall -Werror -pedantic
+CFLAGS :=-std=c99 -pedantic
 
 app.exec: main.o usage.o io.o calculatings.o
 	$(CC) $(CFLAGS) -o $@ $^
