@@ -9,5 +9,6 @@
 #define ERR_PRINT -5
 #define ERR_PARAM -6
 #define ERR_INPUT -7
+#define eps 0.00001
 
 #endif

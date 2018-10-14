@@ -2,8 +2,9 @@
 
 
 #include "calculatings.h"
+#include "io.h"
 
-
+/*
 void free_mem(double **matrix, const int rows)
 {
     for (int row = 0; row < rows; row++)
@@ -11,6 +12,20 @@ void free_mem(double **matrix, const int rows)
         free(matrix[row]);
     }
     free(matrix);
+}
+*/
+
+bool cmp_double(double left, double right)
+{
+    if (fabs(left - right) <= eps)
+    {
+        return false;
+    }
+    if (left < right)
+    {
+        return true;
+    }
+    return false;
 }
 
 void zero_filling(double **matrix, const int rows, const int columns)
@@ -20,10 +35,62 @@ void zero_filling(double **matrix, const int rows, const int columns)
         for (int j = 0; j < columns; j++)
         {
              matrix[i][j] = 0;
-//             printf("matrix %lf\n", matrix[i][j]);
         }
     }
 }
+
+
+void index_of_max(double **matrix, int rows, int rows_columns, int *maximum)
+{
+    double temp = matrix[rows][rows];
+    for(int temp_row = rows; temp_row <= rows_columns; temp_row++)
+    {
+        for(int temp_column = rows; temp_column <= rows_columns; temp_column++)
+        {
+            if (cmp_double(temp, matrix[temp_row][temp_column]))
+            {
+                temp = matrix[temp_row][temp_column];
+                maximum[0] = temp_row;
+                maximum[1] = temp_column;
+            }
+        }
+    }
+}
+
+void swap(double **matrix, int *maximum, int row, int rows_columns)
+{
+    print_square(matrix, row, rows_columns);
+    double temp_elem = 0.0;
+    double *temp_row = matrix[row];
+    matrix[row] = matrix[maximum[0]];
+    matrix[maximum[0]] = temp_row;
+    print_square(matrix, row, rows_columns);
+    for (int rows = row; rows <= rows_columns; rows++)
+    {
+        temp_elem = matrix[rows][row];
+        matrix[rows][row] = matrix[rows][maximum[1]];
+        matrix[rows][maximum[1]] = temp_elem;
+    }
+    print_square(matrix, row, rows_columns);
+}
+
+void elimination(double **matrix, int rows_columns)
+{
+    int maximum[2] = { rows_columns, rows_columns };
+    int curr_row = 0;
+    int copy_of_rows_columns = rows_columns;
+    while (rows_columns > 0)
+    {
+        maximum[0] = curr_row;
+        maximum[1] = curr_row;
+        index_of_max(matrix, curr_row, copy_of_rows_columns, maximum);
+        printf("maximum %d %d\n", maximum[0], maximum[1]);
+        swap(matrix, maximum, curr_row, copy_of_rows_columns);
+        curr_row++;
+        rows_columns--;
+    }
+}
+
 
 void addition(double **matrix_first, double **matrix_second, const int rows, const int columns, int *positive_elements)
 {
@@ -44,17 +111,23 @@ void addition(double **matrix_first, double **matrix_second, const int rows, con
 double **multiplication(double **matrix_first, double **matrix_second, const int columns_first_rows_sec, const int rows_first, const int columns_second, int *positive_elements)
 {
     double **result_matrix = allocate_memory(rows_first, columns_second);
-    for(int row_first = 0; row_first < rows_first; row_first++)
+    for (int row_first = 0; row_first < rows_first; row_first++)
     {
-        for(int column_second = 0; column_second < columns_second; column_second++)
+        for (int column_second = 0; column_second < columns_second; column_second++)
         {
-            for(int column_first_row_sec = 0; column_first_row_sec < columns_first_rows_sec; column_first_row_sec++)
+            for (int column_first_row_sec = 0; column_first_row_sec < columns_first_rows_sec; column_first_row_sec++)
             {
                 result_matrix[row_first][column_second] += matrix_first[row_first][column_first_row_sec] * matrix_second[column_first_row_sec][column_second];
-                if (result_matrix[row_first][column_second] != 0)
-                {
-                    (*positive_elements)++;
-                }
+            }
+        }
+    }
+    for (int row_first = 0; row_first < rows_first; row_first++)
+    {
+        for( int column_second = 0; column_second < columns_second; column_second++)
+        {
+            if (result_matrix[row_first][column_second] != 0)
+            {
+                (*positive_elements)++;
             }
         }
     }

@@ -13,7 +13,7 @@ int main(int argc, char **argv)
     }
     else if ((argc == 4) && (strcmp(argv[1], "o")) == 0)
     {
-
+        rc = gauss(argv);
     }
     else if ((argc == 2) && (strcmp(argv[1], "h")) == 0)
     {

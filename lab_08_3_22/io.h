@@ -3,12 +3,13 @@
 
 #include <stdio.h>
 
-
+int gauss(char **argv);
 int arithmetic(char **argv);
 int read_matrix(FILE *in, double ***matrix, int *rows, int *columns, int *positive_elements);
 void read_params(FILE *in, int *rows, int *columns, int *positive_elements);
 int read_elems(FILE *in, const int rows, const int columns, const int positive_elements, double **matrix);
 void save(FILE *out, double **matrix, const int rows, const int columns, const int positive_elements);
 void print_matrix(double **matrix, const int rows, const int columns, const int positive_elements);
+void print_square(double **matrix, int row, int rows_columns);
 
 #endif
