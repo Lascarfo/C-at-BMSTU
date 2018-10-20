@@ -20,6 +20,6 @@ void elimination(double **matrix, int rows_columns);
 bool cmp_double(double left, double right);
 void swap(double **matrix, int *maximum, int row, int rows_columns);
 void index_of_max(double **matrix, int rows, int rows_columns, int *maximum);
-//void free_mem(double **matrix, const int rows);
+// void free_mem(double **matrix, const int rows);
 
 #endif

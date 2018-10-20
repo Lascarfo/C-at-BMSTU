@@ -3,17 +3,17 @@
 
 #include "calculatings.h"
 #include "io.h"
+//
+//
+// void free_mem(double **matrix, const int rows)
+// {
+//     for (int row = 0; row < rows; row++)
+//     {
+//         free(matrix[row]);
+//     }
+//     //free(matrix);
+// }
 
-/*
-void free_mem(double **matrix, const int rows)
-{
-    for (int row = 0; row < rows; row++)
-    {
-        free(matrix[row]);
-    }
-    free(matrix);
-}
-*/
 
 bool cmp_double(double left, double right)
 {
@@ -171,12 +171,16 @@ bool counter_params(FILE *in)
 
 double **allocate_memory(const int rows, const int columns)
 {
-    double **matrix = malloc(rows * sizeof(double*) + rows * columns * sizeof(double));
-    if (matrix)
+    double **matrix = NULL;
+    if (rows > 0 && columns > 0)
     {
-        for (int index = 0; index < rows; index++)
+        matrix = malloc(rows * sizeof(double*) + rows * columns * sizeof(double));
+        if (matrix)
         {
-            matrix[index] = (double*)((char*) matrix + rows * sizeof(double*) + index * columns * sizeof(double));
+            for (int index = 0; index < rows; index++)
+            {
+                matrix[index] = (double*)((char*) matrix + rows * sizeof(double*) + index * columns * sizeof(double));
+            }
         }
     }
     return matrix;

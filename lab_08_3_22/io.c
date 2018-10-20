@@ -143,6 +143,7 @@ int arithmetic(char **argv)
                     if ((columns_first = columns_second) && (rows_first == rows_second))
                     {
                         addition(matrix_first, matrix_second, rows_first, columns_first, &positive_elements);
+                        printf("lf %lf\n", *matrix_first[0]);
                         save(file_out, matrix_first, rows_first, columns_second, positive_elements);
                     }
                     else
