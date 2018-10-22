@@ -1,2 +1,4 @@
 *.exe
+*.exec
 *.o
+*.DS_Store
