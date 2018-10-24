@@ -92,6 +92,12 @@ int arithmetic(char **argv)
                     }
                     else
                     {
+                        free_mem(matrix_first, rows_first);
+                        free_mem(matrix_second, rows_second);
+
+                        fclose(file_in_1);
+                        fclose(file_in_2);
+                        fclose(file_out);
                         rc = ERR_MATRIX;
                     }
                 }
@@ -105,12 +111,16 @@ int arithmetic(char **argv)
                     }
                     else
                     {
+                        free_mem(matrix_first, rows_first);
+                        free_mem(matrix_second, rows_second);
+                        fclose(file_in_1);
+                        fclose(file_in_2);
+                        fclose(file_out);
                         rc = ERR_MATRIX;
                     }
                 }
                 free_mem(matrix_first, rows_first);
                 free_mem(matrix_second, rows_second);
-
 
                 fclose(file_in_1);
                 fclose(file_in_2);
@@ -141,7 +151,7 @@ int arithmetic(char **argv)
 
 bool cmp_double(double left, double right)
 {
-    if (fabs(left - right) <= eps)
+    if (fabs(left - right) <= EPS)
     {
         return false;
     }
