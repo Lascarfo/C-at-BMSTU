@@ -87,7 +87,7 @@ int main(void)
         int rows = 3;
         int columns = 3;
         double mat_arr1[3][3] = { { 1, 2, 3 }, { 4, 5, 6 }, { 7, 8, 9 } };
-        double mat_arr2[3][3] = { { -1, -2, -3}, { -4, -5, -6 }, { -7, -8, -9 } };
+        double mat_arr2[3][3] = { { -1, -2, -3 }, { -4, -5, -6 }, { -7, -8, -9 } };
         double mat_arr3[3][3] = { { 0, 0, 0 }, { 0, 0, 0 }, { 0, 0, 0 } };
         double *matrix1[3] = { mat_arr1[0], mat_arr1[1], mat_arr1[2] };
         double *matrix2[3] = { mat_arr2[0], mat_arr2[1], mat_arr2[2] };
