@@ -87,9 +87,9 @@ void print_matrix(double **matrix, const int rows, const int columns, const int 
 void print_square(double **matrix, int row, int rows_columns)
 {
     printf("\n");
-    for(int temp_row = row; temp_row <= rows_columns; temp_row++)
+    for (int temp_row = row; temp_row <= rows_columns; temp_row++)
     {
-        for(int temp_column = row; temp_column <= rows_columns; temp_column++)
+        for (int temp_column = row; temp_column <= rows_columns; temp_column++)
         {
             printf("%0.1lf ", matrix[temp_row][temp_column]);
         }
