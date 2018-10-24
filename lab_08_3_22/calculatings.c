@@ -168,7 +168,7 @@ void zero_filling(double **matrix, const int rows, const int columns)
     {
         for (int j = 0; j < columns; j++)
         {
-             matrix[i][j] = 0;
+            matrix[i][j] = 0;
         }
     }
 }
@@ -177,9 +177,9 @@ void zero_filling(double **matrix, const int rows, const int columns)
 void index_of_max(double **matrix, int rows, int rows_columns, int *max_rows, int *max_columns)
 {
     double temp = matrix[rows][rows];
-    for(int temp_row = rows; temp_row <= rows_columns; temp_row++)
+    for (int temp_row = rows; temp_row <= rows_columns; temp_row++)
     {
-        for(int temp_column = rows; temp_column <= rows_columns; temp_column++)
+        for (int temp_column = rows; temp_column <= rows_columns; temp_column++)
         {
             if (cmp_double(temp, matrix[temp_row][temp_column]))
             {
@@ -260,7 +260,7 @@ double **multiplication(double **matrix_first, double **matrix_second, const int
         }
         for (int row_first = 0; row_first < rows_first; row_first++)
         {
-            for( int column_second = 0; column_second < columns_second; column_second++)
+            for (int column_second = 0; column_second < columns_second; column_second++)
             {
                 if (result_matrix[row_first][column_second] != 0)
                 {

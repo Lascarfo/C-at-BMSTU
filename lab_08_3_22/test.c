@@ -12,7 +12,7 @@
 int cmp_double_c(double l, double r)
 {
     double result = fabs(l - r);
-    if (result > eps)
+    if (result > EPS)
         return true;
     else
         return false;
