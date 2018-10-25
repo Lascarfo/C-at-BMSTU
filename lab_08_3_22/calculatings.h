@@ -15,10 +15,13 @@ int arithmetic(char **argv);
 void addition(double **matrix_first, double **matrix_second, const int rows, const int columns, int *positive_elements);
 double **multiplication(double **matrix_first, double **matrix_second, const int columns_first_rows_sec, const int rows_first, const int columns_second, int *positive_elements);
 void zero_filling(double **matrix, const int rows, const int columns);
-void elimination(double **matrix, int rows_columns);
+void method(double **matrix, double **res_matrix, const int rows, const int columns);
 bool cmp_double(double left, double right);
-//void swap(double **matrix, int *maximum, int row, int rows_columns);
-void index_of_max(double **matrix, int rows, int rows_columns, int *max_rows, int *max_columns);
-// void free_mem(double **matrix, const int rows);
+void index_of_max(const double **matrix, const int current, const int rows, int *max_rows, int *max_columns);
+void shift(double **matrix, const int max_row, const int max_column, const int current, const int rows);
+void my_div(double **matrix, const int rows, const int columns, const int current);
+void sub(double **matrix, const int rows, const int columns, int current);
+void fin_res(double **matrix, double **res_matrix, const int rows, const int columns);
+
 
 #endif

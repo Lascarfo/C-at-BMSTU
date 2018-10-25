@@ -8,28 +8,49 @@
 
 int gauss(char **argv)
 {
-    int rc = OK;
     FILE *file_in_1;
     FILE *file_out;
-    double **matrix_first = NULL;
     file_in_1 = fopen(argv[2], "r");
     if (file_in_1)
     {
         file_out = fopen(argv[3], "w");
         if (file_out)
         {
+            double **matrix_first = NULL;
             int rows_first, columns_first, positive_elements_first;
-            rc = read_matrix(file_in_1, &matrix_first, &rows_first, &columns_first, &positive_elements_first);
-            if ((rows_first == columns_first) && (rc == OK))
+            if (read_matrix(file_in_1, &matrix_first, &rows_first, &columns_first, &positive_elements_first) != OK)
             {
-                elimination(matrix_first, rows_first - 1);
+                fclose(file_out);
+                fclose(file_in_1);
+                return ERR_MATRIX;
+            }
+            if (rows_first == columns_first - 1)
+            {
+                double **res_matrix = NULL;
+                res_matrix = allocate_memory(rows_first, 1);
+                if (res_matrix)
+                {
+                    zero_filling(res_matrix, rows_first, 1);
+                    method(matrix_first, res_matrix, rows_first, columns_first);
+                    save(file_out, res_matrix, rows_first, 1, -1);
+                    free_mem(res_matrix, rows_first);
+                }
+                else
+                {
+                    free_mem(matrix_first, rows_first);
+                    fclose(file_out);
+                    fclose(file_in_1);
+                    return ERR_MATRIX;
+                }
             }
             else
             {
-                rc = ERR_MATRIX;
+                free_mem(matrix_first, rows_first);
+                fclose(file_out);
+                fclose(file_in_1);
+                return ERR_MATRIX;
             }
-            save(file_out, matrix_first, rows_first, columns_first, positive_elements_first);
-            free(matrix_first);
+            free_mem(matrix_first, rows_first);
             fclose(file_out);
             fclose(file_in_1);
         }
@@ -45,7 +66,7 @@ int gauss(char **argv)
         printf("error open file_in_1 for read\nplease input ./app.exe h\nfor help\n");
         return ERR_FILE;
     }
-    return rc;
+    return OK;
 }
 
 
@@ -174,57 +195,117 @@ void zero_filling(double **matrix, const int rows, const int columns)
 }
 
 
-void index_of_max(double **matrix, int rows, int rows_columns, int *max_rows, int *max_columns)
+void index_of_max(const double **matrix, const int current, const int rows, int *max_rows, int *max_columns)
 {
-    double temp = matrix[rows][rows];
-    for (int temp_row = rows; temp_row <= rows_columns; temp_row++)
+    double temp = matrix[current][current];
+    *max_rows = current;
+    *max_columns = current;
+    for (int row = current; row < rows; row++)
     {
-        for (int temp_column = rows; temp_column <= rows_columns; temp_column++)
+        if (cmp_double(temp, matrix[row][current]))
         {
-            if (cmp_double(temp, matrix[temp_row][temp_column]))
-            {
-                temp = matrix[temp_row][temp_column];
-                *max_rows = temp_row;
-                *max_columns = temp_column;
-            }
+            temp = matrix[row][current];
+            *max_rows = row;
+        }
+    }
+    for (int row = current; row < rows; row++)
+    {
+        if (cmp_double(temp, matrix[current][row]))
+        {
+            temp = matrix[current][row];
+            *max_rows = current;
+            *max_columns = row;
         }
     }
 }
 
-// void swap(double **matrix, int *maximum, int row, int rows_columns)
-// {
-// //    print_square(matrix, row, rows_columns);
-//     double temp_elem = 0.0;
-//     double *temp_row = matrix[row];
-//     matrix[row] = matrix[maximum[0]];
-//     matrix[maximum[0]] = temp_row;
-// //    print_square(matrix, row, rows_columns);
-//     for (int rows = row; rows <= rows_columns; rows++)
-//     {
-//         temp_elem = matrix[rows][row];
-//         matrix[rows][row] = matrix[rows][maximum[1]];
-//         matrix[rows][maximum[1]] = temp_elem;
-//     }
-// //    print_square(matrix, row, rows_columns);
-// }
 
-void elimination(double **matrix, int rows_columns)
+
+void method(double **matrix, double **res_matrix, const int rows, const int columns)
 {
-    int max_rows = rows_columns, max_columns = rows_columns;
-    int curr_row = 0;
-    int copy_of_rows_columns = rows_columns;
-    while (rows_columns > 0)
+    int max_row, max_column;
+    for (int current = 0; current < rows; current++)
     {
-        max_rows = curr_row;
-        max_columns = curr_row;
-        index_of_max(matrix, curr_row, copy_of_rows_columns, &max_rows, &max_columns);
-        printf("maximum %d %d\n", max_rows, max_columns);
-//        swap(matrix, maximum, curr_row, copy_of_rows_columns);
-        curr_row++;
-        rows_columns--;
+        // printf("matrix\n");
+        // print_square(matrix, rows, columns);
+        index_of_max((const double**)(matrix), current, rows, &max_row, &max_column);
+        shift(matrix, max_row, max_column, current, rows);
+        // printf("shift_func\n");
+        // print_square(matrix, rows, columns);
+        my_div(matrix, rows, columns, current);
+        // printf("my_div_func\n");
+        // print_square(matrix, rows, columns);
+        if (current + 1 != rows)
+        {
+            sub(matrix, rows, columns, current + 1);
+            // printf("sub_func\n");
+            // print_square(matrix, rows, columns);
+        }
+        //printf("iter: %d, row: %d, column: %d\n", current + 1, max_row + 1, max_column + 1);
+    }
+    fin_res(matrix, res_matrix, rows, columns);
+}
+
+void shift(double **matrix, const int max_row, const int max_column, const int current, const int rows)
+{
+    double temp_elem = 0.0;
+    if (max_column == current)
+    {
+        double *temp_row = matrix[current];
+        matrix[current] = matrix[max_row];
+        matrix[max_row] = temp_row;
+    }
+    else
+    {
+        for (int row = current; row < rows; row++)
+        {
+            temp_elem = matrix[row][current];
+            matrix[row][current] = matrix[row][max_column];
+            matrix[row][max_column] = temp_elem;
+        }
     }
 }
 
+void my_div(double **matrix, const int rows, const int columns, const int current)
+{
+    double divider = matrix[current][current];
+    for (int column = current; column < columns; column++)
+    {
+        matrix[current][column] /= divider;
+    }
+}
+
+void sub(double **matrix, const int rows, const int columns, int current)
+{
+    double factor = 0;
+    for (int row = current; row < rows; row++)
+    {
+        factor = -matrix[row][current - 1];
+        for (int column = current - 1; column < columns; column++)
+        {
+            matrix[row][column] += (factor * matrix[current - 1][column]);
+        }
+    }
+}
+
+void fin_res(double **matrix, double **res_matrix, const int rows, const int columns)
+{
+    int current = (int)(columns) - 2;
+    int x_stage = 1;
+    res_matrix[rows - 1][0] = matrix[rows - 1][columns - 1];
+    for (int row = rows - 2; row >= 0; row--)
+    {
+        x_stage = 1;
+        for (int column = columns - 2; column >= current; column--)
+        {
+            matrix[row][columns - 1] -= matrix[row][column] * matrix[rows - x_stage][columns - 1];
+            x_stage++;
+        }
+        current--;
+        res_matrix[row][0] = matrix[row][columns - 1];
+//        printf("res: %f\n", res_matrix[row][0]);
+    }
+}
 
 void addition(double **matrix_first, double **matrix_second, const int rows, const int columns, int *positive_elements)
 {

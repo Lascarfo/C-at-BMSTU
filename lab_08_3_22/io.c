@@ -30,7 +30,10 @@ int read_elems(FILE *in, const int rows, const int columns, const int positive_e
     int cache_row, cache_column;
     for (int index = 0; index < positive_elements; index++)
     {
-        fscanf(in, "%d %d %lf", &cache_row, &cache_column, &cache_double);
+        if (fscanf(in, "%d %d %lf", &cache_row, &cache_column, &cache_double) != 3)
+        {
+            return ERR_MATRIX;
+        }
         if ((cache_row < 1 || cache_row > rows) || (cache_column < 1 || cache_column > columns))
         {
             return ERR_MATRIX;
@@ -65,7 +68,14 @@ int read_matrix(FILE *in, double ***matrix, int *rows, int *columns, int *positi
 
 void save(FILE *out, double **matrix, const int rows, const int columns, const int positive_elements)
 {
-    fprintf(out, "%d %d %d\n", rows, columns, positive_elements);
+    if (positive_elements == -1)
+    {
+        fprintf(out, "%d %d\n", rows, columns);
+    }
+    else
+    {
+        fprintf(out, "%d %d %d\n", rows, columns, positive_elements);
+    }
     for (int row = 0; row < rows; row++)
     {
         for (int column = 0; column < columns; column++)
@@ -84,16 +94,16 @@ void print_matrix(double **matrix, const int rows, const int columns, const int 
 }
 
 
-void print_square(double **matrix, int row, int rows_columns)
-{
-    printf("\n");
-    for (int temp_row = row; temp_row <= rows_columns; temp_row++)
-    {
-        for (int temp_column = row; temp_column <= rows_columns; temp_column++)
-        {
-            printf("%0.1lf ", matrix[temp_row][temp_column]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
+// void print_square(double **matrix, int row, int rows_columns)
+// {
+//     printf("\n");
+//     for (int temp_row = 0; temp_row < row; temp_row++)
+//     {
+//         for (int temp_column = 0; temp_column < rows_columns; temp_column++)
+//         {
+//             printf("%0.2lf ", matrix[temp_row][temp_column]);
+//         }
+//         printf("\n");
+//     }
+//     printf("\n");
+// }
