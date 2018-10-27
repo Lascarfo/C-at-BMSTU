@@ -1,12 +1,24 @@
+/**
+ \file
+ */
+
 #include <stdlib.h>
 
 #include "memory.h"
+
+
+/**
+* \brief функция, освобождающая память, которая была заняюта матрицей
+*/
 
 void free_mem(double **matrix, const int rows)
 {
     free(matrix);
 }
 
+/**
+* \brief эта функция выделяет память под матрицу
+*/
 
 double **allocate_memory(const int rows, const int columns)
 {
