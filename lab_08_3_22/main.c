@@ -1,9 +1,31 @@
+
+/**
+ * \author Яроцкий Даниил
+ * \brief это основная функция программы
+ * \details программа может выполнить три операции:
+ * 1. просуммировать две матрицы
+ * 2. перемножить две матрицы
+ * 3. найти решение СЛАУ методом Гаусса с максимальным элементом по строке и столбцу
+*/
+
 #include <stdio.h>
 #include <string.h>
 
 #include "calculatings.h"
 #include "io.h"
 
+
+/*!
+ * \file
+ * \fn int main(int argc, char* argv[])
+ *  \brief main function
+ *  \param argc an integer
+ *  \param argv an array of chars.
+ *  \exception symbols in file must been int
+ *  \return code of error
+ */
+
+ 
 int main(int argc, char **argv)
 {
     int rc = OK;

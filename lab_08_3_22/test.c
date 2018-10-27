@@ -8,6 +8,9 @@
 #include "memory.h"
 #include "calculatings.h"
 
+/**
+* \brief функция-компаратор для типа double
+*/
 
 int cmp_double_c(double l, double r)
 {
@@ -18,6 +21,12 @@ int cmp_double_c(double l, double r)
         return false;
     return true;
 }
+
+/**
+* \brief функция, сравнивающая две матрицы
+* \details функция сравнивает матрицу, полученную в результате работы отдельной
+* функции с результатом, предусмотренным пользователем
+*/
 
 bool check(double **matrix_first, double **result_matrix, int rows, int columns)
 {
@@ -34,6 +43,16 @@ bool check(double **matrix_first, double **result_matrix, int rows, int columns)
     return true;
 }
 
+/*!
+ * \file
+ * \fn int main(void)
+ *  \return code of error
+ */
+
+
+ /**
+ * \brief это основная функция программы, выполняющая модульные тесты
+ */
 
 int main(void)
 {

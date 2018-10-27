@@ -1,9 +1,21 @@
+/**
+ \file
+ */
+
 #include <stdbool.h>
 
 
 #include "calculatings.h"
 #include "io.h"
 #include "memory.h"
+
+
+
+/**
+* \brief функция, результатом выполнения которой является решение СЛАУ
+* \details эта функция работает считывает матрицу с файла и передает ее в
+* функцию method, где происходят дальнейшие вычисления, а затем сохраняет результат в файл
+*/
 
 
 int gauss(char **argv)
@@ -69,6 +81,13 @@ int gauss(char **argv)
     return OK;
 }
 
+
+/**
+* \brief функция, выполняющая арифметические операции
+* \details результатом вычислений этой функции является готовая матрица
+* состоящая либо из суммы элементов двух матриц, либо произведения
+* первой матрицы на вторую
+*/
 
 int arithmetic(char **argv)
 {
@@ -170,6 +189,14 @@ int arithmetic(char **argv)
     return rc;
 }
 
+
+/**
+* \brief компаратор для типа double
+* \details функция сравнивает два числа типа double с точностью EPS
+* и возвращает пользователю результат сравнения
+*/
+
+
 bool cmp_double(double left, double right)
 {
     if (fabs(left - right) <= EPS)
@@ -183,6 +210,11 @@ bool cmp_double(double left, double right)
     return false;
 }
 
+/**
+* \brief эта функция заполняет матрицу нулями
+*/
+
+
 void zero_filling(double **matrix, const int rows, const int columns)
 {
     for (int i = 0; i < rows; i++)
@@ -194,6 +226,11 @@ void zero_filling(double **matrix, const int rows, const int columns)
     }
 }
 
+/**
+* \brief функция находит индекс максимального элемента
+* \details функция записывает индекс максимального элемента
+* по строке и столбцу
+*/
 
 void index_of_max(const double **matrix, const int current, const int rows, int *max_rows, int *max_columns)
 {
@@ -220,31 +257,43 @@ void index_of_max(const double **matrix, const int current, const int rows, int 
 }
 
 
+/**
+* \brief основная функция рещения СЛАУ
+* \details в этой функции происходят различные операции
+* в итоге дающие решение СЛАУ
+*/
 
 void method(double **matrix, double **res_matrix, const int rows, const int columns)
 {
     int max_row, max_column;
     for (int current = 0; current < rows; current++)
     {
-        // printf("matrix\n");
-        // print_square(matrix, rows, columns);
+        printf("matrix\n");
+        print_square(matrix, rows, columns);
         index_of_max((const double**)(matrix), current, rows, &max_row, &max_column);
         shift(matrix, max_row, max_column, current, rows);
-        // printf("shift_func\n");
-        // print_square(matrix, rows, columns);
+        printf("shift_func\n");
+        print_square(matrix, rows, columns);
         my_div(matrix, rows, columns, current);
-        // printf("my_div_func\n");
-        // print_square(matrix, rows, columns);
+        printf("my_div_func\n");
+        print_square(matrix, rows, columns);
         if (current + 1 != rows)
         {
             sub(matrix, rows, columns, current + 1);
-            // printf("sub_func\n");
-            // print_square(matrix, rows, columns);
+            printf("sub_func\n");
+            print_square(matrix, rows, columns);
         }
-        //printf("iter: %d, row: %d, column: %d\n", current + 1, max_row + 1, max_column + 1);
+        printf("iter: %d, row: %d, column: %d\n", current + 1, max_row + 1, max_column + 1);
     }
     fin_res(matrix, res_matrix, rows, columns);
 }
+
+/**
+* \brief эта функция переставляет строки/столбцы местами
+* \details функция ставит строку/столбец таким образом, чтобы на диагонали
+* оказался главный элемент
+*/
+
 
 void shift(double **matrix, const int max_row, const int max_column, const int current, const int rows)
 {
@@ -266,6 +315,12 @@ void shift(double **matrix, const int max_row, const int max_column, const int c
     }
 }
 
+/**
+* \brief эта функция приводит делит строку на значение элемента диагонали
+*/
+
+
+
 void my_div(double **matrix, const int rows, const int columns, const int current)
 {
     double divider = matrix[current][current];
@@ -274,6 +329,13 @@ void my_div(double **matrix, const int rows, const int columns, const int curren
         matrix[current][column] /= divider;
     }
 }
+
+/**
+* \brief эта функция производит вычитание
+* \details функция вычитает первую строку из всех нижестоящих для получения нулей
+* в текущем столбце под диагональю
+*/
+
 
 void sub(double **matrix, const int rows, const int columns, int current)
 {
@@ -287,6 +349,10 @@ void sub(double **matrix, const int rows, const int columns, int current)
         }
     }
 }
+
+/**
+* \brief эта функция находит значения неизвестных по получившейся матрице
+*/
 
 void fin_res(double **matrix, double **res_matrix, const int rows, const int columns)
 {
@@ -307,6 +373,10 @@ void fin_res(double **matrix, double **res_matrix, const int rows, const int col
     }
 }
 
+/**
+* \brief эта функция производит сложение двух матриц
+*/
+
 void addition(double **matrix_first, double **matrix_second, const int rows, const int columns, int *positive_elements)
 {
     *positive_elements = 0;
@@ -322,6 +392,10 @@ void addition(double **matrix_first, double **matrix_second, const int rows, con
         }
     }
 }
+
+/**
+* \brief эта функция производит перемножение двух матриц
+*/
 
 double **multiplication(double **matrix_first, double **matrix_second, const int columns_first_rows_sec, const int rows_first, const int columns_second, int *positive_elements)
 {

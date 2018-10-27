@@ -1,3 +1,9 @@
+/**
+ \file
+ */
+
+
+
 #include "io.h"
 #include "const.h"
 #include "calculatings.h"
@@ -5,6 +11,10 @@
 
 
 
+/**
+* \brief эта функция считывает параметры
+* \details параметры –– количество строк, столбцов, положительных элементов
+*/
 
 int read_params(FILE *in, int *rows, int *columns, int *positive_elements)
 {
@@ -23,6 +33,9 @@ int read_params(FILE *in, int *rows, int *columns, int *positive_elements)
     return OK;
 }
 
+/**
+* \brief эта функция считывает элементы с матрицы
+*/
 
 int read_elems(FILE *in, const int rows, const int columns, const int positive_elements, double **matrix)
 {
@@ -42,6 +55,11 @@ int read_elems(FILE *in, const int rows, const int columns, const int positive_e
     }
     return OK;
 }
+
+/**
+* \brief это основная функция считывания матрицы
+* \details функция связывает read_elems() и read_params()
+*/
 
 int read_matrix(FILE *in, double ***matrix, int *rows, int *columns, int *positive_elements)
 {
@@ -65,6 +83,10 @@ int read_matrix(FILE *in, double ***matrix, int *rows, int *columns, int *positi
     return OK;
 }
 
+/**
+* \brief эта функция сохраняет матрицу в файл
+* \details матрица будет сохранена в координатном виде
+*/
 
 void save(FILE *out, double **matrix, const int rows, const int columns, const int positive_elements)
 {
@@ -88,10 +110,16 @@ void save(FILE *out, double **matrix, const int rows, const int columns, const i
     }
 }
 
+/**
+* \brief эта функция печатает матрицу
+*/
+
 void print_matrix(double **matrix, const int rows, const int columns, const int positive_elements)
 {
     save(stdout, matrix, rows, columns, positive_elements);
 }
+
+
 
 
 // void print_square(double **matrix, int row, int rows_columns)
