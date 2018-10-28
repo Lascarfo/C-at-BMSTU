@@ -1,10 +1,8 @@
 CC :=gcc
 CFLAGS :=-std=c99 -Wall -Werror -pedantic
 
-app.exe: main.o my_string.o
-	$(CC) $(CFLAGS) -o $@ $^
 
-test.exe: test.o memory.o calculatings.o io.o
+test.exe: test.o my_string.o
 	$(CC) $(CFLAGS) -g3 -o $@ $^
 
 %.o: %.c *.h

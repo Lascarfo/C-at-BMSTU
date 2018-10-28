@@ -44,11 +44,15 @@ int my_strcspn(const char *symbols, const char *deps)
 * то строка обрезается. При возникновении ошибки функция возвращает NULL.
 */
 
-char *my_strndup(const char *symbols, const int len)
+char *my_strndup(const char *symbols, int len)
 {
     if (symbols == NULL)
     {
         return NULL;
+    }
+    if (len < 0)
+    {
+        len = full_len(symbols);
     }
     int temp_len = 0;
     const char *temp_symbols = symbols;
@@ -83,4 +87,15 @@ char *my_strndup(const char *symbols, const int len)
         }
     }
     return drop;
+}
+
+int full_len(const char *symbols)
+{
+    int len = 0;
+    while (*symbols != '\0')
+    {
+        symbols++;
+        len++;
+    }
+    return len;
 }
