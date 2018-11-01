@@ -268,22 +268,22 @@ void method(double **matrix, double **res_matrix, const int rows, const int colu
     int max_row, max_column;
     for (int current = 0; current < rows; current++)
     {
-        printf("matrix\n");
-        print_square(matrix, rows, columns);
+        // printf("matrix\n");
+        // print_square(matrix, rows, columns);
         index_of_max((const double**)(matrix), current, rows, &max_row, &max_column);
         shift(matrix, max_row, max_column, current, rows);
-        printf("shift_func\n");
-        print_square(matrix, rows, columns);
+        // printf("shift_func\n");
+        // print_square(matrix, rows, columns);
         my_div(matrix, rows, columns, current);
-        printf("my_div_func\n");
-        print_square(matrix, rows, columns);
+        // printf("my_div_func\n");
+        // print_square(matrix, rows, columns);
         if (current + 1 != rows)
         {
             sub(matrix, rows, columns, current + 1);
-            printf("sub_func\n");
-            print_square(matrix, rows, columns);
+            // printf("sub_func\n");
+            // print_square(matrix, rows, columns);
         }
-        printf("iter: %d, row: %d, column: %d\n", current + 1, max_row + 1, max_column + 1);
+        // printf("iter: %d, row: %d, column: %d\n", current + 1, max_row + 1, max_column + 1);
     }
     fin_res(matrix, res_matrix, rows, columns);
 }
