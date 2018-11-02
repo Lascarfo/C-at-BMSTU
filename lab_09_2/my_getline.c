@@ -1,6 +1,21 @@
+
+/**
+ \file
+*/
+
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+
 #include "my_getline.h"
+#include "str_replace.h"
 #include "string.h"
 #include "const.h"
+
+
+/**
+* \brief функция считывает строку из выделенного потока
+*/
 
 int my_getline(char **lineptr, size_t *n, FILE *stream)
 {
@@ -12,7 +27,7 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
         {
             if (fgets(*lineptr + sym_count, BUFFER, stream) != NULL)
             {
-                sym_count = full_len(*lineptr);
+                sym_count = str_len(*lineptr);
                 *n += BUFFER;
                 *lineptr = realloc(*lineptr, *n);
             }
@@ -23,15 +38,4 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
         sym_count = ERR_MEMORY;
     }
     return sym_count;
-}
-
-int full_len(const char *symbols)
-{
-    int len = 0;
-    while (*symbols != '\0')
-    {
-        symbols++;
-        len++;
-    }
-    return len;
 }
