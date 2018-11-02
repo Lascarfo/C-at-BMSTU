@@ -3,7 +3,9 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <stdbool.h>
 
 int my_getline(char **lineptr, size_t *n, FILE *stream);
+bool end_of_line(const char *line, const int sym_count);
 
 #endif
