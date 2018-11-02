@@ -5,6 +5,7 @@
 #include <stdbool.h>
 
 #include "my_string.h"
+#include "const.h"
 
 
 /**
@@ -89,6 +90,10 @@ int main(void)
         const char first[] = "3.141592653589793238";
         const int barrier = 4;
         mind = my_strndup(first, barrier);
+        if (!mind)
+        {
+            return ERR_MEMORY;
+        }
         //not_mind = strndup(first, barrier);
         // printf("my_strndup: %s\n", mind);
         // printf("strndup: %s\n", not_mind);
@@ -101,6 +106,7 @@ int main(void)
         {
             printf("test 1 not passed\n");
         }
+        free(mind);
     }
     {
         bool flag = false;
@@ -109,6 +115,10 @@ int main(void)
         const char first[] = "3.141592653589793238";
         const int barrier = 2;
         mind = my_strndup(first, barrier);
+        if (!mind)
+        {
+            return ERR_MEMORY;
+        }
         //not_mind = strndup(first, barrier);
         flag = cmp_strings(mind, not_mind);
         if (flag)
@@ -119,6 +129,7 @@ int main(void)
         {
             printf("test 2 not passed\n");
         }
+        free(mind);
     }
     {
         bool flag = false;
@@ -127,6 +138,10 @@ int main(void)
         const char first[] = "3.141592653589793238";
         const int barrier = 0;
         mind = my_strndup(first, barrier);
+        if (!mind)
+        {
+            return ERR_MEMORY;
+        }
         //not_mind = strndup(first, barrier);
         flag = cmp_strings(mind, not_mind);
         if (flag)
@@ -137,6 +152,7 @@ int main(void)
         {
             printf("test 3 not passed\n");
         }
+        free(mind);
     }
     {
         bool flag = false;
@@ -145,6 +161,10 @@ int main(void)
         const char first[] = "3.141592653589793238";
         const int barrier = -1;
         mind = my_strndup(first, barrier);
+        if (!mind)
+        {
+            return ERR_MEMORY;
+        }
         //not_mind = strndup(first, barrier);
         flag = cmp_strings(mind, not_mind);
         if (flag)
@@ -155,6 +175,7 @@ int main(void)
         {
             printf("test 4 not passed\n");
         }
+        free(mind);
     }
     return 0;
 }
