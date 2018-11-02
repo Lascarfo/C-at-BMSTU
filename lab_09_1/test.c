@@ -4,6 +4,7 @@
 #include <string.h>
 #include <stdbool.h>
 #include "my_string.h"
+#include "string.h"
 
 
 /**
@@ -32,7 +33,7 @@ const bool cmp_strings(const char *first, const char *second)
 
 /**
 * \brief основная функция программы test.c
-* \details функция выполняет модульное тестирование 
+* \details функция выполняет модульное тестирование
 */
 
 int main(void)

@@ -60,10 +60,12 @@ int main(int argc, char *argv[])
                 if (out)
                 {
                     save(out, line);
+                    free(line);
                     fclose(out);
                 }
                 else
                 {
+                    free(line);
                     fclose(in);
                     rc = ERR_FILE;
                 }
@@ -71,9 +73,9 @@ int main(int argc, char *argv[])
             else
             {
                 fclose(in);
+                free(line);
                 rc = ERR_MEMORY;
             }
-            free(line);
         }
         else
         {
