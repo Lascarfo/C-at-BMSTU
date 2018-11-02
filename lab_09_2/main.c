@@ -67,7 +67,6 @@ int main(int argc, char *argv[])
                     rc = ERR_FILE;
                 }
                 free(line);
-
             }
             else
             {
