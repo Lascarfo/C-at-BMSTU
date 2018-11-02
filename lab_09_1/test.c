@@ -85,11 +85,11 @@ int main(void)
         printf("\ntests for my_strndup\n\n");
         bool flag = false;
         char *mind = NULL;
-        char *not_mind = NULL;
+        char *not_mind = "3.141";
         const char first[] = "3.141592653589793238";
         const int barrier = 4;
         mind = my_strndup(first, barrier);
-        not_mind = strndup(first, barrier);
+        //not_mind = strndup(first, barrier);
         // printf("my_strndup: %s\n", mind);
         // printf("strndup: %s\n", not_mind);
         flag = cmp_strings(mind, not_mind);
@@ -105,11 +105,11 @@ int main(void)
     {
         bool flag = false;
         char *mind = NULL;
-        char *not_mind = NULL;
+        char *not_mind = "3.";
         const char first[] = "3.141592653589793238";
         const int barrier = 2;
         mind = my_strndup(first, barrier);
-        not_mind = strndup(first, barrier);
+        //not_mind = strndup(first, barrier);
         flag = cmp_strings(mind, not_mind);
         if (flag)
         {
@@ -123,11 +123,11 @@ int main(void)
     {
         bool flag = false;
         char *mind = NULL;
-        char *not_mind = NULL;
+        char *not_mind = "";
         const char first[] = "3.141592653589793238";
         const int barrier = 0;
         mind = my_strndup(first, barrier);
-        not_mind = strndup(first, barrier);
+        //not_mind = strndup(first, barrier);
         flag = cmp_strings(mind, not_mind);
         if (flag)
         {
@@ -141,11 +141,11 @@ int main(void)
     {
         bool flag = false;
         char *mind = NULL;
-        char *not_mind = NULL;
+        char *not_mind = "3.141592653589793238";
         const char first[] = "3.141592653589793238";
         const int barrier = -1;
         mind = my_strndup(first, barrier);
-        not_mind = strndup(first, barrier);
+        //not_mind = strndup(first, barrier);
         flag = cmp_strings(mind, not_mind);
         if (flag)
         {
