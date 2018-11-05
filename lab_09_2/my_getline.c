@@ -24,7 +24,7 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
     *lineptr = malloc(BUFFER);
     if (*lineptr)
     {
-        while(feof(stream) == 0)
+        while (feof(stream) == 0)
         {
             if (fgets(*lineptr + sym_count, BUFFER, stream) != NULL)
             {

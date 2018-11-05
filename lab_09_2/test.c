@@ -19,20 +19,26 @@
  * \details сравнивает две строки, поступившие на вход
  */
 
-const bool cmp_strings(const char *first, const char *second)
-{
-    while (*second != '\0' && *first != '\0')
-    {
-        printf("132\n");
-        if (*first != *second)
-        {
-            return false;
-        }
-        first++;
-        second++;
-    }
-    return true;
-}
+ const bool cmp_strings(const char *first, const char *second)
+ {
+     int count = 0;
+     while (second[count] != '\0' || first[count] != '\0')
+     {
+         if (first[count] != second[count])
+         {
+             return false;
+         }
+         count++;
+     }
+     if (second[count] == '\0' && first[count] == '\0')
+     {
+         return true;
+     }
+     else
+     {
+         return false;
+     }
+ }
 
 /**
 * \brief основная функция программы test.c
@@ -153,6 +159,6 @@ int main(void)
         free(result);
 
     }
-    */ 
+    */
     return 0;
 }

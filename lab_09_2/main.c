@@ -31,7 +31,14 @@ const bool cmp_strings(const char *first, const char *second)
         }
         count++;
     }
-    return true;
+    if (second[count] == '\0' && first[count] == '\0')
+    {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
 }
 
 
