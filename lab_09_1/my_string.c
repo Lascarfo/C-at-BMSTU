@@ -44,50 +44,56 @@ int my_strcspn(const char *symbols, const char *deps)
 * то строка обрезается. При возникновении ошибки функция возвращает NULL.
 */
 
-char *my_strndup(const char *symbols, int len)
+char *my_strndup(const char *symbols, size_t len)
 {
     if (symbols == NULL)
     {
         return NULL;
     }
-    if (len < 0)
-    {
-        len = full_len(symbols);
-    }
-    int temp_len = 0;
-    const char *temp_symbols = symbols;
     char *drop = NULL;
-    while (*temp_symbols != '\0')
+    int temp_len = 0;
+    temp_len = full_len(symbols);
+    if (temp_len < len || len < 0)
     {
-        temp_len++;
-        temp_symbols++;
-    }
-    if (temp_len >= len)
-    {
-        drop = malloc(len);
+        drop = malloc(temp_len + 1);
         if (drop)
         {
-            memcpy(drop, symbols, len);
-        }
-        else
-        {
-            return NULL;
+            memcpy(drop, symbols, temp_len + 1);
         }
     }
     else
     {
-        drop = malloc(temp_len);
+        drop = malloc(len + 1);
         if (drop)
         {
-            memcpy(drop, symbols, temp_len);
-        }
-        else
-        {
-            return NULL;
+            sym_copy(drop, symbols, len);
         }
     }
+
     return drop;
 }
+
+
+char *sym_copy(char *line, const char *symbols, size_t len)
+{
+    if (len == 0)
+    {
+        *line = '\0';
+        return line;
+    }
+    while (len != 0)
+    {
+        *line = *symbols;
+        line++;
+        symbols++;
+        len--;
+        // printf("iter %zu\n", len);
+        // printf("line %c\n", *line);
+    }
+    *line = '\0';
+    return line;
+}
+
 
 int full_len(const char *symbols)
 {

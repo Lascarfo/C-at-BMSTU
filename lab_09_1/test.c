@@ -21,7 +21,7 @@
 const bool cmp_strings(const char *first, const char *second)
 {
     int count = 0;
-    while (second[count] != '\0' && first[count] != '\0')
+    while (second[count] != '\0' || first[count] != '\0')
     {
         if (first[count] != second[count])
         {
@@ -83,18 +83,18 @@ int main(void)
         }
     }
     {
-        printf("\ntests for my_strndup\n\n");
+        printf("\ntests for my_strndup\n\n"); // my_strndup
         bool flag = false;
         char *mind = NULL;
-        char *not_mind = "3.141";
-        const char first[] = "3.141592653589793238";
-        const int barrier = 4;
+        char *not_mind = "3.";
+        const char first[] = "3.14";
+        size_t barrier = 2;
         mind = my_strndup(first, barrier);
         if (!mind)
         {
             return ERR_MEMORY;
         }
-        //not_mind = strndup(first, barrier);
+        // not_mind = strndup(first, barrier);
         // printf("my_strndup: %s\n", mind);
         // printf("strndup: %s\n", not_mind);
         flag = cmp_strings(mind, not_mind);
@@ -111,9 +111,9 @@ int main(void)
     {
         bool flag = false;
         char *mind = NULL;
-        char *not_mind = "3.";
+        char *not_mind = "3.1";
         const char first[] = "3.141592653589793238";
-        const int barrier = 2;
+        size_t barrier = 3;
         mind = my_strndup(first, barrier);
         if (!mind)
         {
@@ -136,7 +136,7 @@ int main(void)
         char *mind = NULL;
         char *not_mind = "";
         const char first[] = "3.141592653589793238";
-        const int barrier = 0;
+        size_t barrier = 0;
         mind = my_strndup(first, barrier);
         if (!mind)
         {
@@ -157,17 +157,16 @@ int main(void)
     {
         bool flag = false;
         char *mind = NULL;
-        char *not_mind = "3.141592653589793238";
-        const char first[] = "3.141592653589793238";
-        const int barrier = -1;
-        mind = my_strndup(first, barrier);
-        free(mind);
+        char *not_mind = "3.14159265358979323";
+        const char first[] = "3.14159265358979323";
+        mind = my_strndup(first, -2);
         if (!mind)
         {
             return ERR_MEMORY;
         }
         //not_mind = strndup(first, barrier);
         flag = cmp_strings(mind, not_mind);
+        free(mind);
         if (flag)
         {
             printf("test 4 passed\n");
