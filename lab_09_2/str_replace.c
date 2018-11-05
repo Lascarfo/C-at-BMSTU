@@ -84,7 +84,7 @@ int entries_count(const char *source, const char *search, const int len_search)
 * выполнения цикла
 */
 
-void feel_func(char *line, const char *source, const char* search, const char* replace, const int len_search)
+void feel_func(char *line, const char *source, const char *search, const char *replace, const int len_search)
 {
     const char *temp_search = search;
     const char *temp_replace = replace;

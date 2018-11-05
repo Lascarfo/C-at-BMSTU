@@ -6,6 +6,6 @@
 #define ERR_READ 2
 #define ERR_INPUT 3
 #define ERR_MEMORY -1
-#define BUFFER 128
+#define BUFFER 120
 
 #endif
