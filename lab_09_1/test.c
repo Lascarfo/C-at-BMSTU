@@ -121,6 +121,7 @@ int main(void)
         }
         //not_mind = strndup(first, barrier);
         flag = cmp_strings(mind, not_mind);
+        free(mind);
         if (flag)
         {
             printf("test 2 passed\n");
@@ -129,7 +130,6 @@ int main(void)
         {
             printf("test 2 not passed\n");
         }
-        free(mind);
     }
     {
         bool flag = false;
@@ -144,6 +144,7 @@ int main(void)
         }
         //not_mind = strndup(first, barrier);
         flag = cmp_strings(mind, not_mind);
+        free(mind);
         if (flag)
         {
             printf("test 3 passed\n");
@@ -152,7 +153,6 @@ int main(void)
         {
             printf("test 3 not passed\n");
         }
-        free(mind);
     }
     {
         bool flag = false;
@@ -161,6 +161,7 @@ int main(void)
         const char first[] = "3.141592653589793238";
         const int barrier = -1;
         mind = my_strndup(first, barrier);
+        free(mind);
         if (!mind)
         {
             return ERR_MEMORY;
@@ -175,7 +176,6 @@ int main(void)
         {
             printf("test 4 not passed\n");
         }
-        free(mind);
     }
     return 0;
 }

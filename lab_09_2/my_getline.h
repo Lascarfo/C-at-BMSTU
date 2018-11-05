@@ -6,6 +6,6 @@
 #include <stdbool.h>
 
 int my_getline(char **lineptr, size_t *n, FILE *stream);
-bool end_of_line(const char *line, const int sym_count);
+bool end_of_line(const char *line, const int sym_count, unsigned int *length);
 
 #endif
