@@ -23,7 +23,7 @@ void save(FILE *out, const char *source);
 const bool cmp_strings(const char *first, const char *second)
 {
     int count = 0;
-    while (second[count] != '\0' && first[count] != '\0')
+    while (second[count] != '\0' || first[count] != '\0')
     {
         if (first[count] != second[count])
         {
@@ -50,27 +50,35 @@ int main(int argc, char *argv[])
         in = fopen(argv[1], "r");
         if (in)
         {
-            char *line = NULL;
+            char *line_get = NULL;
             size_t size_of_buffer = 0;
-            int len = my_getline(&line, &size_of_buffer, in);
-            if (len != ERR_MEMORY)
+            int len = my_getline(&line_get, &size_of_buffer, in);
+            if (line_get)
             {
-                line = str_replace(line, argv[4], argv[6]);
-                out = fopen(argv[2], "w");
-                if (out)
+                if (len != ERR_MEMORY)
                 {
-                    save(out, line);
-                    fclose(out);
+                    char *line_replace = NULL;
+                    line_replace = str_replace(line_get, argv[4], argv[6]);
+                    if (line_replace)
+                    {
+                        out = fopen(argv[2], "w");
+                        if (out)
+                        {
+                            save(out, line_replace);
+                        }
+                        else
+                        {
+                            rc = ERR_FILE;
+                        }
+                        fclose(out);
+                        free(line_replace);
+                    }
                 }
                 else
                 {
-                    rc = ERR_FILE;
+                    rc = ERR_MEMORY;
                 }
-                free(line);
-            }
-            else
-            {
-                rc = ERR_MEMORY;
+                free(line_get);
             }
             fclose(in);
         }

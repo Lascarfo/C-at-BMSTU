@@ -32,7 +32,6 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
                 sym_count = str_len(*lineptr);
                 if (end_of_line(*lineptr, sym_count, &length))
                 {
-
                     return sym_count;
                 }
                 *n += BUFFER;

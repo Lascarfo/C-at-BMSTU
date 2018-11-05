@@ -20,13 +20,12 @@ char *str_replace(const char *source, const char *search, const char *replace)
     const int search_len = str_len(search);
     const int replace_len = str_len(replace);
     const int entries = entries_count(source, search, search_len);
-    line = malloc(source_len + entries * (replace_len - search_len));
+    line = malloc(source_len + entries * (replace_len - search_len) + 1);
     if (line)
     {
         feel_func(line, source, search, replace, search_len);
 //        printf("string: %s\n", line);
     }
-
 
     return line;
 }
@@ -95,7 +94,7 @@ void feel_func(char *line, const char *source, const char* search, const char* r
         if (*source == *search)
         {
             temp_source = source;
-            while (*search == *source)
+            while (*search == *source && *source != '\0')
             {
                 search++;
                 source++;
@@ -103,13 +102,13 @@ void feel_func(char *line, const char *source, const char* search, const char* r
             source = temp_source;
             if ((search - temp_search) == len_search)
             {
-                source += len_search;
                 while (*replace != '\0')
                 {
                     *line = *replace;
                     line++;
                     replace++;
                 }
+				source += len_search;
                 replace = temp_replace;
             }
             else
@@ -118,7 +117,7 @@ void feel_func(char *line, const char *source, const char* search, const char* r
                 line++;
                 source++;
             }
-            search = temp_search;
+			search = temp_search;
         }
         else
         {
@@ -127,6 +126,5 @@ void feel_func(char *line, const char *source, const char* search, const char* r
             source++;
         }
     }
-    line++;
     *line = '\0';
 }
