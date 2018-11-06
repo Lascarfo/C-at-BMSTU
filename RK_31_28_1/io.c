@@ -28,3 +28,17 @@ int read_matrix(FILE *file, double **matrix, const int rows, const int columns)
     }
     return OK;
 }
+
+
+
+void print_matrix(double **matrix, const int rows, const int columns)
+{
+    for (int row = 0; row < rows; row++)
+    {
+        for (int column = 0; column < columns; column++)
+        {
+            printf("%0.0lf ", matrix[row][column]);
+        }
+        printf("\n");
+    }
+}

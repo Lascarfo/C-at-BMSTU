@@ -6,6 +6,7 @@
 #define ERR_MATRIX 2
 #define ERR_SORT 3
 #define ERR_MEMORY 4
+#define EPS 0.00001
 
 
 #endif

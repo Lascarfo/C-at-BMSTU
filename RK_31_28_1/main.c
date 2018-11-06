@@ -31,40 +31,41 @@ int main(int argc, char **argv)
                         if (strcmp(argv[2], "s") == 0)
                         {
                             sort_matrix(matrix, rows, columns);
+                            print_matrix(matrix, rows, columns);
                         }
                         else
                         {
-                            rc = OK;
+                            unsigned int count = 0;
+                            unique_elems(matrix, rows, columns, &count);
+                            printf("unqie elements in matrix: %d\n", count);
                         }
                     }
                     else
                     {
-                        free_mem(matrix, rows);
-                        fclose(file);
                         rc = ERR_MATRIX;
                     }
+                    free_mem(matrix, rows);
                 }
                 else
                 {
-                    fclose(file);
                     rc = ERR_MEMORY;
                 }
             }
             else
             {
-                fclose(file);
                 rc = ERR_MATRIX;
             }
+            fclose(file);
         }
         else
         {
-            //usage();
+            usage();
             rc = ERR_FILE;
         }
     }
     else
     {
-        //usage();
+        usage();
         rc = ERR_FILE;
     }
     return rc;
