@@ -13,7 +13,7 @@
 
 /**
 * \brief эта функция считывает параметры
-* \details параметры –– количество строк, столбцов, положительных элементов
+* \details параметры –– количество строк, столбцов, ненулевых элементов
 */
 
 int read_params(FILE *in, int *rows, int *columns, int *positive_elements)
@@ -90,21 +90,14 @@ int read_matrix(FILE *in, double ***matrix, int *rows, int *columns, int *positi
 
 void save(FILE *out, double **matrix, const int rows, const int columns, const int positive_elements)
 {
-    if (positive_elements == -1)
-    {
-        fprintf(out, "%d %d\n", rows, columns);
-    }
-    else
-    {
-        fprintf(out, "%d %d %d\n", rows, columns, positive_elements);
-    }
+    fprintf(out, "%d %d %d\n", rows, columns, positive_elements);
     for (int row = 0; row < rows; row++)
     {
         for (int column = 0; column < columns; column++)
         {
-            if (matrix[row][column] != 0)
+            if (cmp_w_null(0.0, matrix[row][column]))
             {
-                fprintf(out, "%d %d %0.3lf\n", row + 1, column + 1, matrix[row][column]);
+                fprintf(out, "%d %d %f\n", row + 1, column + 1, matrix[row][column]);
             }
         }
     }
@@ -121,7 +114,7 @@ void print_matrix(double **matrix, const int rows, const int columns, const int 
 
 
 
-
+//
 // void print_square(double **matrix, int row, int rows_columns)
 // {
 //     printf("\n");

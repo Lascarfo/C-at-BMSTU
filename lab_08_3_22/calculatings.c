@@ -20,6 +20,7 @@
 
 int gauss(char **argv)
 {
+    int rc = OK;
     FILE *file_in_1;
     FILE *file_out;
     file_in_1 = fopen(argv[2], "r");
@@ -29,56 +30,53 @@ int gauss(char **argv)
         if (file_out)
         {
             double **matrix_first = NULL;
-            int rows_first, columns_first, positive_elements_first;
+            int rows_first, columns_first, positive_elements_first, positive_elements;
             if (read_matrix(file_in_1, &matrix_first, &rows_first, &columns_first, &positive_elements_first) != OK)
             {
-                fclose(file_out);
-                fclose(file_in_1);
-                return ERR_MATRIX;
-            }
-            if (rows_first == columns_first - 1)
-            {
-                double **res_matrix = NULL;
-                res_matrix = allocate_memory(rows_first, 1);
-                if (res_matrix)
-                {
-                    zero_filling(res_matrix, rows_first, 1);
-                    method(matrix_first, res_matrix, rows_first, columns_first);
-                    save(file_out, res_matrix, rows_first, 1, -1);
-                    free_mem(res_matrix, rows_first);
-                }
-                else
+                if (matrix_first)
                 {
                     free_mem(matrix_first, rows_first);
-                    fclose(file_out);
-                    fclose(file_in_1);
-                    return ERR_MATRIX;
                 }
+                rc = ERR_MATRIX;
+            }
+            else if (matrix_first)
+            {
+                if (rows_first == columns_first - 1)
+                {
+                    double **res_matrix = NULL;
+                    res_matrix = allocate_memory(rows_first, 1);
+                    if (res_matrix)
+                    {
+                        zero_filling(res_matrix, rows_first, 1);
+                        method(matrix_first, res_matrix, rows_first, columns_first);
+                        positive_elements = not_null_elems(res_matrix, rows_first, 1);
+                        save(file_out, res_matrix, rows_first, 1, positive_elements);
+                        free_mem(res_matrix, rows_first);
+                    }
+                    else
+                    {
+                        rc = ERR_MATRIX;
+                    }
+                }
+                free_mem(matrix_first, rows_first);
             }
             else
             {
-                free_mem(matrix_first, rows_first);
-                fclose(file_out);
-                fclose(file_in_1);
-                return ERR_MATRIX;
+                rc = ERR_MATRIX;
             }
-            free_mem(matrix_first, rows_first);
             fclose(file_out);
-            fclose(file_in_1);
         }
         else
         {
-            printf("error open file_out for write\nplease input ./app.exe h\nfor help\n");
-            fclose(file_in_1);
-            return ERR_FILE;
+            rc = ERR_FILE;
         }
+        fclose(file_in_1);
     }
     else
     {
-        printf("error open file_in_1 for read\nplease input ./app.exe h\nfor help\n");
         return ERR_FILE;
     }
-    return OK;
+    return rc;
 }
 
 
@@ -110,81 +108,69 @@ int arithmetic(char **argv)
                 rows_first = rows_second = columns_first = columns_second = positive_elements_first = positive_elements_second = positive_elements = OK;
                 if (read_matrix(file_in_1, &matrix_first, &rows_first, &columns_first, &positive_elements_first) != OK)
                 {
-                    fclose(file_in_1);
-                    fclose(file_in_2);
-                    fclose(file_out);
-                    return ERR_MATRIX;
+                    if (matrix_first)
+                    {
+                        free_mem(matrix_first, rows_first);
+                    }
+                    rc = ERR_MATRIX;
                 }
-                if (read_matrix(file_in_2, &matrix_second, &rows_second, &columns_second, &positive_elements_second) != OK)
+                else if (read_matrix(file_in_2, &matrix_second, &rows_second, &columns_second, &positive_elements_second) != OK)
                 {
+                    if (matrix_second)
+                    {
+                        free_mem(matrix_second, rows_second);
+                    }
+                    rc = ERR_MATRIX;
+                }
+                else if (matrix_first)
+                {
+                    if (matrix_second)
+                    {
+                        if ((strcmp(argv[1], "a") == 0))
+                        {
+                            if ((columns_first = columns_second) && (rows_first == rows_second))
+                            {
+                                addition(matrix_first, matrix_second, rows_first, columns_first, &positive_elements);
+                                save(file_out, matrix_first, rows_first, columns_second, positive_elements);
+                            }
+                            else
+                            {
+                                rc = ERR_MATRIX;
+                            }
+                        }
+                        else
+                        {
+                            if (columns_first == rows_second)
+                            {
+                                double **matrix_multiply = multiplication(matrix_first, matrix_second, columns_first, rows_first, columns_second, &positive_elements);
+                                save(file_out, matrix_multiply, rows_first, columns_second, positive_elements);
+                            }
+                            else
+                            {
+                                rc = ERR_MATRIX;
+                            }
+                        }
+                        free_mem(matrix_second, rows_second);
+                    }
                     free_mem(matrix_first, rows_first);
-                    fclose(file_in_1);
-                    fclose(file_in_2);
-                    fclose(file_out);
-                    return ERR_MATRIX;
                 }
-                if ((strcmp(argv[1], "a") == 0))
-                {
-                    if ((columns_first = columns_second) && (rows_first == rows_second))
-                    {
-                        addition(matrix_first, matrix_second, rows_first, columns_first, &positive_elements);
-                        save(file_out, matrix_first, rows_first, columns_second, positive_elements);
-                    }
-                    else
-                    {
-                        free_mem(matrix_first, rows_first);
-                        free_mem(matrix_second, rows_second);
-
-                        fclose(file_in_1);
-                        fclose(file_in_2);
-                        fclose(file_out);
-                        rc = ERR_MATRIX;
-                    }
-                }
-                else if ((strcmp(argv[1], "m") == 0))
-                {
-                    if (columns_first == rows_second)
-                    {
-                        double **matrix_multiply = multiplication(matrix_first, matrix_second, columns_first, rows_first, columns_second, &positive_elements);
-                        save(file_out, matrix_multiply, rows_first, columns_second, positive_elements);
-                        free_mem(matrix_multiply, rows_first);
-                    }
-                    else
-                    {
-                        free_mem(matrix_first, rows_first);
-                        free_mem(matrix_second, rows_second);
-                        fclose(file_in_1);
-                        fclose(file_in_2);
-                        fclose(file_out);
-                        rc = ERR_MATRIX;
-                    }
-                }
-                free_mem(matrix_first, rows_first);
-                free_mem(matrix_second, rows_second);
-
-                fclose(file_in_1);
-                fclose(file_in_2);
                 fclose(file_out);
             }
             else
             {
-                printf("error open file_out for write\nplease input ./app.exe h\nfor help\n");
-                fclose(file_in_1);
-                fclose(file_in_2);
-                return ERR_FILE;
+                rc = ERR_FILE;
             }
+            fclose(file_in_2);
         }
         else
         {
-            printf("error open file_in_2 for read\nplease input ./app.exe h\nfor help\n");
-            fclose(file_in_1);
-            return ERR_FILE;
+            rc = ERR_FILE;
         }
+        fclose(file_in_1);
     }
     else
     {
-        printf("error open file_in_1 for read\nplease input ./app.exe h\nfor help\n");
-        return ERR_FILE;
+        rc = ERR_FILE;
     }
     return rc;
 }
@@ -208,6 +194,16 @@ bool cmp_double(double left, double right)
         return true;
     }
     return false;
+}
+
+
+bool cmp_w_null(double left, double right)
+{
+    if (fabs(left - right) <= EPS)
+    {
+        return false;
+    }
+    return true;
 }
 
 /**
@@ -315,6 +311,25 @@ void shift(double **matrix, const int max_row, const int max_column, const int c
     }
 }
 
+
+int not_null_elems(double **matrix, const int rows, const int columns)
+{
+    int count = 0;
+    for (int temp_row = 0; temp_row < rows; temp_row++)
+    {
+        for (int temp_column = 0; temp_column < columns; temp_column++)
+        {
+            if (cmp_w_null(0.0, matrix[temp_row][temp_column]))
+            {
+                count++;
+            }
+        }
+    }
+    return count;
+}
+
+
+
 /**
 * \brief эта функция приводит делит строку на значение элемента диагонали
 */
@@ -379,18 +394,14 @@ void fin_res(double **matrix, double **res_matrix, const int rows, const int col
 
 void addition(double **matrix_first, double **matrix_second, const int rows, const int columns, int *positive_elements)
 {
-    *positive_elements = 0;
     for (int row = 0; row < rows; row++)
     {
         for (int column = 0; column < columns; column++)
         {
             matrix_first[row][column] += matrix_second[row][column];
-            if (matrix_first[row][column] != 0)
-            {
-                (*positive_elements)++;
-            }
         }
     }
+    *positive_elements = not_null_elems(matrix_first, rows, columns);
 }
 
 /**
@@ -413,16 +424,7 @@ double **multiplication(double **matrix_first, double **matrix_second, const int
                 }
             }
         }
-        for (int row_first = 0; row_first < rows_first; row_first++)
-        {
-            for (int column_second = 0; column_second < columns_second; column_second++)
-            {
-                if (result_matrix[row_first][column_second] != 0)
-                {
-                    (*positive_elements)++;
-                }
-            }
-        }
+        *positive_elements = not_null_elems(result_matrix, rows_first, columns_second);
     }
     return result_matrix;
 }

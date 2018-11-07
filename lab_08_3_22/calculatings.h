@@ -22,6 +22,7 @@ void shift(double **matrix, const int max_row, const int max_column, const int c
 void my_div(double **matrix, const int rows, const int columns, const int current);
 void sub(double **matrix, const int rows, const int columns, int current);
 void fin_res(double **matrix, double **res_matrix, const int rows, const int columns);
+int not_null_elems(double **matrix, const int rows, const int columns);
 
 
 #endif
