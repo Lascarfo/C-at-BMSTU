@@ -143,7 +143,15 @@ int arithmetic(char **argv)
                             if (columns_first == rows_second)
                             {
                                 double **matrix_multiply = multiplication(matrix_first, matrix_second, columns_first, rows_first, columns_second, &positive_elements);
-                                save(file_out, matrix_multiply, rows_first, columns_second, positive_elements);
+                                if (matrix_multiply)
+                                {
+                                    save(file_out, matrix_multiply, rows_first, columns_second, positive_elements);
+                                    free_mem(matrix_multiply, rows_first);
+                                }
+                                else
+                                {
+                                    rc = ERR_MATRIX;
+                                }
                             }
                             else
                             {
@@ -411,7 +419,7 @@ void addition(double **matrix_first, double **matrix_second, const int rows, con
 double **multiplication(double **matrix_first, double **matrix_second, const int columns_first_rows_sec, const int rows_first, const int columns_second, int *positive_elements)
 {
     double **result_matrix = allocate_memory(rows_first, columns_second);
-    if (result_matrix != NULL)
+    if (result_matrix)
     {
         zero_filling(result_matrix, rows_first, columns_second);
         for (int row_first = 0; row_first < rows_first; row_first++)
