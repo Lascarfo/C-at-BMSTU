@@ -62,7 +62,7 @@ int main(void)
         {
             return ERR_FILE;
         }
-        const char expect[] = {'f', 'i', 'r', 's', 't', '\0'};
+        const char expect[] = { 'f', 'i', 'r', 's', 't', '\0' };
         if (cmp_strings(expect, line))
         {
             printf("passed\n");
@@ -82,7 +82,7 @@ int main(void)
         {
             return ERR_FILE;
         }
-        const char expect[] = {'s', 'e', 'c', 'o', 'n', 'd', '\0'};
+        const char expect[] = { 's', 'e', 'c', 'o', 'n', 'd', '\0' };
         if (cmp_strings(expect, line))
         {
             printf("passed\n");

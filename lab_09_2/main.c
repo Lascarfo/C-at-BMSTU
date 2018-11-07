@@ -72,12 +72,12 @@ int main(int argc, char *argv[])
                         if (out)
                         {
                             save(out, line_replace);
+                            fclose(out);
                         }
                         else
                         {
                             rc = ERR_FILE;
                         }
-                        fclose(out);
                         free(line_replace);
                     }
                 }
