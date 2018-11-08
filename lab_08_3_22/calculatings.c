@@ -15,6 +15,7 @@
 * \brief функция, результатом выполнения которой является решение СЛАУ
 * \details эта функция работает считывает матрицу с файла и передает ее в
 * функцию method, где происходят дальнейшие вычисления, а затем сохраняет результат в файл
+* \param argv в этом массиве хранятся символы, поданые на ввод
 */
 
 
@@ -85,6 +86,7 @@ int gauss(char **argv)
 * \details результатом вычислений этой функции является готовая матрица
 * состоящая либо из суммы элементов двух матриц, либо произведения
 * первой матрицы на вторую
+* \param argv в этом массиве хранятся символы, поданые на ввод
 */
 
 int arithmetic(char **argv)
@@ -188,6 +190,7 @@ int arithmetic(char **argv)
 * \brief компаратор для типа double
 * \details функция сравнивает два числа типа double с точностью EPS
 * и возвращает пользователю результат сравнения
+* \param  l, r Числа, проверяемые компаратором
 */
 
 
@@ -205,9 +208,14 @@ bool cmp_double(double left, double right)
 }
 
 
-bool cmp_w_null(double left, double right)
+/**
+* \brief функция, которая сравнивает поданное число с нулем с точностью EPS
+* \param number число для проверки
+*/
+
+bool cmp_w_null(double number)
 {
-    if (fabs(left - right) <= EPS)
+    if (fabs(number) < EPS)
     {
         return false;
     }
@@ -216,6 +224,9 @@ bool cmp_w_null(double left, double right)
 
 /**
 * \brief эта функция заполняет матрицу нулями
+* \param matrix исходная матрица
+* \param rows количество строк
+* \param columns количество столбцов
 */
 
 
@@ -234,6 +245,10 @@ void zero_filling(double **matrix, const int rows, const int columns)
 * \brief функция находит индекс максимального элемента
 * \details функция записывает индекс максимального элемента
 * по строке и столбцу
+* \param matrix исходная матрица
+* \param current текущий элемент
+* \param rows количесво строк
+* \param max_rows, max_columns переменные, в которых хранятся индексы максимального элемента
 */
 
 void index_of_max(const double **matrix, const int current, const int rows, int *max_rows, int *max_columns)
@@ -265,6 +280,10 @@ void index_of_max(const double **matrix, const int current, const int rows, int 
 * \brief основная функция рещения СЛАУ
 * \details в этой функции происходят различные операции
 * в итоге дающие решение СЛАУ
+* \param matrix матрица для обработки
+* \param res_matrix матрица, в которую записывается результат
+* \param rows количесво строк
+* \param columns количесво столбцов
 */
 
 void method(double **matrix, double **res_matrix, const int rows, const int columns)
@@ -296,6 +315,10 @@ void method(double **matrix, double **res_matrix, const int rows, const int colu
 * \brief эта функция переставляет строки/столбцы местами
 * \details функция ставит строку/столбец таким образом, чтобы на диагонали
 * оказался главный элемент
+* \param matrix исходная матрица
+* \param current текущий элемент
+* \param rows количесво строк
+* \param max_row, max_column переменные, в которых хранятся индексы максимального элемента
 */
 
 
@@ -319,6 +342,12 @@ void shift(double **matrix, const int max_row, const int max_column, const int c
     }
 }
 
+/**
+* \brief эта функция переставляет вычисляет количество ненулевых элемнтов
+* \param matrix исходная матрица
+* \param rows количесво строк
+* \param columns количесво столбцов
+*/
 
 int not_null_elems(double **matrix, const int rows, const int columns)
 {
@@ -327,7 +356,7 @@ int not_null_elems(double **matrix, const int rows, const int columns)
     {
         for (int temp_column = 0; temp_column < columns; temp_column++)
         {
-            if (cmp_w_null(0.0, matrix[temp_row][temp_column]))
+            if (cmp_w_null(matrix[temp_row][temp_column]))
             {
                 count++;
             }
@@ -340,6 +369,10 @@ int not_null_elems(double **matrix, const int rows, const int columns)
 
 /**
 * \brief эта функция приводит делит строку на значение элемента диагонали
+* \param matrix исходная матрица
+* \param rows количесво строк
+* \param columns количесво столбцов
+* \param current текущий элемент
 */
 
 
@@ -357,6 +390,9 @@ void my_div(double **matrix, const int rows, const int columns, const int curren
 * \brief эта функция производит вычитание
 * \details функция вычитает первую строку из всех нижестоящих для получения нулей
 * в текущем столбце под диагональю
+* \param rows количесво строк
+* \param columns количесво столбцов
+* \param current текущий элемент
 */
 
 
@@ -375,6 +411,10 @@ void sub(double **matrix, const int rows, const int columns, int current)
 
 /**
 * \brief эта функция находит значения неизвестных по получившейся матрице
+* \param matrix исходная матрица
+* \param res_matrix полученная матрица
+* \param rows количесво строк
+* \param columns количесво столбцов
 */
 
 void fin_res(double **matrix, double **res_matrix, const int rows, const int columns)
@@ -398,6 +438,10 @@ void fin_res(double **matrix, double **res_matrix, const int rows, const int col
 
 /**
 * \brief эта функция производит сложение двух матриц
+* \param matrix_first, matrix_second исходные матрицы
+* \param rows количесво строк
+* \param columns количесво столбцов
+* \param positive_elements количество ненулевых элементов
 */
 
 void addition(double **matrix_first, double **matrix_second, const int rows, const int columns, int *positive_elements)
@@ -414,6 +458,11 @@ void addition(double **matrix_first, double **matrix_second, const int rows, con
 
 /**
 * \brief эта функция производит перемножение двух матриц
+* \param matrix_first, matrix_second исходные матрицы
+* \param columns_first_rows_sec количесво строк второй, столбцов первой
+* \param rows_first количесво строк первой
+* \param columns_second количесво столбцов второй
+* \param positive_elements количество ненулевых элементов
 */
 
 double **multiplication(double **matrix_first, double **matrix_second, const int columns_first_rows_sec, const int rows_first, const int columns_second, int *positive_elements)

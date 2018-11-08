@@ -14,6 +14,10 @@
 /**
 * \brief эта функция считывает параметры
 * \details параметры –– количество строк, столбцов, ненулевых элементов
+* \param in файл для чтения
+* \param rows количество строк
+* \param columns количество столбцов
+* \param positive_elements количество ненулевых элементов
 */
 
 int read_params(FILE *in, int *rows, int *columns, int *positive_elements)
@@ -35,6 +39,11 @@ int read_params(FILE *in, int *rows, int *columns, int *positive_elements)
 
 /**
 * \brief эта функция считывает элементы с матрицы
+* \param in файл для чтения
+* \param rows количество строк
+* \param columns количество столбцов
+* \param positive_elements количество ненулевых элементов
+* \param matrix матрица, в которую будут записаны числа с файла
 */
 
 int read_elems(FILE *in, const int rows, const int columns, const int positive_elements, double **matrix)
@@ -59,6 +68,11 @@ int read_elems(FILE *in, const int rows, const int columns, const int positive_e
 /**
 * \brief это основная функция считывания матрицы
 * \details функция связывает read_elems() и read_params()
+* \param in файл для чтения
+* \param rows количество строк
+* \param columns количество столбцов
+* \param positive_elements количество ненулевых элементов
+* \param matrix исходная матрица
 */
 
 int read_matrix(FILE *in, double ***matrix, int *rows, int *columns, int *positive_elements)
@@ -86,6 +100,11 @@ int read_matrix(FILE *in, double ***matrix, int *rows, int *columns, int *positi
 /**
 * \brief эта функция сохраняет матрицу в файл
 * \details матрица будет сохранена в координатном виде
+* \param out файл для записи
+* \param rows количество строк
+* \param columns количество столбцов
+* \param positive_elements количество ненулевых элементов
+* \param matrix матрица для записи
 */
 
 void save(FILE *out, double **matrix, const int rows, const int columns, const int positive_elements)
@@ -95,7 +114,7 @@ void save(FILE *out, double **matrix, const int rows, const int columns, const i
     {
         for (int column = 0; column < columns; column++)
         {
-            if (cmp_w_null(0.0, matrix[row][column]))
+            if (cmp_w_null(matrix[row][column]))
             {
                 fprintf(out, "%d %d %f\n", row + 1, column + 1, matrix[row][column]);
             }
@@ -105,6 +124,10 @@ void save(FILE *out, double **matrix, const int rows, const int columns, const i
 
 /**
 * \brief эта функция печатает матрицу
+* \param rows количество строк
+* \param columns количество столбцов
+* \param positive_elements количество ненулевых элементов
+* \param matrix исходная матрица
 */
 
 void print_matrix(double **matrix, const int rows, const int columns, const int positive_elements)

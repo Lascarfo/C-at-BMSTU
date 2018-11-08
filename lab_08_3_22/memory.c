@@ -9,6 +9,8 @@
 
 /**
 * \brief функция, освобождающая память, которая была заняюта матрицей
+* \param matrix матрица для освобождения
+* \param rows количество строк
 */
 
 void free_mem(double **matrix, const int rows)
@@ -18,6 +20,8 @@ void free_mem(double **matrix, const int rows)
 
 /**
 * \brief эта функция выделяет память под матрицу
+* \param rows количество строк
+* \param columns количество столбцов
 */
 
 double **allocate_memory(const int rows, const int columns)

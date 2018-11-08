@@ -23,7 +23,7 @@ void my_div(double **matrix, const int rows, const int columns, const int curren
 void sub(double **matrix, const int rows, const int columns, int current);
 void fin_res(double **matrix, double **res_matrix, const int rows, const int columns);
 int not_null_elems(double **matrix, const int rows, const int columns);
-bool cmp_w_null(double left, double right);
+bool cmp_w_null(double number);
 
 
 #endif

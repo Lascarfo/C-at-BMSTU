@@ -10,6 +10,7 @@
 
 /**
 * \brief функция-компаратор для типа double
+* \param  l, r Числа, проверяемые компаратором
 */
 
 int cmp_double_c(double l, double r)
@@ -24,6 +25,9 @@ int cmp_double_c(double l, double r)
 
 /**
 * \brief функция, сравнивающая две матрицы
+* \param matrix_first, result_matrix матрицы для сравнения
+* \param rows количество строк
+* \param columns количество столбцов
 * \details функция сравнивает матрицу, полученную в результате работы отдельной
 * функции с результатом, предусмотренным пользователем
 */
@@ -46,12 +50,13 @@ bool check(double **matrix_first, double **result_matrix, int rows, int columns)
 /*!
  * \file
  * \fn int main(void)
- *  \return code of error
+ * \return code of error
  */
 
 
  /**
  * \brief это основная функция программы, выполняющая модульные тесты
+ * \param void
  */
 
 int main(void)
