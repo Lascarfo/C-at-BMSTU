@@ -28,9 +28,8 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
         {
             if (fgets(*lineptr + sym_count, BUFFER, stream) != NULL)
             {
-                unsigned int length = 0;
                 sym_count = str_len(*lineptr);
-                if (end_of_line(*lineptr, sym_count, &length))
+                if (end_of_line(*lineptr, sym_count))
                 {
                     return sym_count;
                 }
@@ -46,7 +45,7 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
     return sym_count;
 }
 
-bool end_of_line(const char *line, const int sym_count, unsigned int *length)
+bool end_of_line(const char *line, const int sym_count)
 {
     for (int symbol = 0; symbol < sym_count; symbol++)
     {

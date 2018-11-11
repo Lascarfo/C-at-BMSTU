@@ -55,21 +55,13 @@ char *my_strndup(const char *symbols, size_t len)
     temp_len = full_len(symbols);
     if (temp_len < len || len < 0)
     {
-        drop = malloc(temp_len + 1);
-        if (drop)
-        {
-            memcpy(drop, symbols, temp_len + 1);
-        }
+        len = temp_len;
     }
-    else
+    drop = malloc(len + 1);
+    if (drop)
     {
-        drop = malloc(len + 1);
-        if (drop)
-        {
-            sym_copy(drop, symbols, len);
-        }
+        sym_copy(drop, symbols, len);
     }
-
     return drop;
 }
 
