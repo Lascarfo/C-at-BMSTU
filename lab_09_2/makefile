@@ -1,7 +1,7 @@
 CC :=gcc
 CFLAGS :=-std=c99 -Wall -Werror -pedantic
 
-app.exe: main.o usage.o my_getline.o str_replace.o
+app.exe: main.o usage.o my_getline.o str_replace.o execution.o cmpr.o
 	$(CC) $(CFLAGS) $^ -o $@
 
 test.exe: test.o my_getline.o str_replace.o

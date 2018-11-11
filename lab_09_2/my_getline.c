@@ -20,19 +20,27 @@
 
 int my_getline(char **lineptr, size_t *n, FILE *stream)
 {
-    int sym_count = 0;
+    int sym_count = 0, full_count = 0;
     *lineptr = malloc(BUFFER);
+    char cache[BUFFER];
     if (*lineptr)
     {
-        while (feof(stream) == 0)
+        while (feof(stream) == 0 && *(*lineptr + full_count - 1) != '\n')
         {
-            if (fgets(*lineptr + sym_count, BUFFER, stream) != NULL)
+            if (fgets(cache, BUFFER, stream) != NULL)
             {
-                sym_count = str_len(*lineptr);
-                if (end_of_line(*lineptr, sym_count))
+                sym_count = str_len(cache);
+                sym_copy(*lineptr + full_count, cache, sym_count);
+                full_count += sym_count;
+                if (sym_count != BUFFER - 1)
                 {
-                    return sym_count;
+                    return full_count;
                 }
+                //
+                // if (end_of_line(*lineptr, sym_count))
+                // {
+                //     return sym_count;
+                // }
                 *n += BUFFER;
                 *lineptr = realloc(*lineptr, *n);
             }
@@ -40,20 +48,43 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
     }
     else
     {
-        sym_count = ERR_MEMORY;
+        full_count = ERR_MEMORY;
     }
-    return sym_count;
+    return full_count;
 }
 
-bool end_of_line(const char *line, const int sym_count)
+
+
+char *sym_copy(char *line, const char *symbols, size_t len)
 {
-    for (int symbol = 0; symbol < sym_count; symbol++)
+    if (len == 0)
     {
-        if (*line == '\0' || symbol == sym_count - 1)
-        {
-            return true;
-        }
-        line++;
+        *line = '\0';
+        return line;
     }
-    return false;
+    while (len != 0)
+    {
+        *line = *symbols;
+        line++;
+        symbols++;
+        len--;
+        // printf("iter %zu\n", len);
+        // printf("line %c\n", *line);
+    }
+    *line = '\0';
+    return line;
 }
+
+
+// bool end_of_line(const char *line, const int sym_count)
+// {
+//     for (int symbol = 0; symbol < sym_count; symbol++)
+//     {
+//         if (*line == '\0' || symbol == sym_count - 1)
+//         {
+//             return true;
+//         }
+//         line++;
+//     }
+//     return false;
+// }
