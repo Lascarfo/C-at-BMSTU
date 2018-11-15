@@ -5,6 +5,7 @@
 
 bool cmpr_rows(double *row1, double *row2, const int columns);
 void sort_matrix(double **matrix, const int rows, const int columns);
-void unique_elems(double **matrix, int rows, int columns, unsigned int *count);
+unsigned int unique_elems(double *row, int columns);
+int cmp_double(double left, double right);
 
 #endif

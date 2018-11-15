@@ -88,7 +88,10 @@ int main(void)
         double first[2][3] = { { 1.0, 2.0, 3.0 }, { 3.0, 4.0, 5.0 } };
         double *matrix[2] = { first[0], first[1] };
         unsigned int count = 0;
-        unique_elems(matrix, 2, 3, &count);
+        for (int row = 0; row < 2; row++)
+        {
+            count += unique_elems(matrix[row], 3);
+        }
         if (count == 2)
         {
             printf("passed\n");
@@ -103,7 +106,10 @@ int main(void)
         double first[2][3] = { { 1.0, 2.0, 2.0 }, { 3.0, 4.0, 4.0 } };
         double *matrix[2] = { first[0], first[1] };
         unsigned int count = 0;
-        unique_elems(matrix, 2, 3, &count);
+        for (int row = 0; row < 2; row++)
+        {
+            count += unique_elems(matrix[row], 3);
+        }
         if (count == 0)
         {
             printf("passed\n");
@@ -118,7 +124,10 @@ int main(void)
         double first[2][3] = { { 1.0, 2.0, 0 }, { 3.0, 4.0, 5.0 } };
         double *matrix[2] = { first[0], first[1] };
         unsigned int count = 0;
-        unique_elems(matrix, 2, 3, &count);
+        for (int row = 0; row < 2; row++)
+        {
+            count += unique_elems(matrix[row], 3);
+        }
         if (count == 1)
         {
             printf("passed\n");

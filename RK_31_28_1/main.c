@@ -36,7 +36,10 @@ int main(int argc, char **argv)
                         else
                         {
                             unsigned int count = 0;
-                            unique_elems(matrix, rows, columns, &count);
+                            for (int row = 0; row < rows; row++)
+                            {
+                                count += unique_elems(matrix[row], columns);
+                            }
                             printf("unqie elements in matrix: %d\n", count);
                         }
                     }
