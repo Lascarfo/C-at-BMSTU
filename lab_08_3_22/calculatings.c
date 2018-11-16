@@ -15,32 +15,29 @@
 * \brief функция, результатом выполнения которой является решение СЛАУ
 * \details эта функция работает считывает матрицу с файла и передает ее в
 * функцию method, где происходят дальнейшие вычисления, а затем сохраняет результат в файл
-* \param argv в этом массиве хранятся символы, поданые на ввод
+* \param name_in имя файла, в котором находится первая матрица
+* \param name_out имя файла, в котором будет находится матрица решений СЛАУ
 */
 
 
-int gauss(char **argv)
+int gauss(char *name_in, char *name_out)
 {
     int rc = OK;
     FILE *file_in_1;
     FILE *file_out;
-    file_in_1 = fopen(argv[2], "r");
+    file_in_1 = fopen(name_in, "r"); // 2
     if (file_in_1)
     {
-        file_out = fopen(argv[3], "w");
+        file_out = fopen(name_out, "w");  // 3
         if (file_out)
         {
             double **matrix_first = NULL;
             int rows_first, columns_first, positive_elements_first, positive_elements;
             if (read_matrix(file_in_1, &matrix_first, &rows_first, &columns_first, &positive_elements_first) != OK)
             {
-                if (matrix_first)
-                {
-                    free_mem(matrix_first, rows_first);
-                }
                 rc = ERR_MATRIX;
             }
-            else if (matrix_first)
+            else
             {
                 if (rows_first == columns_first - 1)
                 {
@@ -56,14 +53,10 @@ int gauss(char **argv)
                     }
                     else
                     {
-                        rc = ERR_MATRIX;
+                        rc = ERR_INPUT;
                     }
                 }
                 free_mem(matrix_first, rows_first);
-            }
-            else
-            {
-                rc = ERR_MATRIX;
             }
             fclose(file_out);
         }
@@ -82,14 +75,17 @@ int gauss(char **argv)
 
 
 /**
-* \brief функция, выполняющая арифметические операции
+* \brief функция, выполняющая операцию сложения над двумя матрицами
 * \details результатом вычислений этой функции является готовая матрица
-* состоящая либо из суммы элементов двух матриц, либо произведения
-* первой матрицы на вторую
-* \param argv в этом массиве хранятся символы, поданые на ввод
+* состоящая из суммы элементов двух матриц
+* \param name_in_1 имя файла, в котором находится первая матрица
+* \param name_in_2 имя файла, в котором находится вторая матрица
+* \param name_out имя файла, в котором будет находится результат работы функции
 */
 
-int arithmetic(char **argv)
+
+
+int addition_main(char *name_in_1, char *name_in_2, char *name_out)
 {
     int rc = OK;
     FILE *file_in_1;
@@ -97,90 +93,131 @@ int arithmetic(char **argv)
     FILE *file_out;
     double **matrix_first = NULL;
     double **matrix_second = NULL;
-    file_in_1 = fopen(argv[2], "r");
+    file_in_1 = fopen(name_in_1, "r");
     if (file_in_1)
     {
-        file_in_2 = fopen(argv[3], "r");
+        file_in_2 = fopen(name_in_2, "r");
         if (file_in_2)
         {
-            file_out = fopen(argv[4], "w");
-            if (file_out)
+            int rows_first, rows_second, columns_first, columns_second, positive_elements_first, positive_elements_second, positive_elements;
+            rows_first = rows_second = columns_first = columns_second = positive_elements_first = positive_elements_second = positive_elements = 0;
+            if (read_matrix(file_in_1, &matrix_first, &rows_first, &columns_first, &positive_elements_first) != OK)
             {
-                int rows_first, rows_second, columns_first, columns_second, positive_elements_first, positive_elements_second, positive_elements;
-                rows_first = rows_second = columns_first = columns_second = positive_elements_first = positive_elements_second = positive_elements = OK;
-                if (read_matrix(file_in_1, &matrix_first, &rows_first, &columns_first, &positive_elements_first) != OK)
-                {
-                    if (matrix_first)
-                    {
-                        free_mem(matrix_first, rows_first);
-                    }
-                    rc = ERR_MATRIX;
-                }
-                else if (read_matrix(file_in_2, &matrix_second, &rows_second, &columns_second, &positive_elements_second) != OK)
-                {
-                    if (matrix_second)
-                    {
-                        free_mem(matrix_second, rows_second);
-                    }
-                    rc = ERR_MATRIX;
-                }
-                else if (matrix_first)
-                {
-                    if (matrix_second)
-                    {
-                        if ((strcmp(argv[1], "a") == 0))
-                        {
-                            if ((columns_first = columns_second) && (rows_first == rows_second))
-                            {
-                                addition(matrix_first, matrix_second, rows_first, columns_first, &positive_elements);
-                                save(file_out, matrix_first, rows_first, columns_second, positive_elements);
-                            }
-                            else
-                            {
-                                rc = ERR_MATRIX;
-                            }
-                        }
-                        else
-                        {
-                            if (columns_first == rows_second)
-                            {
-                                double **matrix_multiply = multiplication(matrix_first, matrix_second, columns_first, rows_first, columns_second, &positive_elements);
-                                if (matrix_multiply)
-                                {
-                                    save(file_out, matrix_multiply, rows_first, columns_second, positive_elements);
-                                    free_mem(matrix_multiply, rows_first);
-                                }
-                                else
-                                {
-                                    rc = ERR_MATRIX;
-                                }
-                            }
-                            else
-                            {
-                                rc = ERR_MATRIX;
-                            }
-                        }
-                        free_mem(matrix_second, rows_second);
-                    }
-                    free_mem(matrix_first, rows_first);
-                }
-                fclose(file_out);
+                rc = ERR_MATRIX;
+            }
+            else if (read_matrix(file_in_2, &matrix_second, &rows_second, &columns_second, &positive_elements_second) != OK)
+            {
+                free_mem(matrix_first, rows_first);
+                rc = ERR_MATRIX;
             }
             else
             {
-                rc = ERR_FILE;
+                if ((columns_first = columns_second) && (rows_first == rows_second))
+                {
+                    double **matrix = NULL;
+                    matrix = allocate_memory(rows_first, columns_second);
+                    if (matrix)
+                    {
+                        addition(matrix_first, matrix_second, matrix, rows_first, columns_first);
+                        positive_elements = not_null_elems(matrix, rows_first, columns_second);
+                        file_out = fopen(name_out, "w");
+                        if (file_out)
+                        {
+                            save(file_out, matrix, rows_first, columns_second, positive_elements);
+                            fclose(file_out);
+                        }
+                        else
+                        {
+                            rc = ERR_FILE;
+                        }
+                        free_mem(matrix, rows_first);
+                    }
+                }
+                else
+                {
+                    rc = ERR_INPUT;
+                }
+                free_mem(matrix_first, rows_first);
+                free_mem(matrix_second, rows_second);
             }
             fclose(file_in_2);
         }
-        else
-        {
-            rc = ERR_FILE;
-        }
         fclose(file_in_1);
     }
-    else
+    return rc;
+}
+
+
+
+/**
+* \brief функция, выполняющая операцию умножения двух матриц
+* \details результатом вычислений этой функции является готовая матрица
+* состоящая из произведения двух матриц
+* \param name_in_1 имя файла, в котором находится первая матрица
+* \param name_in_2 имя файла, в котором находится вторая матрица
+* \param name_out имя файла, в котором будет находится результат работы функции
+*/
+
+int multiplication_main(char *name_in_1, char *name_in_2, char *name_out)
+{
+    int rc = OK;
+    FILE *file_in_1;
+    FILE *file_in_2;
+    FILE *file_out;
+    double **matrix_first = NULL;
+    double **matrix_second = NULL;
+    file_in_1 = fopen(name_in_1, "r");
+    if (file_in_1)
     {
-        rc = ERR_FILE;
+        file_in_2 = fopen(name_in_2, "r");
+        if (file_in_2)
+        {
+            int rows_first, rows_second, columns_first, columns_second, positive_elements_first, positive_elements_second, positive_elements;
+            rows_first = rows_second = columns_first = columns_second = positive_elements_first = positive_elements_second = positive_elements = 0;
+            if (read_matrix(file_in_1, &matrix_first, &rows_first, &columns_first, &positive_elements_first) != OK)
+            {
+                rc = ERR_MATRIX;
+            }
+            else if (read_matrix(file_in_2, &matrix_second, &rows_second, &columns_second, &positive_elements_second) != OK)
+            {
+                free_mem(matrix_first, rows_first);
+                rc = ERR_MATRIX;
+            }
+            else
+            {
+                if (columns_first == rows_second)
+                {
+                    double **matrix_multiply = multiplication(matrix_first, matrix_second, columns_first, rows_first, columns_second);
+                    if (matrix_multiply)
+                    {
+                        positive_elements = not_null_elems(matrix_multiply, rows_first, columns_second);
+                        file_out = fopen(name_out, "w");
+                        if (file_out)
+                        {
+                            save(file_out, matrix_multiply, rows_first, columns_second, positive_elements);
+                            fclose(file_out);
+                        }
+                        else
+                        {
+                            rc = ERR_FILE;
+                        }
+                        free_mem(matrix_multiply, rows_first);
+                    }
+                    else
+                    {
+                        rc = ERR_MATRIX;
+                    }
+                }
+                else
+                {
+                    rc = ERR_MATRIX;
+                }
+                free_mem(matrix_first, rows_first);
+                free_mem(matrix_second, rows_second);
+            }
+            fclose(file_in_2);
+        }
+        fclose(file_in_1);
     }
     return rc;
 }
@@ -417,9 +454,9 @@ void sub(double **matrix, const int rows, const int columns, int current)
 * \param columns количесво столбцов
 */
 
-void fin_res(double **matrix, double **res_matrix, const int rows, const int columns)
+void fin_res(double **matrix, double **res_matrix, const int rows, int columns)
 {
-    int current = (int)(columns) - 2;
+    int current = columns - 2;
     int x_stage = 1;
     res_matrix[rows - 1][0] = matrix[rows - 1][columns - 1];
     for (int row = rows - 2; row >= 0; row--)
@@ -444,16 +481,15 @@ void fin_res(double **matrix, double **res_matrix, const int rows, const int col
 * \param positive_elements количество ненулевых элементов
 */
 
-void addition(double **matrix_first, double **matrix_second, const int rows, const int columns, int *positive_elements)
+void addition(double **matrix_first, double **matrix_second, double **matrix, const int rows, const int columns)
 {
     for (int row = 0; row < rows; row++)
     {
         for (int column = 0; column < columns; column++)
         {
-            matrix_first[row][column] += matrix_second[row][column];
+            matrix[row][column] = matrix_second[row][column] + matrix_first[row][column];
         }
     }
-    *positive_elements = not_null_elems(matrix_first, rows, columns);
 }
 
 /**
@@ -465,7 +501,7 @@ void addition(double **matrix_first, double **matrix_second, const int rows, con
 * \param positive_elements количество ненулевых элементов
 */
 
-double **multiplication(double **matrix_first, double **matrix_second, const int columns_first_rows_sec, const int rows_first, const int columns_second, int *positive_elements)
+double **multiplication(double **matrix_first, double **matrix_second, const int columns_first_rows_sec, const int rows_first, const int columns_second)
 {
     double **result_matrix = allocate_memory(rows_first, columns_second);
     if (result_matrix)
@@ -481,7 +517,6 @@ double **multiplication(double **matrix_first, double **matrix_second, const int
                 }
             }
         }
-        *positive_elements = not_null_elems(result_matrix, rows_first, columns_second);
     }
     return result_matrix;
 }

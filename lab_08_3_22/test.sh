@@ -5,7 +5,7 @@ function pause(){
 echo '\n'
 echo tests for flag a
 echo '\n'
-for i in 1 2 3 4 5;
+for i in 1 2 3 4;
 do
 ./app.exe a ./func_tests_addition/in_${i}_0.txt ./func_tests_addition/in_${i}_1.txt out.txt
 echo "check file out.txt and out_$i.txt"

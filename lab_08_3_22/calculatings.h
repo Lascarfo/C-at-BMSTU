@@ -10,10 +10,11 @@
 #include "const.h"
 #include "usage.h"
 
-int gauss(char **argv);
-int arithmetic(char **argv);
-void addition(double **matrix_first, double **matrix_second, const int rows, const int columns, int *positive_elements);
-double **multiplication(double **matrix_first, double **matrix_second, const int columns_first_rows_sec, const int rows_first, const int columns_second, int *positive_elements);
+int gauss(char *name_in, char *name_out);
+int multiplication_main(char *name_in_1, char *name_in_2, char *name_out);
+int addition_main(char *name_in_1, char *name_in_2, char *name_out);
+void addition(double **matrix_first, double **matrix_second, double **matrix, const int rows, const int columns);
+double **multiplication(double **matrix_first, double **matrix_second, const int columns_first_rows_sec, const int rows_first, const int columns_second);
 void zero_filling(double **matrix, const int rows, const int columns);
 void method(double **matrix, double **res_matrix, const int rows, const int columns);
 bool cmp_double(double left, double right);

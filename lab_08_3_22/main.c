@@ -25,17 +25,21 @@
  *  \return code of error
  */
 
- 
+
 int main(int argc, char **argv)
 {
     int rc = OK;
-    if ((argc == 5) && ((strcmp(argv[1], "a") == 0 || (strcmp(argv[1], "m")) == 0)))
+    if ((argc == 5) && (strcmp(argv[1], "a") == 0))
     {
-        rc = arithmetic(argv);
+        rc = addition_main(argv[2], argv[3], argv[4]);
+    }
+    else if ((argc == 5) && (strcmp(argv[1], "m") == 0))
+    {
+        rc = multiplication_main(argv[2], argv[3], argv[4]);
     }
     else if ((argc == 4) && (strcmp(argv[1], "o")) == 0)
     {
-        rc = gauss(argv);
+        rc = gauss(argv[2], argv[3]);
     }
     else if ((argc == 2) && (strcmp(argv[1], "h")) == 0)
     {

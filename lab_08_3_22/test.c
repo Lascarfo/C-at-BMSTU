@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 
-
+#include "io.h"
 #include "const.h"
 #include "memory.h"
 #include "calculatings.h"
@@ -116,9 +116,14 @@ int main(void)
         double *matrix1[3] = { mat_arr1[0], mat_arr1[1], mat_arr1[2] };
         double *matrix2[3] = { mat_arr2[0], mat_arr2[1], mat_arr2[2] };
         double *matrix3[3] = { mat_arr3[0], mat_arr3[1], mat_arr3[2] };
-
-        addition(matrix1, matrix2, rows, columns, &positive_elements);
-        if (check(matrix1, matrix3, rows, columns) && positive_elements == expect)
+        double **result_matrix = allocate_memory(rows, columns);
+        if (!result_matrix)
+        {
+            return ERR_MEMORY;
+        }
+        addition(matrix1, matrix2, result_matrix, rows, columns);
+        positive_elements = not_null_elems(result_matrix, rows, columns);
+        if (check(result_matrix, matrix3, rows, columns) && positive_elements == expect)
         {
             printf("passed\n");
         }
@@ -138,9 +143,14 @@ int main(void)
         double *matrix1[3] = { mat_arr1[0], mat_arr1[1], mat_arr1[2] };
         double *matrix2[3] = { mat_arr2[0], mat_arr2[1], mat_arr2[2] };
         double *matrix3[3] = { mat_arr3[0], mat_arr3[1], mat_arr3[2] };
-
-        addition(matrix1, matrix2, rows, columns, &positive_elements);
-        if (check(matrix1, matrix3, rows, columns) && positive_elements == expect)
+        double **result_matrix = allocate_memory(rows, columns);
+        if (!result_matrix)
+        {
+            return ERR_MEMORY;
+        }
+        addition(matrix1, matrix2, result_matrix, rows, columns);
+        positive_elements = not_null_elems(result_matrix, rows, columns);
+        if (check(result_matrix, matrix3, rows, columns) && positive_elements == expect)
         {
             printf("passed\n");
         }
@@ -160,9 +170,14 @@ int main(void)
         double *matrix1[3] = { mat_arr1[0], mat_arr1[1], mat_arr1[2] };
         double *matrix2[3] = { mat_arr2[0], mat_arr2[1], mat_arr2[2] };
         double *matrix3[3] = { mat_arr3[0], mat_arr3[1], mat_arr3[2] };
-
-        addition(matrix1, matrix2, rows, columns, &positive_elements);
-        if (check(matrix1, matrix3, rows, columns) && positive_elements == expect)
+        double **result_matrix = allocate_memory(rows, columns);
+        if (!result_matrix)
+        {
+            return ERR_MEMORY;
+        }
+        addition(matrix1, matrix2, result_matrix, rows, columns);
+        positive_elements = not_null_elems(result_matrix, rows, columns);
+        if (check(result_matrix, matrix3, rows, columns) && positive_elements == expect)
         {
             printf("passed\n");
         }
@@ -182,9 +197,14 @@ int main(void)
         double *matrix1[2] = { mat_arr1[0], mat_arr1[1] };
         double *matrix2[2] = { mat_arr2[0], mat_arr2[1] };
         double *matrix3[2] = { mat_arr3[0], mat_arr3[1] };
-
-        addition(matrix1, matrix2, rows, columns, &positive_elements);
-        if (check(matrix1, matrix3, rows, columns) && positive_elements == expect)
+        double **result_matrix = allocate_memory(rows, columns);
+        if (!result_matrix)
+        {
+            return ERR_MEMORY;
+        }
+        addition(matrix1, matrix2, result_matrix, rows, columns);
+        positive_elements = not_null_elems(result_matrix, rows, columns);
+        if (check(result_matrix, matrix3, rows, columns) && positive_elements == expect)
         {
             printf("passed\n");
         }
@@ -207,7 +227,8 @@ int main(void)
         double *matrix3[2] = { mat_arr3[0], mat_arr3[1] };
         double **matrix4 = NULL;
 
-        matrix4 = multiplication(matrix1, matrix2, rows, rows, columns, &positive_elements);
+        matrix4 = multiplication(matrix1, matrix2, rows, rows, columns);
+        positive_elements = not_null_elems(matrix4, rows, columns);
         if (check(matrix4, matrix3, rows, columns) && positive_elements == expect)
         {
             printf("passed\n");
@@ -231,7 +252,8 @@ int main(void)
         double *matrix3[2] = { mat_arr3[0], mat_arr3[1] };
         double **matrix4 = NULL;
 
-        matrix4 = multiplication(matrix1, matrix2, rows, rows, columns, &positive_elements);
+        matrix4 = multiplication(matrix1, matrix2, rows, rows, columns);
+        positive_elements = not_null_elems(matrix4, rows, columns);
         if (check(matrix4, matrix3, rows, columns) && positive_elements == expect)
         {
             printf("passed\n");
@@ -255,7 +277,8 @@ int main(void)
         double *matrix3[1] = { mat_arr3[0] };
         double **matrix4 = NULL;
 
-        matrix4 = multiplication(matrix1, matrix2, rows, rows, columns, &positive_elements);
+        matrix4 = multiplication(matrix1, matrix2, rows, rows, columns);
+        positive_elements = not_null_elems(matrix4, rows, columns);
         if (check(matrix4, matrix3, rows, columns) && positive_elements == expect)
         {
             printf("passed\n");
@@ -278,8 +301,8 @@ int main(void)
         double *matrix2[2] = { mat_arr2[0], mat_arr2[1] };
         double *matrix3[1] = { mat_arr3[0] };
         double **matrix4 = NULL;
-
-        matrix4 = multiplication(matrix1, matrix2, 2, rows, columns, &positive_elements);
+        matrix4 = multiplication(matrix1, matrix2, 2, rows, columns);
+        positive_elements = not_null_elems(matrix4, rows, columns);
         if (check(matrix4, matrix3, rows, columns) && positive_elements == expect)
         {
             printf("passed\n");
