@@ -137,17 +137,17 @@ void print_matrix(double **matrix, const int rows, const int columns, const int 
 
 
 
-
-void print_square(double **matrix, int row, int rows_columns)
-{
-    printf("\n");
-    for (int temp_row = 0; temp_row < row; temp_row++)
-    {
-        for (int temp_column = 0; temp_column < rows_columns; temp_column++)
-        {
-            printf("%0.2lf ", matrix[temp_row][temp_column]);
-        }
-        printf("\n");
-    }
-    printf("\n");
-}
+// 
+// void print_square(double **matrix, int row, int rows_columns)
+// {
+//     printf("\n");
+//     for (int temp_row = 0; temp_row < row; temp_row++)
+//     {
+//         for (int temp_column = 0; temp_column < rows_columns; temp_column++)
+//         {
+//             printf("%0.2lf ", matrix[temp_row][temp_column]);
+//         }
+//         printf("\n");
+//     }
+//     printf("\n");
+// }
