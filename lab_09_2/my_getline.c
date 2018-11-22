@@ -20,21 +20,36 @@
 
 int my_getline(char **lineptr, size_t *n, FILE *stream)
 {
-    int sym_count = 0;
+    if (!stream)
+    {
+        return ERR_FILE;
+    }
+    if (lineptr == NULL)
+    {
+        return ERR_MEMORY;
+    }
+    int sym_count = 0, len = 0;
     *lineptr = malloc(BUFFER);
+    char tmp[BUFFER];
     if (*lineptr)
     {
-        while (feof(stream) == 0)
+        while (*(*lineptr + len - 1) != '\n')
         {
-            if (fgets(*lineptr + sym_count, BUFFER, stream) != NULL)
+            if (fgets(tmp, BUFFER, stream) != NULL)
             {
-                sym_count = str_len(*lineptr);
-                if (end_of_line(*lineptr, sym_count))
+                sym_count = str_len(tmp);
+                sym_copy(*lineptr + len, tmp, sym_count);
+                len += sym_count;
+                if (end_of_line(*lineptr, len))
                 {
                     return sym_count;
                 }
                 *n += BUFFER;
                 *lineptr = realloc(*lineptr, *n);
+            }
+            else
+            {
+                break;
             }
         }
     }
