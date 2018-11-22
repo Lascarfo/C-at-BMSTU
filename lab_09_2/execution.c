@@ -17,7 +17,7 @@
 
 void save(FILE *out, const char *source)
 {
-    fprintf(out, "%s", source);
+    fprintf(out, "%s\n", source);
 }
 
 

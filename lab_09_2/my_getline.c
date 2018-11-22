@@ -20,9 +20,9 @@
 
 int my_getline(char **lineptr, size_t *n, FILE *stream)
 {
-    if (feof(stream))
+    if (feof(stream) || lineptr == NULL)
     {
-        return -1;
+        return ERR_MEMORY;
     }
     int sym_count = 0, full_count = 0;
     char cache[BUFFER];
