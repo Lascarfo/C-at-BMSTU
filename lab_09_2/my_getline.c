@@ -27,7 +27,7 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
     {
         return ERR_FILE;
     }
-    if (lineptr == NULL)
+    if (lineptr == NULL || n == NULL)
     {
         return ERR_MEMORY;
     }
@@ -57,7 +57,7 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
 
 int prepared_line(char **lineptr, size_t *n, FILE *stream)
 {
-    char cache[BUFFER];
+    char cache[BUFFER + 1];
     int sym_count = 0, full_count = 0, buff_count = 0;
     while (!end_of_line(*lineptr, full_count))
     {
@@ -108,7 +108,7 @@ int prepared_line(char **lineptr, size_t *n, FILE *stream)
 int not_prepared_line(char **lineptr, size_t *n, FILE *stream)
 {
     int sym_count = 0, full_count = 0;
-    char cache[BUFFER];
+    char cache[BUFFER + 1];
     *lineptr = malloc(BUFFER);
     *n = BUFFER;
     if (*lineptr)
