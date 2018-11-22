@@ -17,6 +17,8 @@
 /**
 * \brief точка входа
 * \details функция демонстрирует работу функций my_getline и str_replace
+* \param argc количество параметров
+* \param argv массив символов
 */
 
 int main(int argc, char *argv[])

@@ -13,6 +13,8 @@
 
 /**
 * \brief функция, для записи в файл
+* \param out файл для записи
+* \param source строка для записи
 */
 
 void save(FILE *out, const char *source)
@@ -24,6 +26,9 @@ void save(FILE *out, const char *source)
 
 /**
 * \brief функция, которая выполняет обработку всего файла
+* \param in файл для чтения
+* \param out файл для записи
+* \param argv массив символов, содержащий рабочие данные
 */
 
 

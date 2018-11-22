@@ -17,7 +17,10 @@
  /**
  * \brief строковый компаратор
  * \details сравнивает две строки, поступившие на вход
+ * \param first первая строка
+ * \param second вторая строка
  */
+
 
 const bool cmp_strings(const char *first, const char *second)
 {

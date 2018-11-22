@@ -16,6 +16,9 @@
 
 /**
 * \brief функция считывает строку из выделенного потока
+* \param lineptr, указатель на указатель на строку, в которую попадет финальная строка
+* \param n размер буфера
+* \param stream файл, из которого происходит считывание
 */
 
 int my_getline(char **lineptr, size_t *n, FILE *stream)
@@ -45,6 +48,12 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
 }
 
 
+/**
+* \brief функция производит считывание для строки с буфером, выделенным пользователем
+* \param lineptr, указатель на указатель на строку, в которую попадет финальная строка
+* \param n размер буфера
+* \param stream файл, из которого происходит считывание
+*/
 
 int prepared_line(char **lineptr, size_t *n, FILE *stream)
 {
@@ -80,12 +89,19 @@ int prepared_line(char **lineptr, size_t *n, FILE *stream)
     return full_count;
 }
 
+/**
+* \brief функция производит считывание для строки с невыделенным буфером
+* \param lineptr, указатель на указатель на строку, в которую попадет финальная строка
+* \param n размер буфера
+* \param stream файл, из которого происходит считывание
+*/
 
 int not_prepared_line(char **lineptr, size_t *n, FILE *stream)
 {
     int sym_count = 0, full_count = 0;
     char cache[BUFFER];
     *lineptr = malloc(BUFFER);
+    *n = BUFFER;
     if (*lineptr)
     {
         while (!end_of_line(*lineptr, full_count))
@@ -115,7 +131,12 @@ int not_prepared_line(char **lineptr, size_t *n, FILE *stream)
     return full_count;
 }
 
-
+/**
+* \brief функция производит посимвольное копирование из буффера в конечную строку
+* \param line конечная строка
+* \param symbols буффер
+* \param len размер строки в буффере
+*/
 
 void sym_copy(char *line, const char *symbols, size_t len)
 {
@@ -134,6 +155,13 @@ void sym_copy(char *line, const char *symbols, size_t len)
     }
 }
 
+
+
+/**
+* \brief функция определяет наличие детерменирующего нуля в конце строки
+* \param line конечная строка
+* \sym_count длина строки
+*/
 
 bool end_of_line(const char *line, const int sym_count)
 {

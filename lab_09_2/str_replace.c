@@ -13,7 +13,11 @@
 * \brief функция, выполняющая замену
 * \details эта функция выполняет замену в поданой строке source
 * строки search на строку replace
+* \param source исходная строка
+* \param search строка символов для замены
+* \param replace строка символов на которые будет произведена замена
 */
+
 
 char *str_replace(const char *source, const char *search, const char *replace)
 {
@@ -39,6 +43,7 @@ char *str_replace(const char *source, const char *search, const char *replace)
 
 /**
 * \brief функция считает длину строки
+* \param source исходная строка
 */
 
 int str_len(const char *source)
@@ -55,6 +60,9 @@ int str_len(const char *source)
 
 /**
 * \brief функция выполняет поиск строки в подстроке
+* \param line исходная строка
+* \param subline строка для поиска
+* \param len_search длина строки для поиска
 */
 
 bool substring(const char *line, const char *subline, const int len_search)
@@ -75,6 +83,9 @@ bool substring(const char *line, const char *subline, const int len_search)
 
 /**
 * \brief функция считает количество вхождений seach в source
+* \param source исходная строка
+* \param search строка для поиска
+* \param len_search длина строки для поиска
 */
 
 int entries_count(const char *source, const char *search, const int len_search)
@@ -100,6 +111,11 @@ int entries_count(const char *source, const char *search, const int len_search)
 * \brief функция, выполняющая заполнение строки
 * \details эта функция заполняет строку line, заменяя search на replace в ходе
 * выполнения цикла
+* \param line финальная строка
+* \param source исходная строка
+* \param search строка из символов, которые нужно заменить
+* \param replace строка из символов на которые нужно заменить
+* \param len_search длина строки, которую нужно заменить
 */
 
 void feel_func(char *line, const char *source, const char *search, const char *replace, const int len_search)
