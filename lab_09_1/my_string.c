@@ -53,7 +53,7 @@ char *my_strndup(const char *symbols, size_t len)
     char *drop = NULL;
     int temp_len = 0;
     temp_len = full_len(symbols);
-    if (temp_len < len || len != 0)
+    if (temp_len < len)
     {
         len = temp_len;
     }
