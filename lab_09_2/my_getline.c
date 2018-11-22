@@ -20,6 +20,10 @@
 
 int my_getline(char **lineptr, size_t *n, FILE *stream)
 {
+    if (feof(stream))
+    {
+        return -1;
+    }
     int sym_count = 0, full_count = 0;
     *lineptr = malloc(BUFFER);
     char cache[BUFFER];
@@ -36,11 +40,6 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
                 {
                     return full_count;
                 }
-                //
-                // if (end_of_line(*lineptr, sym_count))
-                // {
-                //     return sym_count;
-                // }
                 *n += BUFFER;
                 *lineptr = realloc(*lineptr, *n);
             }

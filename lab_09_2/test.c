@@ -62,7 +62,7 @@ int main(void)
         {
             return ERR_FILE;
         }
-        const char expect[] = { 'f', 'i', 'r', 's', 't', '\0' };
+        const char expect[] = { 'f', 'i', 'r', 's', 't', '\n','\0' };
         if (cmp_strings(expect, line))
         {
             printf("passed\n");
@@ -82,7 +82,7 @@ int main(void)
         {
             return ERR_FILE;
         }
-        const char expect[] = { 's', 'e', 'c', 'o', 'n', 'd', '\0' };
+        const char expect[] = { 's', 'e', 'c', 'o', 'n', 'd', '\n', '\0' };
         if (cmp_strings(expect, line))
         {
             printf("passed\n");
@@ -102,7 +102,7 @@ int main(void)
         {
             return ERR_FILE;
         }
-        const char expect[] = "third";
+        const char expect[] = "third\n";
         if (cmp_strings(expect, line))
         {
             printf("passed\n");
@@ -133,7 +133,6 @@ int main(void)
         }
     }
     fclose(file);
-    /*
     {
         printf("\ntests for str_replace\n\n");
         printf("1 test: ");
@@ -145,20 +144,80 @@ int main(void)
         {
             return ERR_MEMORY;
         }
-        printf("result %s\n", result);
-        printf("check %s\n", check);
-
-        // if (cmp_strings(result, check))
-        // {
-        //     printf("passed\n");
-        // }
-        // else
-        // {
-        //     printf("not passed\n");
-        // }
+        if (cmp_strings(result, check))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
         free(result);
 
     }
-    */
+    {
+        printf("2 test: ");
+        const char *string = "AAA";
+        const char *check = "AAA";
+        char *result = NULL;
+        result = str_replace(string, "С", "B");
+        if (result == NULL)
+        {
+            return ERR_MEMORY;
+        }
+        if (cmp_strings(result, check))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+        free(result);
+
+    }
+    {
+        printf("3 test: ");
+        const char *string = "";
+        const char *check = "";
+        char *result = NULL;
+        result = str_replace(string, "AAA", "B");
+        if (result == NULL)
+        {
+            return ERR_MEMORY;
+        }
+        if (cmp_strings(result, check))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+        free(result);
+
+    }
+    {
+        printf("4 test: ");
+        const char *string = "\n";
+        const char *check = "B";
+        char *result = NULL;
+        result = str_replace(string, "\n", "B");
+        if (result == NULL)
+        {
+            return ERR_MEMORY;
+        }
+        if (cmp_strings(result, check))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+        free(result);
+
+    }
+
     return 0;
 }

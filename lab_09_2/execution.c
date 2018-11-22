@@ -27,7 +27,7 @@ void save(FILE *out, const char *source)
 */
 
 
-int execution(FILE *in, const char **argv)
+int execution(FILE *in, FILE *out, const char **argv)
 {
     int rc = OK;
     FILE *out;
@@ -44,21 +44,10 @@ int execution(FILE *in, const char **argv)
         {
             if (len > 0)
             {
-                line_replace = NULL;
                 line_replace = str_replace(line_get, argv[4], argv[6]);
                 if (line_replace)
                 {
-                    out = fopen(argv[2], "a");
-                    if (out)
-                    {
-                        save(out, line_replace);
-                        fclose(out);
-                    }
-                    else
-                    {
-                        rc = ERR_FILE;
-                        len = 0;
-                    }
+                    save(out, line_replace);
                     free(line_replace);
                 }
             }

@@ -17,6 +17,11 @@
 
 char *str_replace(const char *source, const char *search, const char *replace)
 {
+    if (source == NULL || search == NULL || replace == NULL)
+    {
+        return NULL;
+    }
+
     char *line = NULL;
     const int source_len = str_len(source);
     const int search_len = str_len(search);
@@ -52,22 +57,18 @@ int str_len(const char *source)
 * \brief функция выполняет поиск строки в подстроке
 */
 
-bool substring(char **line, const char *subline, const int len_search)
+bool substring(const char *line, const char *subline, const int len_search)
 {
-    const char *begin = subline;
-    if (**line == *subline)
+    for (int i = 0; i < len_search; i++)
     {
-        while (**line == *subline)
+        if (*line != *subline)
         {
-            (*line)++;
-            subline++;
+            return false;
         }
-        if ((subline - begin) == len_search)
-        {
-            return true;
-        }
+        line++;
+        subline++;
     }
-    return false;
+    return true;
 }
 
 
@@ -81,9 +82,10 @@ int entries_count(const char *source, const char *search, const int len_search)
     int count = 0;
     while (*source != '\0')
     {
-        if (substring((char **)(&source), search, len_search))
+        if (substring(source, search, len_search))
         {
             count++;
+            source++;
         }
         else
         {
@@ -110,7 +112,7 @@ void feel_func(char *line, const char *source, const char *search, const char *r
         if (*source == *search)
         {
             temp_source = source;
-            if (substring((char **)(&temp_source), search, len_search))
+            if (substring(temp_source, search, len_search))
             {
                 while (*replace != '\0')
                 {
