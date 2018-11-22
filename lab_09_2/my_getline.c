@@ -28,30 +28,78 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
     {
         return ERR_MEMORY;
     }
-    int sym_count = 0;
-    *lineptr = malloc(BUFFER);
+    if (feof(stream))
+    {
+        return 0;
+    }
+    int sym_count = 0, full_count = 0;
+    char cache[BUFFER];
     if (*lineptr)
     {
-        while (feof(stream) == 0)
+        while (!end_of_line(*lineptr, full_count))
         {
-            if (fgets(*lineptr + sym_count, BUFFER, stream) != NULL)
+            if (fgets(cache, BUFFER, stream) != NULL)
             {
-                sym_count = str_len(*lineptr);
-                if (end_of_line(*lineptr, sym_count))
+                sym_count = str_len(cache);
+                if (*n >= sym_count && full_count == 0)
                 {
-                    return sym_count;
+                    sym_copy(*lineptr, cache, sym_count);
+                }
+                else if (*n < sym_count && full_count == 0)
+                {
+                    *n += BUFFER;
+                    *lineptr = realloc(*lineptr, *n);
+                    sym_copy(*lineptr, cache, sym_count);
+                }
+                else
+                {
+                    sym_copy(*lineptr + full_count, cache, sym_count);
+                }
+                full_count += sym_count;
+                if (sym_count != BUFFER - 1)
+                {
+                    return full_count;
                 }
                 *n += BUFFER;
                 *lineptr = realloc(*lineptr, *n);
+            }
+            else
+            {
+                return full_count;
             }
         }
     }
     else
     {
-        sym_count = ERR_MEMORY;
+        *lineptr = malloc(BUFFER);
+        if (*lineptr)
+        {
+            while (!end_of_line(*lineptr, full_count))
+            {
+                if (fgets(cache, BUFFER, stream) != NULL)
+                {
+                    sym_count = str_len(cache);
+                    sym_copy(*lineptr + full_count, cache, sym_count);
+                    full_count += sym_count;
+                    if (sym_count != BUFFER - 1)
+                    {
+                        return full_count;
+                    }
+                    *n += BUFFER;
+                    *lineptr = realloc(*lineptr, *n);
+                }
+                else
+                {
+                    return full_count;
+                }
+            }
+        }
+        else
+        {
+            full_count = ERR_MEMORY;
+        }
     }
-    return sym_count;
-
+    return full_count;
 }
 
 
