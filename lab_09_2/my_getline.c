@@ -30,6 +30,7 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
     }
     int sym_count = 0, len = 0;
     *lineptr = malloc(BUFFER);
+    *n = BUFFER;
     char tmp[BUFFER];
     if (*lineptr)
     {
