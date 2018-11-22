@@ -72,7 +72,15 @@ int prepared_line(char **lineptr, size_t *n, FILE *stream)
             else if (*n < buff_count)
             {
                 *n += BUFFER;
-                *lineptr = realloc(*lineptr, *n);
+                char *tmp = realloc(*lineptr, *n);
+                if (tmp)
+                {
+                    *lineptr = tmp;
+                }
+                else
+                {
+                    return ERR_MEMORY;
+                }
                 sym_copy(*lineptr + full_count, cache, sym_count);
             }
             full_count += sym_count;
@@ -116,7 +124,15 @@ int not_prepared_line(char **lineptr, size_t *n, FILE *stream)
                     return full_count;
                 }
                 *n += BUFFER;
-                *lineptr = realloc(*lineptr, *n);
+                char *tmp = realloc(*lineptr, *n);
+                if (tmp)
+                {
+                    *lineptr = tmp;
+                }
+                else
+                {
+                    return ERR_MEMORY;
+                }
             }
             else
             {
