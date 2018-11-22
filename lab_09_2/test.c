@@ -134,6 +134,7 @@ int main(void)
         {
             printf("not passed\n");
         }
+        free(line);
     }
     fclose(file);
     {
@@ -156,7 +157,6 @@ int main(void)
             printf("not passed\n");
         }
         free(result);
-
     }
     {
         printf("2 test: ");
@@ -177,7 +177,6 @@ int main(void)
             printf("not passed\n");
         }
         free(result);
-
     }
     {
         printf("3 test: ");
@@ -198,7 +197,6 @@ int main(void)
             printf("not passed\n");
         }
         free(result);
-
     }
     {
         printf("4 test: ");
@@ -219,8 +217,6 @@ int main(void)
             printf("not passed\n");
         }
         free(result);
-
     }
-
     return 0;
 }
