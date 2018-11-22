@@ -109,8 +109,8 @@ int not_prepared_line(char **lineptr, size_t *n, FILE *stream)
 {
     int sym_count = 0, full_count = 0;
     char cache[BUFFER + 1];
-    *lineptr = malloc(BUFFER);
-    *n = BUFFER;
+    *lineptr = malloc(BUFFER + 1);
+    *n = BUFFER + 1;
     if (*lineptr)
     {
         while (!end_of_line(*lineptr, full_count))
