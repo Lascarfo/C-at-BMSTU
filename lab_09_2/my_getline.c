@@ -30,17 +30,18 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
     }
     int sym_count = 0, len = 0;
     *lineptr = malloc(BUFFER);
+    *n = BUFFER;
     char tmp[BUFFER];
     if (*lineptr)
     {
-        while (feof(stream) == 0)
+        while (feof(stream) == 0 || *(*lineptr + len - 1) != '\n')
         {
             if (fgets(tmp, BUFFER, stream) != NULL)
             {
                 sym_count = str_len(tmp);
                 sym_copy(*lineptr + len, tmp, sym_count);
-                printf("line %s\n", *lineptr);
-                if (end_of_line(*lineptr, sym_count))
+                len += sym_count;
+                if (end_of_line(*lineptr, len))
                 {
                     return sym_count;
                 }
