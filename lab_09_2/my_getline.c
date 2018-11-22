@@ -25,7 +25,6 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
         return -1;
     }
     int sym_count = 0, full_count = 0;
-    *lineptr = malloc(BUFFER);
     char cache[BUFFER];
     if (*lineptr)
     {
@@ -34,7 +33,20 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
             if (fgets(cache, BUFFER, stream) != NULL)
             {
                 sym_count = str_len(cache);
-                sym_copy(*lineptr + full_count, cache, sym_count);
+                if (*n >= sym_count && full_count == 0)
+                {
+                    sym_copy(*lineptr, cache, sym_count);
+                }
+                else if (*n < sym_count && full_count == 0)
+                {
+                    *n += BUFFER;
+                    *lineptr = realloc(*lineptr, *n);
+                    sym_copy(*lineptr, cache, sym_count);
+                }
+                else
+                {
+                    sym_copy(*lineptr + full_count, cache, sym_count);
+                }
                 full_count += sym_count;
                 if (sym_count != BUFFER - 1)
                 {
@@ -47,7 +59,29 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
     }
     else
     {
-        full_count = ERR_MEMORY;
+        *lineptr = malloc(BUFFER);
+        if (*lineptr)
+        {
+            while (feof(stream) == 0 && *(*lineptr + full_count - 1) != '\n')
+            {
+                if (fgets(cache, BUFFER, stream) != NULL)
+                {
+                    sym_count = str_len(cache);
+                    sym_copy(*lineptr + full_count, cache, sym_count);
+                    full_count += sym_count;
+                    if (sym_count != BUFFER - 1)
+                    {
+                        return full_count;
+                    }
+                    *n += BUFFER;
+                    *lineptr = realloc(*lineptr, *n);
+                }
+            }
+        }
+        else
+        {
+            full_count = ERR_MEMORY;
+        }
     }
     return full_count;
 }

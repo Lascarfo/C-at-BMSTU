@@ -22,13 +22,23 @@
 int main(int argc, char *argv[])
 {
     int rc = OK;
-    FILE *in;
+    FILE *in, *out;
     if (argc == 7 && (cmp_strings(argv[5], "-r")) && (cmp_strings(argv[3], "-s")))
     {
         in = fopen(argv[1], "r");
         if (in)
         {
-            rc = execution(in, (const char **)(argv));
+            out = fopen(argv[2], "w");
+            if (out)
+            {
+                rc = execution(in, out, (const char **)(argv));
+                fclose(out);
+            }
+            else
+            {
+                usage();
+                rc = ERR_FILE;
+            }
             fclose(in);
         }
         else

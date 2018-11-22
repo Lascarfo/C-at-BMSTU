@@ -30,7 +30,6 @@ void save(FILE *out, const char *source)
 int execution(FILE *in, FILE *out, const char **argv)
 {
     int rc = OK;
-    FILE *out;
     char *line_get = NULL;
     char *line_replace = NULL;
     size_t size_of_buffer = 0;
