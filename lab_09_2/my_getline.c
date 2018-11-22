@@ -28,9 +28,9 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
     {
         return ERR_MEMORY;
     }
-    int sym_count = 0;
+    int sym_count = 0, len = 0;
     *lineptr = malloc(BUFFER);
-    char *tmp[BUFFER];
+    char tmp[BUFFER];
     if (*lineptr)
     {
         while (feof(stream) == 0)
@@ -38,6 +38,8 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
             if (fgets(tmp, BUFFER, stream) != NULL)
             {
                 sym_count = str_len(tmp);
+                sym_copy(*lineptr + len, tmp, sym_count);
+                printf("line %s\n", *lineptr);
                 if (end_of_line(*lineptr, sym_count))
                 {
                     return sym_count;
@@ -57,24 +59,21 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
 
 
 
-char *sym_copy(char *line, const char *symbols, size_t len)
+void sym_copy(char *line, const char *symbols, size_t len)
 {
     if (len == 0)
     {
         *line = '\0';
-        return line;
     }
     while (len != 0)
     {
         *line = *symbols;
+        printf("iter %zu\n", len);
+        printf("line %c\n", *line);
         line++;
         symbols++;
         len--;
-        // printf("iter %zu\n", len);
-        // printf("line %c\n", *line);
     }
-    *line = '\0';
-    return line;
 }
 
 

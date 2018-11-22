@@ -7,6 +7,6 @@
 
 int my_getline(char **lineptr, size_t *n, FILE *stream);
 bool end_of_line(const char *line, const int sym_count);
-char *sym_copy(char *line, const char *symbols, size_t len);
+void sym_copy(char *line, const char *symbols, size_t len);
 
 #endif
