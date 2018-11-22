@@ -153,6 +153,7 @@ void sym_copy(char *line, const char *symbols, size_t len)
         // printf("iter %zu\n", len);
         // printf("line %c\n", *line);
     }
+    *line = '\0';
 }
 
 
