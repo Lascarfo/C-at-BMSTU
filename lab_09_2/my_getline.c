@@ -79,6 +79,7 @@ int prepared_line(char **lineptr, size_t *n, FILE *stream)
                 }
                 else
                 {
+                    free(*lineptr);
                     return ERR_MEMORY;
                 }
                 sym_copy(*lineptr + full_count, cache, sym_count);
@@ -131,6 +132,7 @@ int not_prepared_line(char **lineptr, size_t *n, FILE *stream)
                 }
                 else
                 {
+                    free(*lineptr);
                     return ERR_MEMORY;
                 }
             }
