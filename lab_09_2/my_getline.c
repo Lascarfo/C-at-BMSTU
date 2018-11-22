@@ -20,6 +20,10 @@
 
 int my_getline(char **lineptr, size_t *n, FILE *stream)
 {
+    if (!stream)
+    {
+        return ERR_FILE;
+    }
     if (feof(stream) || lineptr == NULL)
     {
         return ERR_MEMORY;
@@ -67,10 +71,12 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
                 if (fgets(cache, BUFFER, stream) != NULL)
                 {
                     sym_count = str_len(cache);
+                    printf("sym count %d\n", sym_count);
                     sym_copy(*lineptr + full_count, cache, sym_count);
                     full_count += sym_count;
                     if (sym_count != BUFFER - 1)
                     {
+                        printf("kk\n");
                         return full_count;
                     }
                     *n += BUFFER;
@@ -83,6 +89,7 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
             full_count = ERR_MEMORY;
         }
     }
+    printf("Ok\n");
     return full_count;
 }
 

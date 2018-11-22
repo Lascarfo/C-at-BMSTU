@@ -17,7 +17,7 @@
 
 void save(FILE *out, const char *source)
 {
-    fprintf(out, "%s\n", source);
+    fprintf(out, "%s", source);
 }
 
 
@@ -33,12 +33,14 @@ int execution(FILE *in, FILE *out, const char **argv)
     char *line_get = NULL;
     char *line_replace = NULL;
     size_t size_of_buffer = 0;
-    int len = -1;
-    while (len != 0)
+    int len = 0;
+    bool run = true;
+    while (run)
     {
         line_get = NULL;
         size_of_buffer = 0;
         len = my_getline(&line_get, &size_of_buffer, in);
+        printf("len %d\n", len);
         if (line_get)
         {
             if (len > 0)
@@ -53,9 +55,14 @@ int execution(FILE *in, FILE *out, const char **argv)
             else
             {
                 rc = ERR_MEMORY;
-                len = 0;
+                run = false;
             }
             free(line_get);
+        }
+        else
+        {
+            rc = ERR_MEMORY;
+            run = false;
         }
     }
     return rc;
