@@ -33,11 +33,7 @@ int gauss(char *name_in, char *name_out)
         {
             double **matrix_first = NULL;
             int rows_first, columns_first, positive_elements_first, positive_elements;
-            if (read_matrix(file_in_1, &matrix_first, &rows_first, &columns_first, &positive_elements_first) != OK)
-            {
-                rc = ERR_MATRIX;
-            }
-            else
+            if (read_matrix(file_in_1, &matrix_first, &rows_first, &columns_first, &positive_elements_first) == OK)
             {
                 if (rows_first == columns_first - 1)
                 {
@@ -45,10 +41,16 @@ int gauss(char *name_in, char *name_out)
                     res_matrix = allocate_memory(rows_first, 1);
                     if (res_matrix)
                     {
-                        zero_filling(res_matrix, rows_first, 1);
-                        method(matrix_first, res_matrix, rows_first, columns_first);
-                        positive_elements = not_null_elems(res_matrix, rows_first, 1);
-                        save(file_out, res_matrix, rows_first, 1, positive_elements);
+                        int *indexis = malloc(sizeof(int) * rows_first);
+                        if (indexis)
+                        {
+                            indexis_gen(indexis, rows_first);
+                            zero_filling(res_matrix, rows_first, 1);
+                            method(matrix_first, res_matrix, rows_first, columns_first, indexis);
+                            positive_elements = not_null_elems(res_matrix, rows_first, 1);
+                            save(file_out, res_matrix, rows_first, 1, positive_elements);
+                            free(indexis);
+                        }
                         free_mem(res_matrix, rows_first);
                     }
                     else
@@ -57,6 +59,15 @@ int gauss(char *name_in, char *name_out)
                     }
                 }
                 free_mem(matrix_first, rows_first);
+            }
+            else if (matrix_first != NULL)
+            {
+                free_mem(matrix_first, rows_first);
+                rc = ERR_MATRIX;
+            }
+            else
+            {
+                rc = ERR_MATRIX;
             }
             fclose(file_out);
         }
@@ -323,7 +334,7 @@ void index_of_max(const double **matrix, const int current, const int rows, int 
 * \param columns количесво столбцов
 */
 
-void method(double **matrix, double **res_matrix, const int rows, const int columns)
+void method(double **matrix, double **res_matrix, const int rows, const int columns, int *indexis)
 {
     int max_row, max_column;
     for (int current = 0; current < rows; current++)
@@ -331,7 +342,7 @@ void method(double **matrix, double **res_matrix, const int rows, const int colu
         // printf("matrix\n");
         // print_square(matrix, rows, columns);
         index_of_max((const double**)(matrix), current, rows, &max_row, &max_column);
-        shift(matrix, max_row, max_column, current, rows);
+        shift(matrix, max_row, max_column, current, rows, indexis);
         // printf("shift_func\n");
         // print_square(matrix, rows, columns);
         my_div(matrix, rows, columns, current);
@@ -345,7 +356,7 @@ void method(double **matrix, double **res_matrix, const int rows, const int colu
         }
         // printf("iter: %d, row: %d, column: %d\n", current + 1, max_row + 1, max_column + 1);
     }
-    fin_res(matrix, res_matrix, rows, columns);
+    fin_res(matrix, res_matrix, rows - 1, columns - 1, indexis);
 }
 
 /**
@@ -359,7 +370,7 @@ void method(double **matrix, double **res_matrix, const int rows, const int colu
 */
 
 
-void shift(double **matrix, const int max_row, const int max_column, const int current, const int rows)
+void shift(double **matrix, const int max_row, const int max_column, const int current, const int rows, int *indexis)
 {
     double temp_elem = 0.0;
     if (max_column == current)
@@ -370,6 +381,9 @@ void shift(double **matrix, const int max_row, const int max_column, const int c
     }
     else
     {
+        int tmp = indexis[current];
+        indexis[current] = indexis[max_column];
+        indexis[max_column] = tmp;
         for (int row = current; row < rows; row++)
         {
             temp_elem = matrix[row][current];
@@ -454,24 +468,26 @@ void sub(double **matrix, const int rows, const int columns, int current)
 * \param columns количесво столбцов
 */
 
-void fin_res(double **matrix, double **res_matrix, const int rows, int columns)
+void fin_res(double **matrix, double **res_matrix, const int rows, int columns, const int *indexis)
 {
-    int current = columns - 2;
-    int x_stage = 1;
-    res_matrix[rows - 1][0] = matrix[rows - 1][columns - 1];
-    for (int row = rows - 2; row >= 0; row--)
+    int current = columns - 1;
+    int x_stage;
+    res_matrix[indexis[rows]][0] = matrix[rows][columns];
+    for (int row = rows - 1; row >= 0; row--)
     {
-        x_stage = 1;
-        for (int column = columns - 2; column >= current; column--)
+        x_stage = 0;
+        for (int column = columns - 1; column >= current; column--)
         {
-            matrix[row][columns - 1] -= matrix[row][column] * matrix[rows - x_stage][columns - 1];
+            matrix[row][columns] -= matrix[row][column] * matrix[rows - x_stage][columns];
             x_stage++;
         }
         current--;
-        res_matrix[row][0] = matrix[row][columns - 1];
-//        printf("res: %f\n", res_matrix[row][0]);
+        res_matrix[indexis[row]][0] = matrix[row][columns];
     }
 }
+
+
+
 
 /**
 * \brief эта функция производит сложение двух матриц
@@ -519,4 +535,20 @@ double **multiplication(double **matrix_first, double **matrix_second, const int
         }
     }
     return result_matrix;
+}
+
+
+/**
+* \brief эта функция создает массив индексов перестановки колон
+* \param indexis массив индексов
+* \param columns количество столбцов в матрице
+*/
+
+
+void indexis_gen(int *indexis, const int columns)
+{
+    for (int col = 0; col < columns; col++)
+    {
+        indexis[col] = col;
+    }
 }
