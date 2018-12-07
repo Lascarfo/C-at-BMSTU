@@ -60,13 +60,12 @@ int gauss(char *name_in, char *name_out)
                 }
                 free_mem(matrix_first, rows_first);
             }
-            else if (matrix_first != NULL)
-            {
-                free_mem(matrix_first, rows_first);
-                rc = ERR_MATRIX;
-            }
             else
             {
+                if (matrix_first != NULL)
+                {
+                    free_mem(matrix_first, rows_first);
+                }
                 rc = ERR_MATRIX;
             }
             fclose(file_out);
@@ -198,11 +197,22 @@ int multiplication_main(char *name_in_1, char *name_in_2, char *name_out)
             rows_first = rows_second = columns_first = columns_second = positive_elements_first = positive_elements_second = positive_elements = 0;
             if (read_matrix(file_in_1, &matrix_first, &rows_first, &columns_first, &positive_elements_first) != OK)
             {
+                if (matrix_first != NULL)
+                {
+                    free_mem(matrix_first, rows_first);
+                }
                 rc = ERR_MATRIX;
             }
             else if (read_matrix(file_in_2, &matrix_second, &rows_second, &columns_second, &positive_elements_second) != OK)
             {
-                free_mem(matrix_first, rows_first);
+                if (matrix_first != NULL)
+                {
+                    free_mem(matrix_first, rows_first);
+                }
+                if (matrix_second != NULL)
+                {
+                    free_mem(matrix_second, rows_second);
+                }
                 rc = ERR_MATRIX;
             }
             else
