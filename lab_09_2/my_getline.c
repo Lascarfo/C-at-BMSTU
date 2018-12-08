@@ -21,7 +21,7 @@
 * \param stream файл, из которого происходит считывание
 */
 
-int my_getline(char **lineptr, size_t *n, FILE *stream)
+ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
     if (!stream)
     {
@@ -35,82 +35,8 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
     {
         return ERR_FILE;
     }
-    int full_count = 0;
-    if (*lineptr)
-    {
-        full_count = prepared_line(lineptr, n, stream);
-    }
-    else
-    {
-        full_count = not_prepared_line(lineptr, n, stream);
-    }
-    return full_count;
-}
-
-
-/**
-* \brief функция производит считывание для строки с буфером, выделенным пользователем
-* \param lineptr, указатель на указатель на строку, в которую попадет финальная строка
-* \param n размер буфера
-* \param stream файл, из которого происходит считывание
-*/
-
-int prepared_line(char **lineptr, size_t *n, FILE *stream)
-{
-    char cache[BUFFER];
     int sym_count = 0, full_count = 0, buff_count = 0;
-    while (!end_of_line(*lineptr, full_count))
-    {
-        if (fgets(cache, BUFFER, stream) != NULL)
-        {
-            sym_count = str_len(cache);
-            buff_count += sym_count;
-            if (*n >= buff_count)
-            {
-                sym_copy(*lineptr + full_count, cache, sym_count);
-            }
-            else if (*n < buff_count)
-            {
-                *n += BUFFER;
-                char *tmp = realloc(*lineptr, *n);
-                if (tmp)
-                {
-                    *lineptr = tmp;
-                }
-                else
-                {
-                    free(*lineptr);
-                    return -1;
-                }
-                sym_copy(*lineptr + full_count, cache, sym_count);
-            }
-            full_count += sym_count;
-            if (end_of_line(*lineptr, full_count))
-            {
-                return full_count;
-            }
-        }
-        else
-        {
-            return full_count;
-        }
-    }
-    return full_count;
-}
-
-/**
-* \brief функция производит считывание для строки с невыделенным буфером
-* \param lineptr, указатель на указатель на строку, в которую попадет финальная строка
-* \param n размер буфера
-* \param stream файл, из которого происходит считывание
-*/
-
-int not_prepared_line(char **lineptr, size_t *n, FILE *stream)
-{
-    int sym_count = 0, full_count = 0;
     char cache[BUFFER];
-    *lineptr = malloc(BUFFER);
-    *n = BUFFER;
     if (*lineptr)
     {
         while (!end_of_line(*lineptr, full_count))
@@ -118,22 +44,30 @@ int not_prepared_line(char **lineptr, size_t *n, FILE *stream)
             if (fgets(cache, BUFFER, stream) != NULL)
             {
                 sym_count = str_len(cache);
-                sym_copy(*lineptr + full_count, cache, sym_count);
+                buff_count += sym_count;
+                if (*n >= buff_count)
+                {
+                    sym_copy(*lineptr + full_count, cache, sym_count);
+                }
+                else if (*n < buff_count)
+                {
+                    *n += BUFFER;
+                    char *tmp = realloc(*lineptr, *n);
+                    if (tmp)
+                    {
+                        *lineptr = tmp;
+                    }
+                    else
+                    {
+                        free(*lineptr);
+                        return -1;
+                    }
+                    sym_copy(*lineptr + full_count, cache, sym_count);
+                }
                 full_count += sym_count;
                 if (end_of_line(*lineptr, full_count))
                 {
                     return full_count;
-                }
-                *n += BUFFER;
-                char *tmp = realloc(*lineptr, *n);
-                if (tmp)
-                {
-                    *lineptr = tmp;
-                }
-                else
-                {
-                    free(*lineptr);
-                    return -1;
                 }
             }
             else
@@ -144,10 +78,47 @@ int not_prepared_line(char **lineptr, size_t *n, FILE *stream)
     }
     else
     {
-        full_count = ERR_MEMORY;
+        *lineptr = malloc(BUFFER);
+        *n = BUFFER;
+        if (*lineptr)
+        {
+            while (!end_of_line(*lineptr, full_count))
+            {
+                if (fgets(cache, BUFFER, stream) != NULL)
+                {
+                    sym_count = str_len(cache);
+                    sym_copy(*lineptr + full_count, cache, sym_count);
+                    full_count += sym_count;
+                    if (end_of_line(*lineptr, full_count))
+                    {
+                        return full_count;
+                    }
+                    *n += BUFFER;
+                    char *tmp = realloc(*lineptr, *n);
+                    if (tmp)
+                    {
+                        *lineptr = tmp;
+                    }
+                    else
+                    {
+                        free(*lineptr);
+                        return -1;
+                    }
+                }
+                else
+                {
+                    return full_count;
+                }
+            }
+        }
+        else
+        {
+            full_count = -1;
+        }
     }
     return full_count;
 }
+
 
 /**
 * \brief функция производит посимвольное копирование из буффера в конечную строку

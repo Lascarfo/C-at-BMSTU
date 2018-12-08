@@ -38,16 +38,16 @@ int execution(FILE *in, FILE *out, char **argv)
     char *line_get = NULL;
     char *line_replace = NULL;
     size_t size_of_buffer = 0;
-    int len = 0;
+    ssize_t len = 0;
     bool run = true;
     while (run)
     {
         line_get = NULL;
         size_of_buffer = 0;
         len = my_getline(&line_get, &size_of_buffer, in);
-        if (line_get)
+        if (len > 0)
         {
-            if (len > 0)
+            if (line_get)
             {
                 line_replace = str_replace(line_get, argv[4], argv[6]);
                 if (line_replace)
@@ -55,16 +55,20 @@ int execution(FILE *in, FILE *out, char **argv)
                     save(out, line_replace);
                     free(line_replace);
                 }
+                free(line_get);
             }
             else
             {
+                rc = ERR_MEMORY;
                 run = false;
             }
-            free(line_get);
         }
         else
         {
-            rc = ERR_MEMORY;
+            if (line_get)
+            {
+                free(line_get);
+            }
             run = false;
         }
     }
