@@ -21,7 +21,7 @@
 * \param stream файл, из которого происходит считывание
 */
 
-int my_getline(char **lineptr, size_t *n, FILE *stream)
+ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
     if (!stream)
     {
