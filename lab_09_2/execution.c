@@ -38,7 +38,7 @@ int execution(FILE *in, FILE *out, char **argv)
     char *line_get = NULL;
     char *line_replace = NULL;
     size_t size_of_buffer = 0;
-    ssize_t len = 0;
+    int len = 0;
     bool run = true;
     while (run)
     {
@@ -58,7 +58,6 @@ int execution(FILE *in, FILE *out, char **argv)
             }
             else
             {
-                rc = ERR_MEMORY;
                 run = false;
             }
             free(line_get);
