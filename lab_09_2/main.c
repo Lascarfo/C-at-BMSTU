@@ -33,7 +33,7 @@ int main(int argc, char *argv[])
             out = fopen(argv[2], "w");
             if (out)
             {
-                rc = execution(in, out, (const char **)(argv));
+                rc = execution(in, out, argv);
                 fclose(out);
             }
             else

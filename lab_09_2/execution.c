@@ -32,7 +32,7 @@ void save(FILE *out, const char *source)
 */
 
 
-int execution(FILE *in, FILE *out, const char **argv)
+int execution(FILE *in, FILE *out, char **argv)
 {
     int rc = OK;
     char *line_get = NULL;
@@ -45,7 +45,6 @@ int execution(FILE *in, FILE *out, const char **argv)
         line_get = NULL;
         size_of_buffer = 0;
         len = my_getline(&line_get, &size_of_buffer, in);
-        printf("len %d\n", len);
         if (line_get)
         {
             if (len > 0)

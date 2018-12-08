@@ -21,7 +21,7 @@
 * \param stream файл, из которого происходит считывание
 */
 
-int my_getline(char **lineptr, size_t *n, FILE *stream)
+ssize_t my_getline(char **lineptr, size_t *n, FILE *stream)
 {
     if (!stream)
     {
@@ -29,11 +29,11 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
     }
     if (lineptr == NULL || n == NULL)
     {
-        return ERR_MEMORY;
+        return -1;
     }
     if (feof(stream))
     {
-        return 0;
+        return ERR_FILE;
     }
     int full_count = 0;
     if (*lineptr)
@@ -57,7 +57,7 @@ int my_getline(char **lineptr, size_t *n, FILE *stream)
 
 int prepared_line(char **lineptr, size_t *n, FILE *stream)
 {
-    char cache[BUFFER + 1];
+    char cache[BUFFER];
     int sym_count = 0, full_count = 0, buff_count = 0;
     while (!end_of_line(*lineptr, full_count))
     {
@@ -80,7 +80,7 @@ int prepared_line(char **lineptr, size_t *n, FILE *stream)
                 else
                 {
                     free(*lineptr);
-                    return ERR_MEMORY;
+                    return -1;
                 }
                 sym_copy(*lineptr + full_count, cache, sym_count);
             }
@@ -108,9 +108,9 @@ int prepared_line(char **lineptr, size_t *n, FILE *stream)
 int not_prepared_line(char **lineptr, size_t *n, FILE *stream)
 {
     int sym_count = 0, full_count = 0;
-    char cache[BUFFER + 1];
-    *lineptr = malloc(BUFFER + 1);
-    *n = BUFFER + 1;
+    char cache[BUFFER];
+    *lineptr = malloc(BUFFER);
+    *n = BUFFER;
     if (*lineptr)
     {
         while (!end_of_line(*lineptr, full_count))
@@ -133,7 +133,7 @@ int not_prepared_line(char **lineptr, size_t *n, FILE *stream)
                 else
                 {
                     free(*lineptr);
-                    return ERR_MEMORY;
+                    return -1;
                 }
             }
             else

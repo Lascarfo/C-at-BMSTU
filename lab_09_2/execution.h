@@ -4,6 +4,6 @@
 #include <stdio.h>
 
 void save(FILE *out, const char *source);
-int execution(FILE *in, FILE *out, const char **argv);
+int execution(FILE *in, FILE *out, char **argv);
 
 #endif
