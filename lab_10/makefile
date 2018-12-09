@@ -1,7 +1,7 @@
 CC := gcc
 CFLAGS :=-std=c99 -Wall -Werror -pedantic
 
-app.exe: main.o io.o list.o pop_back.o insert.o
+app.exe: main.o io.o list.o
 	$(CC) $(CFLAGS) -o $@ $^
 
 %.o: %.c *.h

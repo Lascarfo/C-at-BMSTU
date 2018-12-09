@@ -7,4 +7,12 @@
 #define ERR_LIST -3
 #define ERR_IN -4
 
+typedef struct node node_t;
+
+struct node
+{
+    void *data;
+    node_t *next;
+};
+
 #endif
