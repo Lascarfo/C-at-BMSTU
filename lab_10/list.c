@@ -60,6 +60,7 @@ void *pop_back(node_t **head)
      {
          return;
      }
+     bool flag = false;
      node_t *next_temp = (*head)->next;
      node_t *temp = *head;
      if (next_temp == NULL)
@@ -75,9 +76,14 @@ void *pop_back(node_t **head)
              next_temp = next_temp->next;
              if (next_temp == before)
              {
+                 flag = true;
                  break;
              }
          }
-
+         if (flag)
+         {
+             temp->next = elem;
+             elem -> next = next_temp;
+         }
      }
  }
