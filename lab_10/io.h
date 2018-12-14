@@ -2,18 +2,9 @@
 #define _IO_H_
 
 #include "const.h"
+#include "list.h"
 
 
-typedef struct discipline dis_t;
-
-struct discipline
-{
-    int complete;
-    int amount;
-    char name[10];
-    char type[5];
-    int priority;
-};
 
 node_t *read_data(FILE *in);
 dis_t *scan_current(FILE *in);

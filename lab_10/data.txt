@@ -1,5 +1,5 @@
 2 7 TaSOD lab 2
-1 6 C lab 1
+4 8 C lab 1
 1 2 C RK 1
 5 8 FOE lab 3
 1 2 Math HW 1

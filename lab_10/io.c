@@ -13,7 +13,6 @@ node_t *read_data(FILE *in)
     node_t *head = NULL;
     int rc = 0;
     rc = scan_all(&head, in);
-    print_data(head);
     return head;
 }
 
@@ -88,7 +87,8 @@ void print_data(node_t *head)
     while (head != NULL)
     {
         current = head->data;
-        printf("%s\n", current->name);
+        printf("complete: %d amount: %d discipline: %-8s type: %-5s priority: %d\n",current->complete,\
+        current->amount, current->name, current->type, current->priority);
         head = head->next;
     }
 }

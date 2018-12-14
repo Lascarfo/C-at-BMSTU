@@ -1,0 +1,3 @@
+2 7 TaSOD lab 2
+1 6 C lab 1
+5 8 FOE lab 3
