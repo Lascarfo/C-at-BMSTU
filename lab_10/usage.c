@@ -11,5 +11,5 @@
 
 void usage(void)
 {
-    fprintf(stdout, "Please follow next input:\napp.exe in.txt out.txt\n");
+    fprintf(stdout, "Please follow next input:\napp.exe data.txt\n");
 }

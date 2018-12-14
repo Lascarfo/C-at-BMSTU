@@ -17,6 +17,7 @@ sorted_insert — получает упорядоченный список, и
 #include "const.h"
 #include "io.h"
 #include "list.h"
+#include "usage.h"
 
 
 
@@ -34,11 +35,13 @@ int main(int argc, char **argv)
         }
         else
         {
+            usage();
             rc = ERR_FILE;
         }
     }
     else
     {
+        usage();
         rc = ERR_IN;
     }
     return rc;
