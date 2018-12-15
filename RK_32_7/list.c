@@ -27,11 +27,13 @@ void free_names(node_t *current)
 
 void free_list(node_t *head)
 {
+    node_t *temp = NULL;
     while(head != NULL)
     {
         free_names(head);
-        head = head->next;
+        temp = head->next;
         free(head);
+        head = temp;
     }
 }
 

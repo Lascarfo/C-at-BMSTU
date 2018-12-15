@@ -63,7 +63,7 @@ char *read_string(FILE *file)
     int length = strlen(str);
     if (length > 0)
     {
-        char *string = malloc(sizeof(str));
+        char *string = malloc(length * sizeof(char) + 1);
         if (string)
         {
             strcpy(string, str);
@@ -95,4 +95,3 @@ void print_node(node_t *head)
         head = head->next;
     }
 }
-
