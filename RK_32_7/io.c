@@ -91,7 +91,7 @@ void print_node(node_t *head)
 {
     while(head != NULL)
     {
-        printf("%s %s %d %d\n", head->sec, head->name, head->year, head->group);
+        printf("%-12s %-8s %-7d %d\n", head->sec, head->name, head->year, head->group);
         head = head->next;
     }
 }

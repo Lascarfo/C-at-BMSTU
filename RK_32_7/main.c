@@ -25,7 +25,6 @@ int main(int argc, char **argv)
                 usage();
             }
             fclose(file);
-
         }
         else
         {
@@ -35,7 +34,26 @@ int main(int argc, char **argv)
     }
     else if (argc == 4)
     {
-        // form
+        FILE *file;
+        file = fopen(argv[1], "r");
+        if (file)
+        {
+            if (strcmp(argv[2], "form") == 0)
+            {
+                form_func(file, (atoi)(argv[3]));
+            }
+            else
+            {
+                rc = ERR_FILE;
+                usage();
+            }
+            fclose(file);
+        }
+        else
+        {
+            rc = ERR_FILE;
+            usage();
+        }
     }
     else
     {
