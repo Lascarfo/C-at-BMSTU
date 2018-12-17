@@ -19,6 +19,7 @@ int form_func(FILE *file, int group)
     head = read_all(head, file);
     head = elimination(head, group);
     print_node(head);
+    free_list(head);
     return OK;
 }
 
