@@ -84,7 +84,6 @@ void dec_to_oct(char *buffer, int len, unsigned int number)
         number /= 8;
         len--;
     }
-
 }
 
 /**
@@ -161,7 +160,6 @@ int calculate_size(const char *format, va_list args)
                 unsigned short int number = va_arg(args, int);
                 int len_hX = len_dec_to_hex(number);
                 size += len_hX;
-
             }
             else if (cmp_n_strings(format + i + 1, "o", 1))
             {
