@@ -66,7 +66,6 @@ void dec_to_hex(char *buffer, int n, int len, unsigned short int number)
             number /= 16;
             len--;
         }
-        *(cache + len) = '\0';
         for (int i = 0; i < n; i++)
         {
             *(buffer + i) = *(cache + i);
@@ -79,7 +78,6 @@ void dec_to_hex(char *buffer, int n, int len, unsigned short int number)
     }
     else
     {
-
         return;
     }
 
@@ -94,16 +92,34 @@ void dec_to_hex(char *buffer, int n, int len, unsigned short int number)
 
 void dec_to_oct(char *buffer, int n, int len, unsigned int number)
 {
-    unsigned short cache = 0;
-    *(buffer + len) = '\0';
-    len--;
-    while (number != 0)
+    unsigned int temp = 0;
+    int *cache = malloc(len + 1);
+    if (cache)
     {
-        cache = number % 8;
-        *(buffer + len) = cache + '0';
-        number /= 8;
+        *(cache + len) = '\0';
         len--;
+        while (number != 0)
+        {
+            temp = number % 8;
+            *(cache + len) = temp + '0';
+            number /= 8;
+            len--;
+        }
+        for (int i = 0; i < n; i++)
+        {
+            *(buffer + i) = *(cache + i);
+        }
+        if (n != len)
+        {
+            *(buffer + n) = '\0';
+        }
+        free(cache);
     }
+    else
+    {
+        return;
+    }
+
 }
 
 /**
@@ -297,6 +313,14 @@ void write_string(char *string, const char *format, size_t n, va_list args)
                 int len_o = len_dec_to_oct(number);
                 if (len_o > n - counter - 1)
                 {
+                    char *buffer = malloc(n - counter);
+                    if (buffer)
+                    {
+                        dec_to_oct(buffer, n - counter - 1, len_o, number);
+                        sym_copy(string + counter, buffer, full_len(buffer));
+                        counter += full_len(buffer);
+                        free(buffer);
+                    }
                     counter += n - counter - 1;
                 }
                 else
@@ -304,7 +328,7 @@ void write_string(char *string, const char *format, size_t n, va_list args)
                     char *buffer = malloc(len_o + 1);
                     if (buffer)
                     {
-                        dec_to_oct(buffer, len_o, number);
+                        dec_to_oct(buffer, len_o, len_o, number);
                         sym_copy(string + counter, buffer, full_len(buffer));
                         counter += full_len(buffer);
                         free(buffer);

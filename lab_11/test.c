@@ -41,11 +41,11 @@ int main(void)
     printf("test for %%o:\n");                              // %o
     {
         int rc, my_rc;               // MAX
-        char arr[UINT_MAX + 1];
-        char my_arr[UINT_MAX + 1];
+        char arr[LEN + 1];
+        char my_arr[LEN + 1];
         char string[] = "%o";
-        rc = snprintf(arr, UINT_MAX, string, UINT_MAX);
-        my_rc = my_snprintf(my_arr, UINT_MAX, string, UINT_MAX);
+        rc = snprintf(arr, LEN, string, UINT_MAX);
+        my_rc = my_snprintf(my_arr, LEN, string, UINT_MAX);
         // printf("\n%s\n", arr);
         // printf("%s\n", my_arr);
         // printf("%d\n", rc);
@@ -62,11 +62,11 @@ int main(void)
     }
     {
         int rc, my_rc;               // число превышающее диапазон UINT
-        char arr[UINT_MAX + 1];
-        char my_arr[UINT_MAX + 1];
+        char arr[LEN + 1];
+        char my_arr[LEN + 1];
         char string[] = "%o";
-        rc = snprintf(arr, UINT_MAX, string, UINT_MAX + 1);
-        my_rc = my_snprintf(my_arr, UINT_MAX, string, UINT_MAX + 1);
+        rc = snprintf(arr, LEN, string, UINT_MAX + 1);
+        my_rc = my_snprintf(my_arr, LEN, string, UINT_MAX + 1);
         // printf("\n%s\n", arr);
         // printf("%s\n", my_arr);
         // printf("%d\n", rc);
@@ -104,11 +104,11 @@ int main(void)
     }
     {
         int rc, my_rc;               // отрицательное число
-        char arr[UINT_MAX + 1];
-        char my_arr[UINT_MAX + 1];
+        char arr[LEN + 1];
+        char my_arr[LEN + 1];
         char string[] = "%o";
-        rc = snprintf(arr, UINT_MAX, string, -1);
-        my_rc = my_snprintf(my_arr, UINT_MAX, string, -1);
+        rc = snprintf(arr, LEN, string, -1);
+        my_rc = my_snprintf(my_arr, LEN, string, -1);
         // printf("\n%s\n", arr);
         // printf("%s\n", my_arr);
         // printf("%d\n", rc);
