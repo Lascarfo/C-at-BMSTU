@@ -51,18 +51,38 @@ int len_dec_to_hex(unsigned short int number)
 * \param number число на вход
 */
 
-void dec_to_hex(char *buffer, int len, unsigned short int number)
+void dec_to_hex(char *buffer, int n, int len, unsigned short int number)
 {
-    unsigned short cache = 0;
-    *(buffer + len) = '\0';
-    len--;
-    while (number != 0)
+    unsigned short temp = 0;
+    int *cache = malloc(len + 1);
+    if (cache)
     {
-        cache = number % 16;
-        *(buffer + len) = cache + ((cache < 10) ? '0' : 'A' - 10);
-        number /= 16;
+        *(cache + len) = '\0';
         len--;
+        while (number != 0)
+        {
+            temp = number % 16;
+            *(cache + len) = temp + ((temp < 10) ? '0' : 'A' - 10);
+            number /= 16;
+            len--;
+        }
+        *(cache + len) = '\0';
+        for (int i = 0; i < n; i++)
+        {
+            *(buffer + i) = *(cache + i);
+        }
+        if (n != len)
+        {
+            *(buffer + n) = '\0';
+        }
+        free(cache);
     }
+    else
+    {
+
+        return;
+    }
+
 }
 
 /**
@@ -72,7 +92,7 @@ void dec_to_hex(char *buffer, int len, unsigned short int number)
 * \param number число на вход
 */
 
-void dec_to_oct(char *buffer, int len, unsigned int number)
+void dec_to_oct(char *buffer, int n, int len, unsigned int number)
 {
     unsigned short cache = 0;
     *(buffer + len) = '\0';
@@ -248,6 +268,14 @@ void write_string(char *string, const char *format, size_t n, va_list args)
                 int len_hX = len_dec_to_hex(number);
                 if (len_hX > n - counter - 1)
                 {
+                    char *buffer = malloc(n - counter);
+                    if (buffer)
+                    {
+                        dec_to_hex(buffer, n - counter - 1, len_hX, number);
+                        sym_copy(string + counter, buffer, full_len(buffer));
+                        counter += full_len(buffer);
+                        free(buffer);
+                    }
                     counter += n - counter - 1;
                 }
                 else
@@ -255,7 +283,7 @@ void write_string(char *string, const char *format, size_t n, va_list args)
                     char *buffer = malloc(len_hX + 1);
                     if (buffer)
                     {
-                        dec_to_hex(buffer, len_hX, number);
+                        dec_to_hex(buffer, len_hX, len_hX, number);
                         sym_copy(string + counter, buffer, full_len(buffer));
                         counter += full_len(buffer);
                         free(buffer);
@@ -265,7 +293,7 @@ void write_string(char *string, const char *format, size_t n, va_list args)
             else if (cmp_n_strings(format + i + 1, "o", 1))
             {
                 i++;
-                unsigned short int number = va_arg(args, int);
+                unsigned int number = va_arg(args, int);
                 int len_o = len_dec_to_oct(number);
                 if (len_o > n - counter - 1)
                 {

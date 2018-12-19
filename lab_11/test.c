@@ -2,9 +2,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <limits.h>
 
 #include "const.h"
 #include "my_snprintf.h"
+
 
 
 
@@ -36,13 +38,14 @@ const bool cmp_strings(const char *first, const char *second)
 int main(void)
 {
     printf("func my_snprintf testing:\n\n");
-    printf("test for %%o:\n");
+    printf("test for %%o:\n");                              // %o
     {
-        int rc, my_rc;
-        char arr[LEN + 1];
-        char my_arr[LEN + 1];
-        rc = snprintf(arr, LEN, "%o", 11);
-        my_rc = my_snprintf(my_arr, LEN, "%o", 11);
+        int rc, my_rc;               // MAX
+        char arr[UINT_MAX + 1];
+        char my_arr[UINT_MAX + 1];
+        char string[] = "%o";
+        rc = snprintf(arr, UINT_MAX, string, UINT_MAX);
+        my_rc = my_snprintf(my_arr, UINT_MAX, string, UINT_MAX);
         // printf("\n%s\n", arr);
         // printf("%s\n", my_arr);
         // printf("%d\n", rc);
@@ -58,16 +61,17 @@ int main(void)
         }
     }
     {
-        int rc, my_rc;
-        char arr[LEN + 1] = {'\0'};
-        char my_arr[LEN + 1];
-        rc = 2;
-        my_rc = my_snprintf(my_arr, 2, "%o", 10);
-        printf("test 2: ");
+        int rc, my_rc;               // число превышающее диапазон UINT
+        char arr[UINT_MAX + 1];
+        char my_arr[UINT_MAX + 1];
+        char string[] = "%o";
+        rc = snprintf(arr, UINT_MAX, string, UINT_MAX + 1);
+        my_rc = my_snprintf(my_arr, UINT_MAX, string, UINT_MAX + 1);
         // printf("\n%s\n", arr);
         // printf("%s\n", my_arr);
         // printf("%d\n", rc);
         // printf("%d\n", my_rc);
+        printf("test 2: ");
         if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
         {
             printf("passed\n");
@@ -78,11 +82,16 @@ int main(void)
         }
     }
     {
-        int rc, my_rc;
-        char arr[4];
-        char my_arr[4];
-        rc = snprintf(arr, 4, "%o", 11);
-        my_rc = my_snprintf(my_arr, 4, "%o", 11);
+        int rc, my_rc;               // 0
+        char arr[1 + 1];
+        char my_arr[1 + 1];
+        char string[] = "%o";
+        rc = snprintf(arr, 1, string, 0);
+        my_rc = my_snprintf(my_arr, 1, string, 0);
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
         printf("test 3: ");
         if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
         {
@@ -94,38 +103,17 @@ int main(void)
         }
     }
     {
-        int rc, my_rc;
-        char arr[LEN + 1];
-        char my_arr[LEN + 1];
-        rc = snprintf(arr, LEN, "oct_num: %o", 11);
-        my_rc = my_snprintf(my_arr, LEN, "oct_num: %o", 11);
+        int rc, my_rc;               // отрицательное число
+        char arr[UINT_MAX + 1];
+        char my_arr[UINT_MAX + 1];
+        char string[] = "%o";
+        rc = snprintf(arr, UINT_MAX, string, -1);
+        my_rc = my_snprintf(my_arr, UINT_MAX, string, -1);
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
         printf("test 4: ");
-        // printf("\n%s\n", arr);
-        // printf("%s\n", my_arr);
-        // printf("%d\n", rc);
-        // printf("%d\n", my_rc);
-        if (rc == my_rc)
-        {
-            printf("passed\n");
-        }
-        else
-        {
-            printf("not passed\n");
-        }
-    }
-    printf("\ntest for %%hX:\n");
-    {
-        int rc, my_rc;
-        char arr[LEN + 1];
-        char my_arr[LEN + 1];
-        unsigned short num = 11;
-        rc = snprintf(arr, LEN, "%hX", num);
-        my_rc = my_snprintf(my_arr, LEN, "%hX", num);
-        printf("test 1: ");
-        // printf("\n%s\n", arr);
-        // printf("%s\n", my_arr);
-        // printf("%d\n", rc);
-        // printf("%d\n", my_rc);
         if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
         {
             printf("passed\n");
@@ -136,18 +124,18 @@ int main(void)
         }
     }
     {
-        int rc, my_rc;
+        int rc, my_rc;               // буфер достаточной длины
         char arr[LEN + 1];
         char my_arr[LEN + 1];
-        unsigned short num = 25601;
-        rc = snprintf(arr, 3, "%hX", num);
-        my_rc = my_snprintf(my_arr, 3, "%hX", num);
+        char string[] = "%o";
+        rc = snprintf(arr, LEN, string, 5);
+        my_rc = my_snprintf(my_arr, LEN, string, 5);
         // printf("\n%s\n", arr);
         // printf("%s\n", my_arr);
         // printf("%d\n", rc);
         // printf("%d\n", my_rc);
-        printf("test 2: ");
-        if (rc == my_rc)
+        printf("test 5: ");
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
         {
             printf("passed\n");
         }
@@ -156,19 +144,279 @@ int main(void)
             printf("not passed\n");
         }
     }
-    printf("\ntest for %%s:\n");
     {
-        int rc, my_rc;
+        int rc, my_rc;               // буфер нулевой длины
+        char arr[0 + 1];
+        char my_arr[0 + 1];
+        char string[] = "%o";
+        rc = snprintf(arr, 0, string, 5);
+        my_rc = my_snprintf(my_arr, 0, string, 5);
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
+        printf("test 6: ");
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+    }
+    {
+        int rc, my_rc;               // недостаточный буфер
         char arr[LEN + 1];
         char my_arr[LEN + 1];
-        rc = snprintf(arr, 3, "%s", "String");
-        my_rc = my_snprintf(my_arr, 3, "%s", "String");
+        char string[] = "%o";
+        rc = snprintf(arr, LEN, string, 5);
+        my_rc = my_snprintf(my_arr, LEN, string, 5);
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
+        printf("test 7: ");
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+    }
+
+
+    printf("\ntest for %%hX:\n");                   // %hX
+    {
+        int rc, my_rc;               // MAX
+        char arr[LEN + 1];
+        char my_arr[LEN + 1];
+        char string[] = "%hX";
+        rc = snprintf(arr, LEN, string, SHRT_MAX);
+        my_rc = my_snprintf(my_arr, LEN, string, SHRT_MAX);
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
+        printf("test 1: ");
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+    }
+    {
+        int rc, my_rc;               // число превышающее диапазон SHRT
+        char arr[LEN + 1];
+        char my_arr[LEN + 1];
+        char string[] = "%hX";
+        rc = snprintf(arr, LEN, string, SHRT_MAX + 1);
+        my_rc = my_snprintf(my_arr, LEN, string, SHRT_MAX + 1);
         // printf("\n%s\n", arr);
         // printf("%s\n", my_arr);
         // printf("%d\n", rc);
         // printf("%d\n", my_rc);
         printf("test 2: ");
-        if (rc == my_rc)
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+    }
+    {
+        int rc, my_rc;               // 0
+        char arr[1 + 1];
+        char my_arr[1 + 1];
+        char string[] = "%hX";
+        rc = snprintf(arr, 1, string, 0);
+        my_rc = my_snprintf(my_arr, 1, string, 0);
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
+        printf("test 3: ");
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+    }
+    {
+        int rc, my_rc;               // отрицательное число
+        char arr[LEN + 1];
+        char my_arr[LEN + 1];
+        char string[] = "%hX";
+        rc = snprintf(arr, LEN, string, -1);
+        my_rc = my_snprintf(my_arr, LEN, string, -1);
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
+        printf("test 4: ");
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+    }
+    {
+        int rc, my_rc;               // буфер достаточной длины
+        char arr[LEN + 1];
+        char my_arr[LEN + 1];
+        char string[] = "%hX";
+        rc = snprintf(arr, LEN, string, 5);
+        my_rc = my_snprintf(my_arr, LEN, string, 5);
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
+        printf("test 5: ");
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+    }
+    {
+        int rc, my_rc;               // буфер нулевой длины
+        char arr[0 + 1];
+        char my_arr[0 + 1];
+        char string[] = "%hX";
+        rc = snprintf(arr, 0, string, 5);
+        my_rc = my_snprintf(my_arr, 0, string, 5);
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
+        printf("test 6: ");
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+    }
+    {
+        int rc, my_rc;               // недостаточный буфер
+        char arr[2 + 1];
+        char my_arr[2 + 1];
+        char string[] = "%hX";
+        rc = snprintf(arr, 2, string, 4500);
+        my_rc = my_snprintf(my_arr, 2, string, 4500);
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
+        printf("test 7: ");
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+    }
+
+
+
+
+    printf("\ntest for %%s:\n");
+    {
+        int rc, my_rc;               // буфер достаточной длины
+        char arr[LEN + 1];
+        char my_arr[LEN + 1];
+        char string[] = "%s";
+        rc = snprintf(arr, LEN, string, "test");
+        my_rc = my_snprintf(my_arr, LEN, string, 5);
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
+        printf("test 1: ");
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+    }
+    {
+        int rc, my_rc;               // буфер нулевой длины
+        char arr[0 + 1];
+        char my_arr[0 + 1];
+        char string[] = "%s";
+        rc = snprintf(arr, 0, string, "test");
+        my_rc = my_snprintf(my_arr, 0, string, "test");
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
+        printf("test 2: ");
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+    }
+    {
+        int rc, my_rc;               // недостаточный буфер
+        char arr[2 + 1];
+        char my_arr[2 + 1];
+        char string[] = "%s";
+        rc = snprintf(arr, 2, string, "test");
+        my_rc = my_snprintf(my_arr, 2, string, "test");
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
+        printf("test 3: ");
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
+        {
+            printf("passed\n");
+        }
+        else
+        {
+            printf("not passed\n");
+        }
+    }
+    {
+        int rc, my_rc;               // пустая строка
+        char arr[2 + 1];
+        char my_arr[2 + 1];
+        char string[] = "%s";
+        rc = snprintf(arr, 2, string, "test");
+        my_rc = my_snprintf(my_arr, 2, string, "test");
+        // printf("\n%s\n", arr);
+        // printf("%s\n", my_arr);
+        // printf("%d\n", rc);
+        // printf("%d\n", my_rc);
+        printf("test 4: ");
+        if ((rc == my_rc) && (cmp_strings(arr, my_arr)))
         {
             printf("passed\n");
         }
