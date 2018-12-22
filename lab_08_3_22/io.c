@@ -12,6 +12,21 @@
 
 
 /**
+* \brief функция-компаратор для типа double
+* \param  l, r Числа, проверяемые компаратором
+*/
+
+int cmp_double_c(double l, double r)
+{
+    double result = fabs(l - r);
+    if (result > EPS)
+        return true;
+    else
+        return false;
+}
+
+
+/**
 * \brief эта функция считывает параметры
 * \details параметры –– количество строк, столбцов, ненулевых элементов
 * \param in файл для чтения
@@ -59,6 +74,10 @@ int read_elems(FILE *in, const int rows, const int columns, const int positive_e
         if ((cache_row < 1 || cache_row > rows) || (cache_column < 1 || cache_column > columns))
         {
             return ERR_MATRIX;
+        }
+        if (!cmp_double_c(0, cache_double))
+        {
+            return ERR_INPUT;
         }
         matrix[cache_row - 1][cache_column - 1] = cache_double;
     }
