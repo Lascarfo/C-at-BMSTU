@@ -154,9 +154,7 @@ int addition_main(char *name_in_1, char *name_in_2, char *name_out)
                         file_out = fopen(name_out, "w");
                         if (file_out)
                         {
-                            rc = ERR_MATRIX;
-                            if (rc == OK)
-                                save(file_out, matrix, rows_first, columns_second, positive_elements);
+                            save(file_out, matrix, rows_first, columns_second, positive_elements);
                             fclose(file_out);
                         }
                         else
@@ -250,7 +248,9 @@ int multiplication_main(char *name_in_1, char *name_in_2, char *name_out)
                         file_out = fopen(name_out, "w");
                         if (file_out)
                         {
-                            save(file_out, matrix_multiply, rows_first, columns_second, positive_elements);
+                            rc = ERR_MATRIX;
+                            if (rc == OK)
+                                save(file_out, matrix_multiply, rows_first, columns_second, positive_elements);
                             fclose(file_out);
                         }
                         else
