@@ -141,7 +141,7 @@ int addition_main(char *name_in_1, char *name_in_2, char *name_out)
             }
             else
             {
-                if ((columns_first = columns_second) && (rows_first == rows_second))
+                if ((columns_first == columns_second) && (rows_first == rows_second))
                 {
                     double **matrix = NULL;
                     matrix = allocate_memory(rows_first, columns_second);
