@@ -32,10 +32,12 @@ int main(int argc, char **argv)
     if ((argc == 5) && (strcmp(argv[1], "a") == 0))
     {
         rc = addition_main(argv[2], argv[3], argv[4]);
+        // printf("rc_a %d\n", rc);
     }
     else if ((argc == 5) && (strcmp(argv[1], "m") == 0))
     {
         rc = multiplication_main(argv[2], argv[3], argv[4]);
+        // printf("rc_m %d\n", rc);
     }
     else if ((argc == 4) && (strcmp(argv[1], "o")) == 0)
     {

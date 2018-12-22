@@ -163,7 +163,15 @@ int addition_main(char *name_in_1, char *name_in_2, char *name_out)
             }
             fclose(file_in_2);
         }
+        else
+        {
+            rc = ERR_FILE;
+        }
         fclose(file_in_1);
+    }
+    else
+    {
+        rc = ERR_FILE;
     }
     return rc;
 }
@@ -249,7 +257,15 @@ int multiplication_main(char *name_in_1, char *name_in_2, char *name_out)
             }
             fclose(file_in_2);
         }
+        else
+        {
+            rc = ERR_FILE;
+        }
         fclose(file_in_1);
+    }
+    else
+    {
+        rc = ERR_FILE;
     }
     return rc;
 }
