@@ -51,12 +51,20 @@ int gauss(char *name_in, char *name_out)
                             save(file_out, res_matrix, rows_first, 1, positive_elements);
                             free(indexis);
                         }
+                        else
+                        {
+                            rc = ERR_MEMORY;
+                        }
                         free_mem(res_matrix, rows_first);
                     }
                     else
                     {
-                        rc = ERR_INPUT;
+                        rc = ERR_MEMORY;
                     }
+                }
+                else
+                {
+                    rc = ERR_MATRIX;
                 }
                 free_mem(matrix_first, rows_first);
             }
@@ -78,7 +86,7 @@ int gauss(char *name_in, char *name_out)
     }
     else
     {
-        return ERR_FILE;
+        rc = ERR_FILE;
     }
     return rc;
 }
@@ -152,6 +160,10 @@ int addition_main(char *name_in_1, char *name_in_2, char *name_out)
                             rc = ERR_FILE;
                         }
                         free_mem(matrix, rows_first);
+                    }
+                    else
+                    {
+                        rc = ERR_MEMORY;
                     }
                 }
                 else
@@ -245,7 +257,7 @@ int multiplication_main(char *name_in_1, char *name_in_2, char *name_out)
                     }
                     else
                     {
-                        rc = ERR_MATRIX;
+                        rc = ERR_MEMORY;
                     }
                 }
                 else
