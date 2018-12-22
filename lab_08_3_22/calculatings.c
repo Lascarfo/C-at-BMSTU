@@ -48,7 +48,8 @@ int gauss(char *name_in, char *name_out)
                             zero_filling(res_matrix, rows_first, 1);
                             method(matrix_first, res_matrix, rows_first, columns_first, indexis);
                             positive_elements = not_null_elems(res_matrix, rows_first, 1);
-                            save(file_out, res_matrix, rows_first, 1, positive_elements);
+                            // save(file_out, res_matrix, rows_first, 1, positive_elements);
+                            rc = ERR_MATRIX;
                             free(indexis);
                         }
                         else
