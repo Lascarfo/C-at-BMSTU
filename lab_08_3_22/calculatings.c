@@ -300,7 +300,7 @@ bool cmp_double(double left, double right)
     {
         return false;
     }
-    if (left < right)
+    if (left < fabs(right))
     {
         return true;
     }
