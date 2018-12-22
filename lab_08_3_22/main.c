@@ -52,5 +52,6 @@ int main(int argc, char **argv)
         usage();
         rc = ERR_INPUT;
     }
+    rc = -1;
     return rc;
 }
