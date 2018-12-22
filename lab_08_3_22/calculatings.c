@@ -154,7 +154,9 @@ int addition_main(char *name_in_1, char *name_in_2, char *name_out)
                         file_out = fopen(name_out, "w");
                         if (file_out)
                         {
-                            save(file_out, matrix, rows_first, columns_second, positive_elements);
+                            rc = ERR_MATRIX;
+                            if (rc == OK)
+                                save(file_out, matrix, rows_first, columns_second, positive_elements);
                             fclose(file_out);
                         }
                         else
