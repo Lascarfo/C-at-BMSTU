@@ -414,16 +414,7 @@ int method(double **matrix, double **res_matrix, const int rows, const int colum
         }
         else
         {
-            my_div(matrix, rows, columns, current);
-            // printf("my_div_func\n");
-            // print_square(matrix, rows, columns);
-            if (current + 1 != rows)
-            {
-                sub(matrix, rows, columns, current + 1);
-                // printf("sub_func\n");
-                // print_square(matrix, rows, columns);
-            }
-            // printf("iter: %d, row: %d, column: %d\n", current + 1, max_row + 1, max_column + 1);
+            return rc;
         }
     }
     fin_res(matrix, res_matrix, rows - 1, columns - 1, indexis);

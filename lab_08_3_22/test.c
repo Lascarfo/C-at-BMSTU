@@ -68,7 +68,7 @@ int main(void)
         matrix_first = allocate_memory(1, 1);
         if (matrix_first != NULL)
         {
-            free(matrix_first);
+            free_mem(matrix_first, 1);
             printf("passed\n");
         }
         else
@@ -86,7 +86,6 @@ int main(void)
         }
         else
         {
-            free(matrix_first);
             printf("not passed\n");
         }
     }
@@ -96,7 +95,7 @@ int main(void)
         matrix_first = allocate_memory(10, 1);
         if (matrix_first != NULL)
         {
-            free(matrix_first);
+            free_mem(matrix_first, 10);
             printf("passed\n");
         }
         else
@@ -131,6 +130,7 @@ int main(void)
         {
             printf("not passed\n");
         }
+        free_mem(result_matrix, rows);
     }
     {
         printf("test 2: ");
@@ -158,6 +158,7 @@ int main(void)
         {
             printf("not passed\n");
         }
+        free_mem(result_matrix, rows);
     }
     {
         printf("test 3: ");
@@ -185,6 +186,7 @@ int main(void)
         {
             printf("not passed\n");
         }
+        free_mem(result_matrix, rows);
     }
     {
         printf("test 4: ");
@@ -212,6 +214,7 @@ int main(void)
         {
             printf("not passed\n");
         }
+        free_mem(result_matrix, rows);
     }
     {
         printf("\nTesting multipication func\n");
