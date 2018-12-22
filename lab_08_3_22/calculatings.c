@@ -405,7 +405,7 @@ void shift(double **matrix, const int max_row, const int max_column, const int c
         int tmp = indexis[current];
         indexis[current] = indexis[max_column];
         indexis[max_column] = tmp;
-        for (int row = current; row < rows; row++)
+        for (int row = 0; row < rows; row++)
         {
             temp_elem = matrix[row][current];
             matrix[row][current] = matrix[row][max_column];
