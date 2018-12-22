@@ -28,59 +28,62 @@ int gauss(char *name_in, char *name_out)
     file_in_1 = fopen(name_in, "r"); // 2
     if (file_in_1)
     {
-        file_out = fopen(name_out, "w");  // 3
-        if (file_out)
+        double **matrix_first = NULL;
+        int rows_first, columns_first, positive_elements_first, positive_elements;
+        if (read_matrix(file_in_1, &matrix_first, &rows_first, &columns_first, &positive_elements_first) == OK)
         {
-            double **matrix_first = NULL;
-            int rows_first, columns_first, positive_elements_first, positive_elements;
-            if (read_matrix(file_in_1, &matrix_first, &rows_first, &columns_first, &positive_elements_first) == OK)
+            if (rows_first == columns_first - 1)
             {
-                if (rows_first == columns_first - 1)
+                double **res_matrix = NULL;
+                res_matrix = allocate_memory(rows_first, 1);
+                if (res_matrix)
                 {
-                    double **res_matrix = NULL;
-                    res_matrix = allocate_memory(rows_first, 1);
-                    if (res_matrix)
+                    int *indexis = malloc(sizeof(int) * rows_first);
+                    if (indexis)
                     {
-                        int *indexis = malloc(sizeof(int) * rows_first);
-                        if (indexis)
+                        indexis_gen(indexis, rows_first);
+                        zero_filling(res_matrix, rows_first, 1);
+                        rc = method(matrix_first, res_matrix, rows_first, columns_first, indexis);
+                        if (rc == OK)
                         {
-                            indexis_gen(indexis, rows_first);
-                            zero_filling(res_matrix, rows_first, 1);
-                            method(matrix_first, res_matrix, rows_first, columns_first, indexis);
-                            positive_elements = not_null_elems(res_matrix, rows_first, 1);
-                            save(file_out, res_matrix, rows_first, 1, positive_elements);
-                            free(indexis);
+                            file_out = fopen(name_out, "w");  // 3
+                            if (file_out)
+                            {
+                                positive_elements = not_null_elems(res_matrix, rows_first, 1);
+                                save(file_out, res_matrix, rows_first, 1, positive_elements);
+                                fclose(file_out);
+                            }
+                            else
+                            {
+                                rc = ERR_FILE;
+                            }
                         }
-                        else
-                        {
-                            rc = ERR_MEMORY;
-                        }
-                        free_mem(res_matrix, rows_first);
+                        free(indexis);
                     }
                     else
                     {
                         rc = ERR_MEMORY;
                     }
+                    free_mem(res_matrix, rows_first);
                 }
                 else
                 {
-                    rc = ERR_MATRIX;
+                    rc = ERR_MEMORY;
                 }
-                free_mem(matrix_first, rows_first);
             }
             else
             {
-                if (matrix_first != NULL)
-                {
-                    free_mem(matrix_first, rows_first);
-                }
                 rc = ERR_MATRIX;
             }
-            fclose(file_out);
+            free_mem(matrix_first, rows_first);
         }
         else
         {
-            rc = ERR_FILE;
+            if (matrix_first != NULL)
+            {
+                free_mem(matrix_first, rows_first);
+            }
+            rc = ERR_MATRIX;
         }
         fclose(file_in_1);
     }
@@ -383,8 +386,9 @@ void index_of_max(const double **matrix, const int current, const int rows, int 
 * \param columns количесво столбцов
 */
 
-void method(double **matrix, double **res_matrix, const int rows, const int columns, int *indexis)
+int method(double **matrix, double **res_matrix, const int rows, const int columns, int *indexis)
 {
+    int rc = OK;
     int max_row, max_column;
     for (int current = 0; current < rows; current++)
     {
@@ -394,18 +398,27 @@ void method(double **matrix, double **res_matrix, const int rows, const int colu
         shift(matrix, max_row, max_column, current, rows, indexis);
         // printf("shift_func\n");
         // print_square(matrix, rows, columns);
-        my_div(matrix, rows, columns, current);
-        // printf("my_div_func\n");
-        // print_square(matrix, rows, columns);
-        if (current + 1 != rows)
+        rc = check_det(matrix, rows);
+        if (rc == OK)
         {
-            sub(matrix, rows, columns, current + 1);
-            // printf("sub_func\n");
+            my_div(matrix, rows, columns, current);
+            // printf("my_div_func\n");
             // print_square(matrix, rows, columns);
+            if (current + 1 != rows)
+            {
+                sub(matrix, rows, columns, current + 1);
+                // printf("sub_func\n");
+                // print_square(matrix, rows, columns);
+            }
+            // printf("iter: %d, row: %d, column: %d\n", current + 1, max_row + 1, max_column + 1);
         }
-        // printf("iter: %d, row: %d, column: %d\n", current + 1, max_row + 1, max_column + 1);
+        else
+        {
+            return rc;
+        }
     }
     fin_res(matrix, res_matrix, rows - 1, columns - 1, indexis);
+    return rc;
 }
 
 /**
@@ -600,4 +613,19 @@ void indexis_gen(int *indexis, const int columns)
     {
         indexis[col] = col;
     }
+}
+
+
+int check_det(double **matrix, const int rows)
+{
+    double cache = 1;
+    for (int row = 0; row < rows; row++)
+    {
+         cache *= matrix[row][row];
+    }
+    if (cmp_w_null(cache))
+    {
+        return OK;
+    }
+    return ERR_MATRIX;
 }

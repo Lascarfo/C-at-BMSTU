@@ -156,7 +156,7 @@ void print_matrix(double **matrix, const int rows, const int columns, const int 
 
 
 
-
+// 
 // void print_square(double **matrix, int row, int rows_columns)
 // {
 //     printf("\n");
