@@ -16,7 +16,7 @@
 * \param  l, r Числа, проверяемые компаратором
 */
 
-int cmp_double_c(double l, double r)
+int cmp_double_null(double l, double r)
 {
     double result = fabs(l - r);
     if (result > EPS)
@@ -75,7 +75,7 @@ int read_elems(FILE *in, const int rows, const int columns, const int positive_e
         {
             return ERR_MATRIX;
         }
-        if (!cmp_double_c(0, cache_double))
+        if (!cmp_double_null(0, cache_double))
         {
             return ERR_INPUT;
         }
