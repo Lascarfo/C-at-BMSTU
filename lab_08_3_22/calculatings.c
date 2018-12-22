@@ -399,7 +399,7 @@ int method(double **matrix, double **res_matrix, const int rows, const int colum
         // printf("shift_func\n");
         // print_square(matrix, rows, columns);
         rc = check_det(matrix, rows);
-        if (rc == OK)
+        if (rc == OK || current == 0)
         {
             my_div(matrix, rows, columns, current);
             // printf("my_div_func\n");
@@ -621,7 +621,7 @@ int check_det(double **matrix, const int rows)
     double cache = 1;
     for (int row = 0; row < rows; row++)
     {
-         cache *= matrix[row][row];
+        cache *= matrix[row][row];
     }
     if (cmp_w_null(cache))
     {
