@@ -28,7 +28,7 @@
 
 int main(int argc, char **argv)
 {
-    int rc = 10;
+    int rc = OK;
     if ((argc == 5) && (strcmp(argv[1], "a") == 0))
     {
         rc = addition_main(argv[2], argv[3], argv[4]);

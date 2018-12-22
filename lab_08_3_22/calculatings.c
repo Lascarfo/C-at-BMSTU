@@ -48,7 +48,7 @@ int gauss(char *name_in, char *name_out)
                             zero_filling(res_matrix, rows_first, 1);
                             method(matrix_first, res_matrix, rows_first, columns_first, indexis);
                             positive_elements = not_null_elems(res_matrix, rows_first, 1);
-                            save(file_out, res_matrix, rows_first, 1, positive_elements);
+                            //save(file_out, res_matrix, rows_first, 1, positive_elements);
                             free(indexis);
                         }
                         else
@@ -152,7 +152,7 @@ int addition_main(char *name_in_1, char *name_in_2, char *name_out)
                         file_out = fopen(name_out, "w");
                         if (file_out)
                         {
-                            save(file_out, matrix, rows_first, columns_second, positive_elements);
+                            //save(file_out, matrix, rows_first, columns_second, positive_elements);
                             fclose(file_out);
                         }
                         else
@@ -246,7 +246,7 @@ int multiplication_main(char *name_in_1, char *name_in_2, char *name_out)
                         file_out = fopen(name_out, "w");
                         if (file_out)
                         {
-                            save(file_out, matrix_multiply, rows_first, columns_second, positive_elements);
+                            //save(file_out, matrix_multiply, rows_first, columns_second, positive_elements);
                             fclose(file_out);
                         }
                         else
