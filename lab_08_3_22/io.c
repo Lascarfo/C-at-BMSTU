@@ -109,17 +109,17 @@ int read_matrix(FILE *in, double ***matrix, int *rows, int *columns, int *positi
 
 void save(FILE *out, double **matrix, const int rows, const int columns, const int positive_elements)
 {
-    fprintf(out, "%d %d %d\n", rows, columns, positive_elements);
-    for (int row = 0; row < rows; row++)
-    {
-        for (int column = 0; column < columns; column++)
-        {
-            if (cmp_w_null(matrix[row][column]))
-            {
-                fprintf(out, "%d %d %f\n", row + 1, column + 1, matrix[row][column]);
-            }
-        }
-    }
+    // fprintf(out, "%d %d %d\n", rows, columns, positive_elements);
+    // for (int row = 0; row < rows; row++)
+    // {
+    //     for (int column = 0; column < columns; column++)
+    //     {
+    //         if (cmp_w_null(matrix[row][column]))
+    //         {
+    //             fprintf(out, "%d %d %f\n", row + 1, column + 1, matrix[row][column]);
+    //         }
+    //     }
+    // }
 }
 
 /**
