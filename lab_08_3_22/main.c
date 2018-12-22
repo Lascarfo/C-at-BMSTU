@@ -28,28 +28,24 @@
 
 int main(int argc, char **argv)
 {
-    int rc = OK;
+    int rc = 10;
     if ((argc == 5) && (strcmp(argv[1], "a") == 0))
     {
         rc = addition_main(argv[2], argv[3], argv[4]);
-        rc = -1;
         // printf("rc_a %d\n", rc);
     }
     else if ((argc == 5) && (strcmp(argv[1], "m") == 0))
     {
         rc = multiplication_main(argv[2], argv[3], argv[4]);
-        rc = -1;
         // printf("rc_m %d\n", rc);
     }
     else if ((argc == 4) && (strcmp(argv[1], "o")) == 0)
     {
         rc = gauss(argv[2], argv[3]);
-        rc = -1;
     }
     else if ((argc == 2) && (strcmp(argv[1], "h")) == 0)
     {
         usage();
-        rc = -1;
     }
     else
     {
