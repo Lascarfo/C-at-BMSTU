@@ -2,6 +2,7 @@
 #define _MY_SNPRINTF_
 
 #include <stdbool.h>
+#include <stdarg.h>
 
 int my_snprintf(char *string, size_t n, const char *format, ...);
 int full_len(const char *symbols);
