@@ -10,12 +10,13 @@
 #define ERR_EMPTY -4
 #define ERR_PRINT -5
 #define ERR_PARAM -6
+#define ERR_KEY -7
 
 #define N 50
 
 const int *count_pos(const int *arr, const int *arr_end);
 void copy_arr(const int *arr, int *arr_s, int *arr_s_end);
-int key(const int *arr, const int *arr_end, int *arr_n, int *arr_n_end);
+int key(const int *arr, const int *arr_end, int *arr_n, int **arr_n_end, int *size_buf);
 void calculate(const int *arr, const int *arr_end, int *len);
 int count_n(FILE *file);
 int read_array(FILE *file, int *arr, int *arr_end);

@@ -49,11 +49,20 @@ int main(int argc, char *argv[])
                         calculate(arr, arr_end, &len);
                         if (len > 0)
                         {
-                            arr_s = malloc(len * sizeof (int));
+                            int size_buf = len;
+                            arr_s = malloc(size_buf * sizeof (int));
                             if (arr_s)
                             {
-                                arr_s_end = arr_s + len;
-                                rc = key(arr, arr_end, arr_s, arr_s_end);  // вызов функции - фильтра
+                                rc = key(arr, arr_end, arr_s, &arr_s_end, &size_buf);  // вызов функции - фильтра
+                                if (rc == 5)
+                                {
+                                    arr_s = malloc(size_buf * sizeof (int));
+                                    rc = key(arr, arr_end, arr_s, &arr_s_end, &size_buf);
+                                }
+                                else if (rc == 10)
+                                {
+                                    rc = ERR_KEY;
+                                }
                             }
                             else
                             {

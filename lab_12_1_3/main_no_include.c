@@ -32,6 +32,7 @@
  #define ERR_EMPTY -4
  #define ERR_PRINT -5
  #define ERR_PARAM -6
+ #define ERR_KEY -7
 
  #define N 50
 
@@ -46,7 +47,7 @@ int main(int argc, char *argv[])
     void (*usage)(void);
     int (*save)(FILE *file, const int *arr, const int *arr_end);
     void (*calculate)(const int *arr, const int *arr_end, int *len);
-    int (*key)(const int *arr, const int *arr_end, int *arr_n, int *arr_n_end);
+    int (*key)(const int *arr, const int *arr_end, int *arr_n, int **arr_n_end, int *size_buf);
     void (*mysort)(void *base, size_t nitems, size_t size, int(*cmp_int)(const void*, const void*));
     int (*cmp_int)(const void *left, const void *right);
     handle = dlopen("lib.so", RTLD_LAZY);  //RTLD_NOW
@@ -61,8 +62,7 @@ int main(int argc, char *argv[])
     mysort = (void (*)(void *, size_t, size_t, int \
       (*)(const void *, const void *)))dlsym(handle, "mysort");
     cmp_int = (int (*)(const void *, const void *))dlsym(handle, "cmp_int");
-    key = (int (*)(const int *, const int *, int *, int
-      *))dlsym(handle, "key");
+    key = (int (*)(const int *, const int *, int *, int **, int *))dlsym(handle, "key");
     if (((argc == 3) || ((argc == 4) && (strcmp(argv[3], "f")) == 0)))
     {
         file_in = fopen(argv[1], "r");
@@ -81,11 +81,20 @@ int main(int argc, char *argv[])
                         (*calculate)(arr, arr_end, &len);
                         if (len > 0)
                         {
-                            arr_s = malloc(len * sizeof (int));
+                            int size_buf = len;
+                            arr_s = malloc(size_buf * sizeof (int));
                             if (arr_s)
                             {
-                                arr_s_end = arr_s + len;
-                                rc = (*key)(arr, arr_end, arr_s, arr_s_end);  // вызов функции - фильтра
+                                rc = (*key)(arr, arr_end, arr_s, &arr_s_end, &size_buf);  // вызов функции - фильтра
+                                if (rc == 5)
+                                {
+                                    arr_s = malloc(size_buf * sizeof (int));
+                                    rc = (*key)(arr, arr_end, arr_s, &arr_s_end, &size_buf);
+                                }
+                                else if (rc == 10)
+                                {
+                                    rc = ERR_KEY;
+                                }
                             }
                             else
                             {

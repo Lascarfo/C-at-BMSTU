@@ -60,23 +60,42 @@ void copy_arr(const int *arr, int *arr_s, int *arr_s_end)
 */
 
 
-int key(const int *arr, const int *arr_end, int *arr_n, int *arr_n_end)
+int key(const int *arr, const int *arr_end, int *arr_n, int **arr_n_end, int *size_buf)
 {
     int rc = OK;
-
-
-    // printf("arr_end: %pd\n", (void * ) arr_end);
-    // printf("arr: %pd\n", (void * )arr);
-    // printf("diff: %ld\n", (arr_end - arr));
-
-
-    if ((arr != NULL && arr_end != NULL) && (arr < arr_end) && (arr_n != NULL && arr_n_end != NULL))
+    if (arr == NULL || arr_end == NULL || (arr_end < arr))
     {
-        copy_arr(arr, arr_n, arr_n_end);
+        return 10; // основная ошибка в полученных данных
+    }
+    if (arr_n == NULL && (*size_buf == 0))
+    {
+        calculate(arr, arr_end, size_buf);
+        return 5; // нужно аллоцировать память
+    }
+    if (arr_n)
+    {
+        int cache;
+        calculate(arr, arr_end, &cache);
+        if (cache > *size_buf)
+        {
+            *size_buf = cache;
+            return 10;
+        }
+        else
+        {
+            *arr_n_end = arr_n + cache;
+            copy_arr(arr, arr_n, *arr_n_end);
+            *size_buf = cache;
+        }
     }
     else
     {
-        rc = ERR_ARRAY;
+        rc = 10;
     }
     return rc;
 }
+
+
+// printf("arr_end: %pd\n", (void * ) arr_end);
+// printf("arr: %pd\n", (void * )arr);
+// printf("diff: %ld\n", (arr_end - arr));
